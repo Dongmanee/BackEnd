@@ -1,4 +1,4 @@
-package com.dongmanee.global.exception;
+package com.dongmanee.global.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.dongmanee.global.error.exception.CustomException;
 import com.dongmanee.global.utils.ApiResponse;
 
 @RestControllerAdvice

@@ -1,4 +1,4 @@
-package com.dongmanee.global.exception;
+package com.dongmanee.global.error.exception;
 
 import org.springframework.http.HttpStatus;
 
