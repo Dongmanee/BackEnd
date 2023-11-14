@@ -1,4 +1,4 @@
-package com.dongmanee.utils;
+package com.dongmanee.global.utils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
