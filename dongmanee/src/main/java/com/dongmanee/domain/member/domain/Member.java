@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,30 +28,32 @@ public class Member extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
+	@NotNull
 	private Long universityId;
 
-	@Column(nullable = false)
+	@NotNull
 	private Role role;
 
-	@Column(nullable = false, unique = true)
+	@NotNull
+	@Column(unique = true)
 	private String studentId;
 
-	@Column(nullable = false)
+	@NotNull
 	private String department;
 
-	@Column(nullable = false)
+	@NotNull
 	private String name;
 
-	@Column(unique = true)
+	@NotNull
 	private String phone;
 
-	@Column(unique = true)
+	@NotNull
 	private String email;
 
-	private String profileImageUrl;
-
+	@NotNull
 	private LocalDate birth;
+
+	private String profileImageUrl;
 
 	@Column(unique = true)
 	private String loginId;
