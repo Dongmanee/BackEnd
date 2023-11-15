@@ -12,7 +12,7 @@ import com.dongmanee.global.utils.ApiResponse;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	@ExceptionHandler(CustomException.class)
-	public ResponseEntity<ApiResponse> handleDuplicateEmailException(CustomException ex) {
+	public ResponseEntity<ApiResponse> handleCustomException(CustomException ex) {
 		return ApiResponse.error(ex.getHttpStatus(), ex.getMessage());
 	}
 
