@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "club_categorys")
+@Table(name = "club_category")
 public class ClubCategory extends BaseEntity {
 
 	@Id
