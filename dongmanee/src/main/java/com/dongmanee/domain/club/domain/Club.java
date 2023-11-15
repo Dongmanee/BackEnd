@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.dongmanee.global.entity.BaseEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -38,7 +39,7 @@ public class Club extends BaseEntity {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private ClubCategory clubCategory;
-	@OneToMany(mappedBy = "club")
+	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ClubSns> clubSns = new ArrayList<>();
 	private Integer applicationId;
 	@NotNull
