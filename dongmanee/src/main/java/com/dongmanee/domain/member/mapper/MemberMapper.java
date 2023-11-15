@@ -6,7 +6,7 @@ import org.mapstruct.ReportingPolicy;
 
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestSignup;
-import com.dongmanee.domain.university.mapper.UniversityMapping;
+import com.dongmanee.domain.university.mapper.UniversityMapper;
 
 //StudentMapper.java
 //@Mapper를 이용하여 mapper임을 알려주고, MapStruct를 이용해 코드를 generate해야 함을 알려준다.
@@ -14,7 +14,7 @@ import com.dongmanee.domain.university.mapper.UniversityMapping;
 //unmappedTargetPolicy IGNORE 만약, target class에 매핑되지 않는 필드가 있으면, null로 넣게 되고, 따로 report하지 않는다.
 @Mapper(componentModel = "spring",
 	unmappedTargetPolicy = ReportingPolicy.IGNORE,
-	uses = {PasswordMapper.class, UniversityMapping.class})
+	uses = {PasswordMapper.class, UniversityMapper.class})
 public interface MemberMapper {
 	@Mapping(source = "password", target = "password", qualifiedByName = {"passwordEncoder", "passwordEncoded"})
 	@Mapping(source = "universityId", target = "university", qualifiedByName = {"universityMapper",

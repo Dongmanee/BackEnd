@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 @Named("universityMapper")
-public class UniversityMapping {
+public class UniversityMapper {
 	private final UniversityRepository universityRepository;
 
 	@Named("universityIdToUniversityEntity")
