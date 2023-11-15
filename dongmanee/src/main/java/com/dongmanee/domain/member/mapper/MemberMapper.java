@@ -18,11 +18,6 @@ import com.dongmanee.domain.member.dto.request.RequestSignup;
 	unmappedTargetPolicy = ReportingPolicy.IGNORE,
 	uses = PasswordMapper.class)
 public interface MemberMapper {
-
-	public RequestSignup toDTO(Member member);
-
 	@Mapping(source = "password", target = "password", qualifiedByName = {"passwordEncoder", "passwordEncoded"})
 	public Member toEntity(RequestSignup requestSignup);
-
-
 }
