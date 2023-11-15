@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "clubs")
+@Table(name = "club")
 public class Club extends BaseEntity {
 	@Id
 	private Long id;
