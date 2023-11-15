@@ -3,6 +3,7 @@ package com.dongmanee.domain.club.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dongmanee.domain.university.domain.University;
 import com.dongmanee.global.entity.BaseEntity;
 
 import jakarta.persistence.CascadeType;
@@ -31,8 +32,10 @@ public class Club extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	//TODO: 이 위치에 universities 와 연관관계 설정 필요
+	@NotNull
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "university_id")
+	private University university;
 	@OneToMany(mappedBy = "club")
 	private List<ClubUser> clubUsers = new ArrayList<>();
 	@NotNull

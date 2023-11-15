@@ -6,14 +6,18 @@ import java.util.List;
 
 import com.dongmanee.domain.club.domain.ClubUser;
 import com.dongmanee.domain.member.enums.Role;
+import com.dongmanee.domain.university.domain.University;
 import com.dongmanee.global.entity.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -36,7 +40,9 @@ public class Member extends BaseEntity {
 	private List<ClubUser> clubUsers = new ArrayList<>();
 
 	@NotNull
-	private Long universityId;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "university_id")
+	private University university;
 
 	@NotNull
 	private Role role;
