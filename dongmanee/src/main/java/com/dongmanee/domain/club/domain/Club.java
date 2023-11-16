@@ -41,7 +41,7 @@ public class Club extends BaseEntity {
 	@NotNull
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
-	private ClubCategory clubCategory;
+	private ClubCategory category;
 	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ClubSns> clubSns = new ArrayList<>();
 	private Integer applicationId;
