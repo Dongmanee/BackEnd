@@ -19,7 +19,7 @@ public class SignInController {
 
 	@PostMapping(value = "/login")
 	public ApiResponse<?> userLogin(@Valid @RequestBody SignInRequest request) {
-		return ApiResponse.success(signInService.login(request), "회원가입");
+		return ApiResponse.success(signInService.login(request.getLoginId(), request.getPassword()), "회원가입");
 	}
 
 }
