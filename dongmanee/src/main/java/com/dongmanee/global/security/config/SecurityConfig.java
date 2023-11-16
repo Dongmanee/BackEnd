@@ -17,6 +17,7 @@ import com.dongmanee.global.security.login.entrypoint.JwtAuthenticationEntryPoin
 import com.dongmanee.global.security.login.filter.JwtAuthenticationFilter;
 import com.dongmanee.global.security.login.handler.JwtAccessDeniedHandler;
 import com.dongmanee.global.security.login.provider.JwtProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final JwtProvider jwtProvider;
+	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -47,8 +49,8 @@ public class SecurityConfig {
 			.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 
 			.exceptionHandling((exception) -> {
-				exception.accessDeniedHandler(new JwtAccessDeniedHandler());
-				exception.authenticationEntryPoint(new JwtAuthenticationEntryPoint());
+				exception.accessDeniedHandler(new JwtAccessDeniedHandler(objectMapper));
+				exception.authenticationEntryPoint(new JwtAuthenticationEntryPoint(objectMapper));
 			});
 
 		return http.build();
