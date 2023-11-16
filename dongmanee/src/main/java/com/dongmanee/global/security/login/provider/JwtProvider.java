@@ -81,6 +81,7 @@ public class JwtProvider {
 			}
 			Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
 			// 만료되었을 시 false
+			// TODO: 예외 추가해야함
 			return !claims.getBody().getExpiration().before(new Date());
 		} catch (Exception e) {
 			return false;
