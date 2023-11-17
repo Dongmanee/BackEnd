@@ -13,9 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.dongmanee.global.security.login.entrypoint.JwtAuthenticationEntryPoint;
+import com.dongmanee.global.security.login.entrypoint.CustomAuthenticationEntryPoint;
 import com.dongmanee.global.security.login.filter.JwtAuthenticationFilter;
-import com.dongmanee.global.security.login.handler.JwtAccessDeniedHandler;
+import com.dongmanee.global.security.login.handler.CustomAccessDeniedHandler;
 import com.dongmanee.global.security.login.provider.JwtProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -49,8 +49,8 @@ public class SecurityConfig {
 			.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 
 			.exceptionHandling((exception) -> {
-				exception.accessDeniedHandler(new JwtAccessDeniedHandler(objectMapper));
-				exception.authenticationEntryPoint(new JwtAuthenticationEntryPoint(objectMapper));
+				exception.accessDeniedHandler(new CustomAccessDeniedHandler(objectMapper));
+				exception.authenticationEntryPoint(new CustomAuthenticationEntryPoint(objectMapper));
 			});
 
 		return http.build();
