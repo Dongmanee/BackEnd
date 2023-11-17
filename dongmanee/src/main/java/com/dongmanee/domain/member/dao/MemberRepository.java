@@ -5,9 +5,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.dongmanee.domain.member.domain.Member;
-import com.dongmanee.global.security.login.service.port.LoginMemberRepository;
 
-public interface MemberRepository extends JpaRepository<Member, Long>, LoginMemberRepository {
+public interface MemberRepository extends JpaRepository<Member, Long> {
 	boolean existsByLoginId(String loginId);
 
 	boolean existsByStudentId(String studentId);
