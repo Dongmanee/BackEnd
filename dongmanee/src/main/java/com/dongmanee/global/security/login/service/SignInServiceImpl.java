@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.global.security.login.controller.port.SignInService;
-import com.dongmanee.global.security.login.dto.response.SignInResponse;
+import com.dongmanee.global.security.login.dto.response.SignInResponseToken;
 import com.dongmanee.global.security.login.exception.PasswordUnMatchException;
 import com.dongmanee.global.security.login.exception.UserNotExistException;
 import com.dongmanee.global.security.login.provider.JwtProvider;
@@ -22,7 +22,7 @@ public class SignInServiceImpl implements SignInService {
 	private final JwtProvider jwtProvider;
 
 	@Override
-	public SignInResponse login(String loginId, String password) {
+	public SignInResponseToken login(String loginId, String password) {
 		Member member = loginMemberRepository.findByLoginId(loginId)
 			.orElseThrow(UserNotExistException::new);
 
@@ -32,6 +32,6 @@ public class SignInServiceImpl implements SignInService {
 
 		String accessToken = jwtProvider.createToken(member.getLoginId(), member.getRole().getTitle());
 
-		return SignInResponse.of(accessToken);
+		return SignInResponseToken.of(accessToken);
 	}
 }
