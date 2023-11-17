@@ -17,15 +17,11 @@ public class MemberDetails implements UserDetails {
 
 	private Long id;
 	private Role role;
-	private String name;
-	private String loginId;
 	private String password;
 
 	MemberDetails(Member member) {
 		this.id = member.getId();
 		this.role = member.getRole();
-		this.name = member.getName();
-		this.loginId = member.getLoginId();
 		this.password = member.getPassword();
 	}
 
@@ -48,7 +44,7 @@ public class MemberDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return this.name;
+		return this.id.toString();
 	}
 
 	@Override
