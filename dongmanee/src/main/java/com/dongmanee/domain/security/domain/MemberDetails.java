@@ -1,4 +1,4 @@
-package com.dongmanee.global.security.login.domain;
+package com.dongmanee.domain.security.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;

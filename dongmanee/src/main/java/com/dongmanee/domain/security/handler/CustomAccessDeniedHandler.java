@@ -1,9 +1,9 @@
-package com.dongmanee.global.security.login.handler;
+package com.dongmanee.domain.security.handler;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-import com.dongmanee.global.security.login.exception.CustomAccessDeniedException;
+import com.dongmanee.domain.security.exception.CustomAccessDeniedException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package com.dongmanee.global.security.login.provider;
+package com.dongmanee.domain.security.provider;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.dongmanee.global.security.login.service.UserDetailLoginService;
+import com.dongmanee.domain.security.service.UserDetailLoginService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

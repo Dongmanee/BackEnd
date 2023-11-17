@@ -1,9 +1,9 @@
-package com.dongmanee.global.security.login.entrypoint;
+package com.dongmanee.domain.security.entrypoint;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import com.dongmanee.global.security.login.exception.CustomAuthenticationException;
+import com.dongmanee.domain.security.exception.CustomAuthenticationException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

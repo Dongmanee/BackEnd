@@ -1,7 +1,7 @@
-package com.dongmanee.global.security.login.controller;
+package com.dongmanee.domain.security.controller;
 
-import com.dongmanee.global.security.login.dto.request.SignInRequest;
-import com.dongmanee.global.security.login.service.SignInService;
+import com.dongmanee.domain.security.dto.request.SignInRequest;
+import com.dongmanee.domain.security.service.AuthService;
 import com.dongmanee.global.utils.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class SignInController {
+public class AuthController {
 
-    private final SignInService signInService;
+    private final AuthService authService;
 
     @PostMapping(value = "/login")
     public ApiResponse<?> userLogin(@Valid @RequestBody SignInRequest request) {
-        return ApiResponse.success(signInService.login(request.getLoginId(), request.getPassword()), "로그인 성공");
+        return ApiResponse.success(authService.login(request.getLoginId(), request.getPassword()), "로그인 성공");
     }
 
 }

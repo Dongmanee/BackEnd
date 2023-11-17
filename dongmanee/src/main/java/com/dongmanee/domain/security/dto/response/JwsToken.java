@@ -1,4 +1,4 @@
-package com.dongmanee.global.security.login.dto.response;
+package com.dongmanee.domain.security.dto.response;
 
 import lombok.Data;
 

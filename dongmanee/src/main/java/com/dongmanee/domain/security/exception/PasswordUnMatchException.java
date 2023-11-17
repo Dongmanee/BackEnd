@@ -1,4 +1,4 @@
-package com.dongmanee.global.security.login.exception;
+package com.dongmanee.domain.security.exception;
 
 import org.springframework.http.HttpStatus;
 

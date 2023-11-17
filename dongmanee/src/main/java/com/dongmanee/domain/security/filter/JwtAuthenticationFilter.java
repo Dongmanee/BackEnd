@@ -1,4 +1,4 @@
-package com.dongmanee.global.security.login.filter;
+package com.dongmanee.domain.security.filter;
 
 import java.io.IOException;
 
@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.dongmanee.global.security.login.provider.JwtProvider;
+import com.dongmanee.domain.security.provider.JwtProvider;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package com.dongmanee.global.security.config;
+package com.dongmanee.domain.security.config;
 
 import java.util.List;
 
