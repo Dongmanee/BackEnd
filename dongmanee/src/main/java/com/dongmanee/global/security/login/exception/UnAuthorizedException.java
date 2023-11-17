@@ -4,14 +4,14 @@ import org.springframework.http.HttpStatus;
 
 import com.dongmanee.global.error.exception.CustomException;
 
-public class UserNotExistException extends CustomException {
+public class UnAuthorizedException extends CustomException {
 	private final HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
 
-	public UserNotExistException() {
+	public UnAuthorizedException() {
 		super("유저가 존재하지 않습니다.");
 	}
 
-	public UserNotExistException(String message) {
+	public UnAuthorizedException(String message) {
 		super(message);
 	}
 

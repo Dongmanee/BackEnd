@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.global.security.login.domain.MemberDetails;
-import com.dongmanee.global.security.login.exception.UserNotExistException;
+import com.dongmanee.global.security.login.exception.UnAuthorizedException;
 import com.dongmanee.global.security.login.service.port.LoginMemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class UserDetailLoginService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		Member member = loginMemberRepository.findByLoginId(userId)
-			.orElseThrow(UserNotExistException::new);
+			.orElseThrow(UnAuthorizedException::new);
 
 		return MemberDetails.of(member);
 	}
