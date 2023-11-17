@@ -18,8 +18,8 @@ public class UserDetailLoginService implements UserDetailsService {
 	private final LoginMemberRepository loginMemberRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Member member = loginMemberRepository.findByLoginId(username)
+	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+		Member member = loginMemberRepository.findByLoginId(userId)
 			.orElseThrow(UserNotExistException::new);
 
 		return MemberDetails.of(member);
