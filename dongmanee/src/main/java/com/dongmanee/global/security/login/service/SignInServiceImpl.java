@@ -30,7 +30,7 @@ public class SignInServiceImpl implements SignInService {
 			throw new PasswordUnMatchException();
 		}
 
-		String accessToken = jwtProvider.createToken(member.getLoginId(), member.getRole().getKey());
+		String accessToken = jwtProvider.createToken(member.getId(), member.getRole().getKey());
 
 		return SignInResponseToken.of(accessToken);
 	}
