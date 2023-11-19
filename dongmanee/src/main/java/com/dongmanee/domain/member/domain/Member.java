@@ -11,6 +11,8 @@ import com.dongmanee.global.entity.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,31 +41,25 @@ public class Member extends BaseEntity {
 	@OneToMany(mappedBy = "member")
 	private List<ClubUser> clubUsers = new ArrayList<>();
 
-	@NotNull
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "university_id")
 	private University university;
 
 	@NotNull
+	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@NotNull
 	@Column(unique = true)
 	private String studentId;
 
-	@NotNull
 	private String department;
 
-	@NotNull
 	private String name;
 
-	@NotNull
 	private String phone;
 
-	@NotNull
 	private String email;
 
-	@NotNull
 	private LocalDate birth;
 
 	private String profileImageUrl;
@@ -73,7 +69,11 @@ public class Member extends BaseEntity {
 
 	private String password;
 
-	public void changeRole(Role role) {
+	public void updateRole(Role role) {
 		this.role = role;
+	}
+
+	public void updateEmail(String email) {
+		this.email = email;
 	}
 }
