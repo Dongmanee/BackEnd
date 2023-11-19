@@ -8,7 +8,7 @@ public class UnAuthorizedException extends CustomException {
 	private final HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
 
 	public UnAuthorizedException() {
-		super("유저가 존재하지 않습니다.");
+		super("인증되지 않은 사용자입니다.");
 	}
 
 	public UnAuthorizedException(String message) {
