@@ -58,6 +58,10 @@ public class SecurityConfig {
 					.permitAll()
 					.anyRequest().permitAll()
 			)
+			.exceptionHandling((exception) -> {
+				exception.accessDeniedHandler(new CustomAccessDeniedHandler());
+				exception.authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+			})
 
 			// 로컬 로그인
 			.authenticationManager(authenticationManager)
@@ -68,11 +72,7 @@ public class SecurityConfig {
 				.successHandler(customAuthenticationSuccessHandler))
 
 			// JWT 검증 및 인증
-			.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
-			.exceptionHandling((exception) -> {
-				exception.accessDeniedHandler(new CustomAccessDeniedHandler());
-				exception.authenticationEntryPoint(new CustomAuthenticationEntryPoint());
-			});
+			.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
