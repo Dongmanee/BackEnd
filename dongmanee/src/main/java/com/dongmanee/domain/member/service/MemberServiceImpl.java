@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 		} else if (memberRepository.existsByPhone(member.getPhone())) {
 			throw new DuplicatePhoneException("이미 사용 중인 전화번호 입니다.");
 		}
-		member.changeRole(Role.ROLE_USER);
+		member.updateRole(Role.ROLE_USER);
 
 		Member save = memberRepository.save(member);
 	}
