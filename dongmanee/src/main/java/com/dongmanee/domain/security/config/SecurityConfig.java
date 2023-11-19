@@ -40,7 +40,7 @@ public class SecurityConfig {
 		AuthenticationManager authenticationManager = getAuthenticationManager(http);
 
 		http.httpBasic(AbstractHttpConfigurer::disable) // spring security 기본 인증 해제
-			// .formLogin(AbstractHttpConfigurer::disable)
+			.formLogin(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable) // CSRF 공격 방지 기능 해제
 			.cors(Customizer.withDefaults()) // CORS 설정
 			.headers((headerConfig) ->    // h2-console 표시를 위해
