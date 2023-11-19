@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -12,7 +11,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class SignInRequest {
 	@NotBlank(message = "로그인 id를 입력해 주세요")
 	@Pattern(regexp = "^[a-zA-Z0-9]{6,12}$", message = "아이디는 6~12자 영문 대 소문자, 숫자만 사용 가능합니다.")
