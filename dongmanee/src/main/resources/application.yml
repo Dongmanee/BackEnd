@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: dongmanee
+  profiles:
+    active: dev
+  config:
+    import:
+      - application-oauth.yml
   datasource:
     driverClassName: org.h2.Driver
     url: jdbc:h2:mem:test
@@ -12,7 +17,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
@@ -22,6 +27,23 @@ spring:
       settings:
         web-allow-others: true
       path: /h2-console
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            authorization-grant-type: authorization_code
+            scope:
+              - account_email
+            client-authentication-method: client_secret_post
+            client-name: kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
 
 logging:
   level:
