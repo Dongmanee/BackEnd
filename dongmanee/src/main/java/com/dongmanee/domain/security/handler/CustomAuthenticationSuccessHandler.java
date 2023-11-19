@@ -16,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.dongmanee.domain.member.dao.MemberRepository;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.enums.Role;
-import com.dongmanee.domain.security.dao.AuthProviderRepository;
 import com.dongmanee.domain.security.dto.response.JwsToken;
 import com.dongmanee.domain.security.provider.JwtProvider;
 import com.dongmanee.global.utils.ApiResponse;
@@ -31,7 +30,6 @@ import lombok.RequiredArgsConstructor;
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	private final ObjectMapper objectMapper;
 	private final JwtProvider jwtProvider;
-	private final AuthProviderRepository authProviderRepository;
 	private final MemberRepository memberRepository;
 
 	@Override
