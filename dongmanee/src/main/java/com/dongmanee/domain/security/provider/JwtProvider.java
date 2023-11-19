@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.dongmanee.domain.security.service.UserDetailLoginService;
+import com.dongmanee.domain.security.service.AuthService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -24,15 +24,15 @@ import jakarta.servlet.http.HttpServletRequest;
 public class JwtProvider {
 	private final String salt;
 	private final long accessTokenValidityIn;
-	private final UserDetailLoginService userDetailLoginService;
+	private final AuthService authService;
 	private Key secretKey;
 
 	public JwtProvider(@Value("${jwt.secret}") String salt,
 		@Value("${jwt.access-token-validity-in-seconds}") Long accessTokenValidityIn,
-		UserDetailLoginService userDetailLoginService) {
+		AuthService authService) {
 		this.salt = salt;
 		this.accessTokenValidityIn = accessTokenValidityIn * 1000;
-		this.userDetailLoginService = userDetailLoginService;
+		this.authService = authService;
 	}
 
 	@PostConstruct
@@ -56,7 +56,7 @@ public class JwtProvider {
 	// 권한정보 획득
 	// Spring Security 인증과정에서 권한확인을 위한 기능
 	public Authentication getAuthentication(String token) {
-		UserDetails userDetails = userDetailLoginService.loadUserByUsername(this.getAccount(token));
+		UserDetails userDetails = authService.loadUserByUsername(this.getAccount(token));
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
 
