@@ -2,10 +2,16 @@ package com.dongmanee.domain.security.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class SignInRequest {
 	@NotBlank(message = "로그인 id를 입력해 주세요")
