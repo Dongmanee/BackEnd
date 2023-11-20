@@ -87,6 +87,23 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 			attributes.getAttributes(), attributes.getNameAttributeKey());
 	}
 
+	/**
+	 * UserId 기반으로 데이터를 가져와 반환 -
+	 * JWTAuthenticationFilter 에서 사용
+	 *
+	 * @param userId
+	 * @return User
+	 */
+	public UserDetails loadUserById(Long userId) {
+		Member member = memberRepository.findById(userId).orElseThrow(UnAuthorizedException::new);
+
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority(member.getRole().getKey()));
+
+		// User: Spring Security에서 제공해주는 User 모델로 반환
+		return new User(member.getId().toString(), member.getPassword(), true, true, true, true, authorities);
+	}
+
 	private AuthProvider saveOrUpdate(String registrationId, OAuthAttributes attributes) {
 		Long externalProviderId = Long.valueOf(attributes.getAttributes().get("id").toString());
 		AuthProvider authProvider = authProviderRepository.findByAuthProviderAndExternalProviderId(registrationId,
