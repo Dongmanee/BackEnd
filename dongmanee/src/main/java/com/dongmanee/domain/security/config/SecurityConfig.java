@@ -51,8 +51,6 @@ public class SecurityConfig {
 			// HTTP 요청에 대한 인가 설정
 			.authorizeHttpRequests(
 				authorizedRequests -> authorizedRequests
-					.requestMatchers(new AntPathRequestMatcher("/test"))
-					.authenticated()
 					.requestMatchers(new AntPathRequestMatcher("/login"))
 					.permitAll() // 모든 요청에 대해서 인증 없이 허용
 					.requestMatchers(new AntPathRequestMatcher("/oauth2/**"))
