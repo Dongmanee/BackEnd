@@ -20,7 +20,7 @@ public class MemberController {
 	private final MemberMapper memberMapper;
 
 	@PostMapping("/signup")
-	public ApiResponse UserSignUp(@Valid @RequestBody RequestSignup request) {
+	public ApiResponse<?> userSignUp(@Valid @RequestBody RequestSignup request) {
 		Member newMember = memberMapper.toEntity(request);
 		memberService.signup(newMember);
 		return ApiResponse.success("회원가입 성공");
