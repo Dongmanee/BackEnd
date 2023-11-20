@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -91,16 +90,16 @@ public class JwtProvider {
 			return !claims.getBody().getExpiration().before(new Date());
 		} catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
 			log.error("잘못된 JWT 서명입니다.");
-			throw new CustomJwtException("잘못된 JWT 서명입니다.", HttpStatus.UNAUTHORIZED); //401
+			throw new CustomJwtException();
 		} catch (ExpiredJwtException e) {
 			log.error("만료된 JWT 토큰입니다.");
-			throw new CustomJwtException("만료된 JWT 토큰입니다.", HttpStatus.UNAUTHORIZED); //401
+			throw new CustomJwtException();
 		} catch (UnsupportedJwtException e) {
 			log.error("지원되지 않는 JWT 토큰입니다.");
-			throw new CustomJwtException("지원되지 않는 JWT 토큰입니다.", HttpStatus.BAD_REQUEST); //400
+			throw new CustomJwtException();
 		} catch (IllegalArgumentException e) {
 			log.error("JWT 토큰이 잘못되었습니다.");
-			throw new CustomJwtException("JWT 토큰이 잘못되었습니다.", HttpStatus.UNPROCESSABLE_ENTITY); //422
+			throw new CustomJwtException();
 		}
 	}
 

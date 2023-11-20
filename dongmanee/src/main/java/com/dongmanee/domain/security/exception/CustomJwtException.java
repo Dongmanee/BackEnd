@@ -7,16 +7,9 @@ import lombok.Getter;
 
 @Getter
 public class CustomJwtException extends JwtException {
-	private final HttpStatus httpStatus;
+	private final HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
 
-	public CustomJwtException(String message, HttpStatus httpStatus) {
-		super(message);
-		this.httpStatus = httpStatus;
+	public CustomJwtException() {
+		super("인증에 실패하였습니다.");
 	}
-
-	public CustomJwtException(String message, HttpStatus httpStatus, Throwable cause) {
-		super(message, cause);
-		this.httpStatus = httpStatus;
-	}
-
 }
