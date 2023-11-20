@@ -5,17 +5,23 @@ import java.security.Key;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.dongmanee.domain.security.exception.CustomJwtException;
 import com.dongmanee.domain.security.service.AuthService;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -56,7 +62,7 @@ public class JwtProvider {
 	// 권한정보 획득
 	// Spring Security 인증과정에서 권한확인을 위한 기능
 	public Authentication getAuthentication(String token) {
-		UserDetails userDetails = authService.loadUserByUsername(this.getAccount(token));
+		UserDetails userDetails = authService.loadUserById(Long.parseLong(this.getAccount(token)));
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
 
@@ -71,20 +77,19 @@ public class JwtProvider {
 	}
 
 	// 토큰 검증
-	public boolean validateToken(String token) {
+	public boolean validateToken(String token) throws AuthenticationException {
 		try {
-			// Bearer 검증
-			if (!token.substring(0, "BEARER ".length()).equalsIgnoreCase("BEARER ")) {
-				return false;
-			} else {
-				token = token.split(" ")[1].trim();
-			}
+			token = token.split(" ")[1].trim();
 			Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
-			// 만료되었을 시 false
-			// TODO: 예외 추가해야함
 			return !claims.getBody().getExpiration().before(new Date());
-		} catch (Exception e) {
-			return false;
+		} catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+			throw new CustomJwtException("잘못된 JWT 서명입니다.", HttpStatus.UNAUTHORIZED); //401
+		} catch (ExpiredJwtException e) {
+			throw new CustomJwtException("만료된 JWT 토큰입니다.", HttpStatus.UNAUTHORIZED); //401
+		} catch (UnsupportedJwtException e) {
+			throw new CustomJwtException("지원되지 않는 JWT 토큰입니다.", HttpStatus.BAD_REQUEST); //400
+		} catch (IllegalArgumentException e) {
+			throw new CustomJwtException("JWT 토큰이 잘못되었습니다.", HttpStatus.UNPROCESSABLE_ENTITY); //422
 		}
 	}
 
