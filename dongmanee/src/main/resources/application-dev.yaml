@@ -1,4 +1,4 @@
 jwt:
   secret: "a335dd7d3892cb7239cf34803afb9fb89719ec136a36f029d802841aaa9893db"
-  access-token-validity-in-seconds: 60
+  access-token-validity-in-seconds: 3600
   refresh-token-validity-in-seconds: 2592000
