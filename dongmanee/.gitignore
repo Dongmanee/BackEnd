@@ -317,3 +317,4 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,intellij+iml,intellij+all,gradle,macos,windows
 /src/main/resources/application-oauth.yml
+/src/main/resources/application-email.yml
