@@ -35,9 +35,8 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    
+
     // Email
-    implementation 'com.sun.mail:jakarta.mail'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     // Redis
