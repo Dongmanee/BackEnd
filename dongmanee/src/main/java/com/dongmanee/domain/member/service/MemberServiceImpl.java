@@ -9,6 +9,7 @@ import com.dongmanee.domain.member.exception.DuplicateEmailException;
 import com.dongmanee.domain.member.exception.DuplicateLoginIdException;
 import com.dongmanee.domain.member.exception.DuplicatePhoneException;
 import com.dongmanee.domain.member.exception.DuplicateStudentIdException;
+import com.dongmanee.domain.member.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,5 +32,10 @@ public class MemberServiceImpl implements MemberService {
 		member.updateRole(Role.ROLE_USER);
 
 		Member save = memberRepository.save(member);
+	}
+
+	@Override
+	public Member getMemberFromUserId(Long id) {
+		return memberRepository.findById(id).orElseThrow(UserNotFoundException::new);
 	}
 }
