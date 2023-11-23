@@ -19,7 +19,7 @@ spring:
       path: /h2-console
   data:
     redis:
-      host: http://localhost
+      host: localhost
       port: 6379
 
 jwt:
