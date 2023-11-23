@@ -12,12 +12,12 @@ import com.dongmanee.global.utils.ApiResponse;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	@ExceptionHandler(CustomException.class)
-	public ResponseEntity<ApiResponse> handleCustomException(CustomException ex) {
+	public ResponseEntity<ApiResponse<?>> handleCustomException(CustomException ex) {
 		return ApiResponse.error(ex.getHttpStatus(), ex.getMessage());
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+	public ResponseEntity<ApiResponse<?>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
 		return ApiResponse.error(HttpStatus.BAD_REQUEST,
 			ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
 	}

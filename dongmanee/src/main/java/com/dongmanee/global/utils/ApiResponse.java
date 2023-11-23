@@ -16,7 +16,7 @@ public class ApiResponse<T> {
 	private String message;
 	private T data;
 
-	public static ApiResponse success(String message) {
+	public static ApiResponse<?> success(String message) {
 		return new ApiResponse<>(HttpStatus.OK.value(), message, null);
 	}
 
@@ -24,7 +24,7 @@ public class ApiResponse<T> {
 		return new ApiResponse<>(HttpStatus.OK.value(), message, data);
 	}
 
-	public static ResponseEntity<ApiResponse> error(HttpStatus errorCode, String message) {
+	public static ResponseEntity<ApiResponse<?>> error(HttpStatus errorCode, String message) {
 		return ResponseEntity.status(errorCode).body(new ApiResponse<>(errorCode.value(), message, null));
 	}
 }
