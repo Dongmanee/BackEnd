@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class MemberController {
+public class SignUpController {
 	private final MemberService memberService;
 	private final MemberMapper memberMapper;
 
