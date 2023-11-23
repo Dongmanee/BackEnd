@@ -1,6 +1,5 @@
 package com.dongmanee.domain.club.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.dongmanee.domain.university.domain.University;
@@ -37,18 +36,19 @@ public class Club extends BaseEntity {
 	@JoinColumn(name = "university_id")
 	private University university;
 	@OneToMany(mappedBy = "club")
-	private List<ClubUser> clubUsers = new ArrayList<>();
+	private List<ClubUser> clubUsers;
 	@NotNull
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private ClubCategory category;
 	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<ClubSns> clubSns = new ArrayList<>();
+	private List<ClubSns> clubSns;
 	private Integer applicationId;
 	@NotNull
 	private String name;
 	private String description;
 	private String clubMainImageUrl;
+	private String clubBackgroundImageUrl;
 	private String address;
 	@NotNull
 	private Boolean isDeleted;
