@@ -45,4 +45,8 @@ public class ClubUser extends BaseEntity {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private ClubRole clubRole;
+
+	public void editClubUserId(Long id) {
+		this.id = id;
+	}
 }
