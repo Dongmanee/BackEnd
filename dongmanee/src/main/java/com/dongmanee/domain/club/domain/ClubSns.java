@@ -45,4 +45,8 @@ public class ClubSns extends BaseEntity {
 		this.title = clubSns.getTitle();
 		this.url = clubSns.getUrl();
 	}
+
+	public void editClubSnsId(Long id) {
+		this.id = id;
+	}
 }

@@ -57,4 +57,8 @@ public class Club extends BaseEntity {
 		this.description = club.getDescription();
 		this.address = club.getAddress();
 	}
+
+	public void editClubId(Long id) {
+		this.id = id;
+	}
 }

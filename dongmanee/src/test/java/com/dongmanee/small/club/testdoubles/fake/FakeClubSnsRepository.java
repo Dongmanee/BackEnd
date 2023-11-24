@@ -1,0 +1,32 @@
+package com.dongmanee.small.club.testdoubles.fake;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import com.dongmanee.domain.club.domain.ClubSns;
+import com.dongmanee.domain.club.service.port.ClubSnsRepository;
+
+public class FakeClubSnsRepository implements ClubSnsRepository {
+	private final List<ClubSns> list = new ArrayList<>();
+	private long id = 1L;
+
+	@Override
+	public ClubSns save(ClubSns clubSns) {
+		clubSns.editClubSnsId(id++);
+		list.add(clubSns);
+		return clubSns;
+	}
+
+	@Override
+	public Optional<ClubSns> findById(Long id) {
+		return list.stream()
+			.filter(clubSns -> clubSns.getId().equals(id))
+			.findFirst();
+	}
+
+	@Override
+	public void delete(ClubSns clubSns) {
+		list.removeIf(item -> item.getId().equals(clubSns.getId()));
+	}
+}
