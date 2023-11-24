@@ -3,6 +3,7 @@ package com.dongmanee.domain.security.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,6 +26,7 @@ import com.dongmanee.domain.member.enums.Role;
 import com.dongmanee.domain.security.dao.AuthProviderRepository;
 import com.dongmanee.domain.security.domain.AuthProvider;
 import com.dongmanee.domain.security.dto.OAuthAttributes;
+import com.dongmanee.domain.security.exception.OauthUserLocalLoginException;
 import com.dongmanee.domain.security.exception.UnAuthorizedException;
 
 import lombok.RequiredArgsConstructor;
@@ -45,7 +47,12 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Member member = memberRepository.findByLoginId(username).orElseThrow(UnAuthorizedException::new);
+		Member member = memberRepository.findByEmail(username).orElseThrow(UnAuthorizedException::new);
+
+		if (authProviderRepository.existsByMemberId(member.getId())) {
+			AuthProvider authProvider = authProviderRepository.findByMemberId(member.getId()).orElseThrow();
+			throw new OauthUserLocalLoginException(authProvider.getAuthProvider() + " 로그인을 사용해주세요");
+		}
 
 		// 권한 설정
 		List<GrantedAuthority> authorities = new ArrayList<>();
@@ -76,33 +83,38 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 			.getUserInfoEndpoint()
 			.getUserNameAttributeName();
 
+		Long id;
 		// OAuth2UserService
 		OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName,
 			oAuth2User.getAttributes());
 
-		AuthProvider authProvider = saveOrUpdate(registrationId, attributes);
+		AuthProvider authProvider = saveOrUpdate(registrationId, attributes.getAttributes());
+
+		Role role = authProvider.getMember() != null ? authProvider.getMember().getRole() : Role.ROLE_GUEST;
 
 		return new DefaultOAuth2User(
-			Collections.singleton(new SimpleGrantedAuthority(authProvider.getMember().getRole().getKey())),
+			Collections.singleton(new SimpleGrantedAuthority(role.getKey())),
 			attributes.getAttributes(), attributes.getNameAttributeKey());
 	}
 
-	private AuthProvider saveOrUpdate(String registrationId, OAuthAttributes attributes) {
-		Long externalProviderId = Long.valueOf(attributes.getAttributes().get("id").toString());
+	private AuthProvider saveOrUpdate(String registrationId, Map<String, Object> attributes) {
+		Long externalProviderId = Long.valueOf(attributes.get("id").toString());
 		AuthProvider authProvider = authProviderRepository.findByAuthProviderAndExternalProviderId(registrationId,
 				externalProviderId)
 			// 기존 유저
 			.map(provider -> {
-				provider.getMember().updateEmail(attributes.getEmail());
+				Member member = provider.getMember();
+				if (member != null) {
+					member.updateEmail(attributes.get("email").toString());
+					attributes.put("memberId", member.getId());
+				}
+
 				return provider;
 			})
 			// 신규 유저
 			.orElseGet(() -> {
-				Member member = new Member();
-				member.updateRole(Role.ROLE_GUEST);
-				member.updateEmail(attributes.getEmail());
+				attributes.put("memberId", null);
 				return AuthProvider.builder()
-					.member(memberRepository.save(member))
 					.authProvider(registrationId)
 					.externalProviderId(externalProviderId)
 					.build();

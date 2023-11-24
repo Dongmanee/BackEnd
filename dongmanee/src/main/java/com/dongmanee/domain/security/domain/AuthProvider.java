@@ -25,7 +25,6 @@ public class AuthProvider {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
@@ -35,4 +34,7 @@ public class AuthProvider {
 
 	private Long externalProviderId;
 
+	public void initializeMember(Member member) {
+		this.member = member;
+	}
 }

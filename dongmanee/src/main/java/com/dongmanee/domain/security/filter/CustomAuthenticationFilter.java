@@ -38,7 +38,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                         UsernamePasswordAuthenticationToken 형태로 변환
                      */
 				new UsernamePasswordAuthenticationToken(
-					signInRequest.getLoginId(),
+					signInRequest.getEmail(),
 					signInRequest.getPassword(),
 					// 권한과 관련된 값
 					new ArrayList<>()

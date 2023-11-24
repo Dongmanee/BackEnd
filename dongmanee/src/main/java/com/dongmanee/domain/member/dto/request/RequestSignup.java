@@ -20,6 +20,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestSignup {
+	private String provider;
+
+	private Long externalProviderId;
+
 	@NotNull(message = "대학교를 입력해주세요.")
 	private Long universityId;
 
@@ -37,6 +41,9 @@ public class RequestSignup {
 	@Email(message = "올바른 이메일 형식이 아닙니다.")
 	private String email;
 
+	@NotBlank(message = "이메일 인증을 해주세요.")
+	private String emailAuthCode;
+
 	@NotNull(message = "생년월일을 입력해주세요.")
 	@Past(message = "생년월일은 현재 날짜보다 이전이어야 합니다.")
 	private LocalDate birth;
@@ -44,9 +51,6 @@ public class RequestSignup {
 	@NotBlank(message = "이름을 입력해주세요")
 	@Size(min = 2, max = 20, message = "이름은 2~20자 사이여야 합니다.")
 	private String name;
-
-	@Pattern(regexp = "^[a-zA-Z0-9]{6,12}$", message = "아이디는 6~12자 영문 대 소문자, 숫자만 사용 가능합니다.")
-	private String loginId;
 
 	@Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}", message = "비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
 	private String password;
