@@ -29,7 +29,8 @@ public class SignUpController {
 	@PostMapping("/")
 	public ApiResponse<?> userSignUp(@Valid @RequestBody RequestSignup request) {
 		Member newMember = memberMapper.toEntity(request);
-		memberService.signup(newMember);
+		memberService.signup(request.getProvider(), request.getExternalProviderId(), newMember,
+			request.getEmailAuthCode());
 		return ApiResponse.success("회원가입 성공");
 	}
 
