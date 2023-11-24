@@ -12,7 +12,7 @@ import com.dongmanee.domain.email.service.EmailService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestSignup;
 import com.dongmanee.domain.member.mapper.MemberMapper;
-import com.dongmanee.domain.member.service.MemberService;
+import com.dongmanee.domain.member.service.SignUpService;
 import com.dongmanee.global.utils.ApiResponse;
 
 import jakarta.validation.Valid;
@@ -22,14 +22,14 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/signup")
 @RequiredArgsConstructor
 public class SignUpController {
-	private final MemberService memberService;
+	private final SignUpService signUpService;
 	private final EmailService emailService;
 	private final MemberMapper memberMapper;
 
 	@PostMapping("/")
 	public ApiResponse<?> userSignUp(@Valid @RequestBody RequestSignup request) {
 		Member newMember = memberMapper.toEntity(request);
-		memberService.signup(request.getProvider(), request.getExternalProviderId(), newMember,
+		signUpService.signup(request.getProvider(), request.getExternalProviderId(), newMember,
 			request.getEmailAuthCode());
 		return ApiResponse.success("회원가입 성공");
 	}
