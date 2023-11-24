@@ -52,4 +52,9 @@ public class Club extends BaseEntity {
 	private String address;
 	@NotNull
 	private Boolean isDeleted;
+
+	public void editDescriptionAndAddress(Club club) {
+		this.description = club.getDescription();
+		this.address = club.getAddress();
+	}
 }
