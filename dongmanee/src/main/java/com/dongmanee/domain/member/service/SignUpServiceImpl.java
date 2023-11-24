@@ -14,6 +14,7 @@ import com.dongmanee.domain.member.exception.OAuthProviderNotFoundException;
 import com.dongmanee.domain.security.dao.AuthProviderRepository;
 import com.dongmanee.domain.security.domain.AuthProvider;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,6 +25,7 @@ public class SignUpServiceImpl implements SignUpService {
 	private final EmailRedisUtils emailRedis;
 
 	@Override
+	@Transactional
 	public void signup(String provider, Long externalProviderId, Member member, String emailAuthCode) {
 		if (emailRedis.getData(member.getEmail()).equals(emailAuthCode)) {
 			emailRedis.deleteData(member.getEmail());
