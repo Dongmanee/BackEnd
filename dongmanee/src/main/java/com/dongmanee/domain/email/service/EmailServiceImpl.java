@@ -1,9 +1,6 @@
 package com.dongmanee.domain.email.service;
 
 import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,6 +11,7 @@ import com.dongmanee.domain.email.exception.EmailVerifiedException;
 import com.dongmanee.domain.email.utils.EmailRedisUtils;
 import com.dongmanee.domain.member.dao.MemberRepository;
 import com.dongmanee.domain.member.exception.DuplicateEmailException;
+import com.dongmanee.global.utils.AuthCodeProvider;
 
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -29,15 +27,13 @@ public class EmailServiceImpl implements EmailService {
 	private final JavaMailSender emailSender;
 	private final EmailRedisUtils emailRedis;
 	private final MemberRepository memberRepository;
+	private final AuthCodeProvider authCodeProvider;
 
 	@Value("${spring.mail.username}")
 	private String email;
 
 	@Value("${spring.mail.personal}")
 	private String personal;
-
-	@Value("${auth.code.length}")
-	private int authCodeLength;
 
 	@Value("${auth.code.expiration-millis}")
 	private long authCodeExpirationMillis;
@@ -54,7 +50,7 @@ public class EmailServiceImpl implements EmailService {
 		}
 
 		String title = "동만이 이메일 인증";
-		String authCode = createAuthCode();
+		String authCode = authCodeProvider.createAuthCode();
 
 		MimeMessage emailForm = createAuthCodeEmailForm(toEmail, title, authCode);
 		emailSender.send(emailForm);
@@ -74,14 +70,12 @@ public class EmailServiceImpl implements EmailService {
 
 		if (redisAuthCode == null || redisAuthCode.isEmpty() || !redisAuthCode.equals(authCode)) {
 			// 인증 실패
-
-			log.debug(redisAuthCode + "          " + authCode);
 			throw new EmailVerifiedException();
 		}
 
 		// 인증 성공 시 새로운 인증 코드를 생성해 응답
 		// 추가정보를 포함해 회원가입 요청을 보낼 때 해당 값을 포함해야함
-		authCode = createAuthCode();
+		authCode = authCodeProvider.createAuthCode();
 		emailRedis.setData(email, authCode, authCodeExpirationMillis);
 
 		return authCode;
@@ -108,26 +102,6 @@ public class EmailServiceImpl implements EmailService {
 			return message;
 		} catch (MessagingException | UnsupportedEncodingException e) {
 			throw new EmailSendingException("이메일 전송 실패");
-		}
-	}
-
-	/**
-	 * 인증 코드 생성
-	 *
-	 * @return
-	 * @throws NoSuchAlgorithmException
-	 */
-	private String createAuthCode() {
-		int length = authCodeLength;
-		try {
-			Random random = SecureRandom.getInstanceStrong();
-			StringBuilder builder = new StringBuilder();
-			for (int i = 0; i < length; i++) {
-				builder.append(random.nextInt(10));
-			}
-			return builder.toString();
-		} catch (NoSuchAlgorithmException e) {
-			throw new EmailSendingException("인증 메일 발송 실패");
 		}
 	}
 }
