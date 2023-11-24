@@ -46,6 +46,7 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 		// 수정
 		Club targetClub = clubUser.getClub();
 		targetClub.editDescriptionAndAddress(club);
+		clubRepository.save(targetClub);
 	}
 
 	@Override
@@ -71,6 +72,7 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(SnsNotFoundException::new);
 		// 수정
 		targetSns.editClubSns(clubSns);
+		clubSnsRepository.save(targetSns);
 	}
 
 	@Override
