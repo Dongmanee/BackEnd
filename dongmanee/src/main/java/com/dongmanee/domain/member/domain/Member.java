@@ -49,23 +49,26 @@ public class Member extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
+	@NotNull
 	@Column(unique = true)
 	private String studentId;
 
+	@NotNull
 	private String department;
 
+	@NotNull
 	private String name;
 
+	@NotNull
 	private String phone;
 
+	@NotNull
 	private String email;
 
+	@NotNull
 	private LocalDate birth;
 
 	private String profileImageUrl;
-
-	@Column(unique = true)
-	private String loginId;
 
 	private String password;
 
