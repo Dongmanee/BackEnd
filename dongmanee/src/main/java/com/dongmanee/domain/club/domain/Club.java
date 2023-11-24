@@ -61,4 +61,12 @@ public class Club extends BaseEntity {
 	public void editClubId(Long id) {
 		this.id = id;
 	}
+
+	public void appendClubUser(ClubUser clubUser) {
+		this.clubUsers.add(clubUser);
+	}
+
+	public void appendClubSns(ClubSns clubSns) {
+		this.clubSns.add(clubSns);
+	}
 }
