@@ -52,15 +52,16 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			// OAuth 로그인 성공 시
 			DefaultOAuth2User oAuth2User = (DefaultOAuth2User)oauth2Token.getPrincipal();
 			Map<String, Object> attributes = oAuth2User.getAttributes();
-			System.out.println(attributes.toString());
-			String email = attributes.get("email").toString();
+
 			Long memberId = null;
 
 			try {
 				memberId = Long.parseLong(String.valueOf(attributes.get("memberId")));
 			} catch (NumberFormatException e) {
 				// 신규 유저일 시
-				newOauthUser(request, response, oAuth2User, email);
+				String provider = oauth2Token.getAuthorizedClientRegistrationId();
+				String email = attributes.get("email").toString();
+				newOauthUser(request, response, oAuth2User, provider, email);
 				return;
 			}
 
@@ -79,9 +80,8 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 	}
 
 	private void newOauthUser(HttpServletRequest request, HttpServletResponse response, OAuth2User oAuth2User,
-		String email) {
-
-		String provider = request.getParameter("registrationId");
+		String provider, String email) {
+		
 		Long externalProviderId = Long.valueOf(oAuth2User.getAttributes().get("id").toString());
 		String authCode = authCodeProvider.createAuthCode();
 
