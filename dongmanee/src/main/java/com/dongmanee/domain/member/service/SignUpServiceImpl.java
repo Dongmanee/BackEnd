@@ -27,23 +27,11 @@ public class SignUpServiceImpl implements SignUpService {
 	@Override
 	@Transactional
 	public void signup(String provider, Long externalProviderId, Member member, String emailAuthCode) {
-		if (emailRedis.getData(member.getEmail()).equals(emailAuthCode)) {
-			emailRedis.deleteData(member.getEmail());
-		} else {
-			throw new EmailVerifiedException("이메일 인증을 해주세요.");
-		}
+		checkEmailAuthCode(member.getEmail(), emailAuthCode);
+		checkStudentIdAvailability(member.getStudentId());
+		checkEmailAvailability(member.getEmail());
+		checkPhoneAvailability(member.getPhone());
 
-		if (memberRepository.existsByStudentId(member.getStudentId())) {
-			throw new DuplicateStudentIdException("이미 가입한 학번입니다.");
-		}
-
-		if (memberRepository.existsByEmail(member.getEmail())) {
-			throw new DuplicateEmailException("이미 사용 중인 이메일 입니다.");
-		}
-
-		if (memberRepository.existsByPhone(member.getPhone())) {
-			throw new DuplicatePhoneException("이미 사용 중인 전화번호 입니다.");
-		}
 		member.updateRole(Role.ROLE_USER);
 
 		if (provider != null) {
@@ -54,6 +42,32 @@ public class SignUpServiceImpl implements SignUpService {
 			authProvider.initializeMember(member);
 		}
 
-		Member save = memberRepository.save(member);
+		memberRepository.save(member);
+	}
+
+	private void checkEmailAuthCode(String email, String emailAuthCode) {
+		if (emailRedis.getData(email).equals(emailAuthCode)) {
+			emailRedis.deleteData(email);
+		} else {
+			throw new EmailVerifiedException("이메일 인증을 해주세요.");
+		}
+	}
+
+	private void checkStudentIdAvailability(String studentId) {
+		if (memberRepository.existsByStudentId(studentId)) {
+			throw new DuplicateStudentIdException("이미 가입한 학번입니다.");
+		}
+	}
+
+	private void checkEmailAvailability(String email) {
+		if (memberRepository.existsByEmail(email)) {
+			throw new DuplicateEmailException("이미 사용 중인 이메일 입니다.");
+		}
+	}
+
+	private void checkPhoneAvailability(String phone) {
+		if (memberRepository.existsByPhone(phone)) {
+			throw new DuplicatePhoneException("이미 사용 중인 전화번호 입니다.");
+		}
 	}
 }
