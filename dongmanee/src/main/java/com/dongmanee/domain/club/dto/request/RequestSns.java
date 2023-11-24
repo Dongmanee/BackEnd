@@ -1,5 +1,6 @@
 package com.dongmanee.domain.club.dto.request;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestSns {
+	@NotEmpty
 	private String title;
+	@NotEmpty
 	private String url;
 }
