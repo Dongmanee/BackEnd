@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.dongmanee.domain.club.domain.ClubUser;
+import com.dongmanee.domain.club.service.port.ClubUserRepository;
 
-public interface ClubUserRepository extends JpaRepository<ClubUser, Long> {
+public interface ClubUserDataRepository extends JpaRepository<ClubUser, Long>, ClubUserRepository {
 
 	@Query("SELECT cu FROM ClubUser cu LEFT JOIN FETCH cu.member LEFT JOIN FETCH cu.club "
 		+ "WHERE cu.member.id = :memberId AND cu.club.id =:clubId")
