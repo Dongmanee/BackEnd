@@ -6,6 +6,7 @@ import org.mapstruct.ReportingPolicy;
 
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
+import com.dongmanee.domain.club.dto.request.RequestEditClubDescriptionAndAddress;
 
 @Mapper(componentModel = "spring",
 	unmappedTargetPolicy = ReportingPolicy.IGNORE,
@@ -13,4 +14,6 @@ import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 public interface ClubMapper {
 	@Mapping(source = "categoryId", target = "category", qualifiedByName = {"categoryMapper", "categoryIdToEntity"})
 	Club toEntity(RequestCreateClub requestCreateClub);
+
+	Club toEntity(Long id, RequestEditClubDescriptionAndAddress dto);
 }
