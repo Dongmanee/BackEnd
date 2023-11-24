@@ -26,6 +26,7 @@ import com.dongmanee.domain.member.enums.Role;
 import com.dongmanee.domain.security.dao.AuthProviderRepository;
 import com.dongmanee.domain.security.domain.AuthProvider;
 import com.dongmanee.domain.security.dto.OAuthAttributes;
+import com.dongmanee.domain.security.exception.OauthUserLocalLoginException;
 import com.dongmanee.domain.security.exception.UnAuthorizedException;
 
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,11 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Member member = memberRepository.findByEmail(username).orElseThrow(UnAuthorizedException::new);
+
+		if (authProviderRepository.existsByMemberId(member.getId())) {
+			AuthProvider authProvider = authProviderRepository.findByMemberId(member.getId()).orElseThrow();
+			throw new OauthUserLocalLoginException(authProvider.getAuthProvider() + " 로그인을 사용해주세요");
+		}
 
 		// 권한 설정
 		List<GrantedAuthority> authorities = new ArrayList<>();

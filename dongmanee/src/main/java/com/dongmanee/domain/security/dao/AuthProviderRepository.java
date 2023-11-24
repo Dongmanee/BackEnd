@@ -8,4 +8,8 @@ import com.dongmanee.domain.security.domain.AuthProvider;
 
 public interface AuthProviderRepository extends JpaRepository<AuthProvider, Long> {
 	Optional<AuthProvider> findByAuthProviderAndExternalProviderId(String authProvider, Long externalProviderId);
+
+	Optional<AuthProvider> findByMemberId(Long memberId);
+
+	boolean existsByMemberId(Long id);
 }
