@@ -16,7 +16,6 @@ import com.dongmanee.domain.club.dto.request.RequestSns;
 import com.dongmanee.domain.club.mapper.ClubMapper;
 import com.dongmanee.domain.club.mapper.ClubSnsMapper;
 import com.dongmanee.domain.club.service.ClubInfoUpdateService;
-import com.dongmanee.domain.member.service.MemberService;
 import com.dongmanee.global.utils.ApiResponse;
 
 import jakarta.validation.Valid;
@@ -27,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 public class ClubInfoUpdateController {
 	private final ClubMapper clubMapper;
 	private final ClubInfoUpdateService clubInfoUpdateService;
-	private final MemberService memberService;
 	private final ClubSnsMapper clubSnsMapper;
 
 	@PutMapping("/club/{club-id}")
