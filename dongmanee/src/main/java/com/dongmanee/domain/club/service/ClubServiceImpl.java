@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dongmanee.domain.club.dao.ClubRepository;
-import com.dongmanee.domain.club.dao.ClubSnsRepository;
-import com.dongmanee.domain.club.dao.ClubUserRepository;
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.domain.ClubUser;
@@ -15,6 +12,9 @@ import com.dongmanee.domain.club.enums.ClubRole;
 import com.dongmanee.domain.club.exception.ClubUserNotFoundException;
 import com.dongmanee.domain.club.exception.IllegalAccessException;
 import com.dongmanee.domain.club.exception.SnsNotFoundException;
+import com.dongmanee.domain.club.service.port.ClubRepository;
+import com.dongmanee.domain.club.service.port.ClubSnsRepository;
+import com.dongmanee.domain.club.service.port.ClubUserRepository;
 import com.dongmanee.domain.member.domain.Member;
 
 import lombok.RequiredArgsConstructor;

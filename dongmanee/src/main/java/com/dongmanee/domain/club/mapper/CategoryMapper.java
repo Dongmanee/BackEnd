@@ -3,9 +3,9 @@ package com.dongmanee.domain.club.mapper;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
-import com.dongmanee.domain.club.dao.ClubCategoryRepository;
 import com.dongmanee.domain.club.domain.ClubCategory;
 import com.dongmanee.domain.club.exception.CategoryNotFoundException;
+import com.dongmanee.domain.club.service.port.ClubCategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 
