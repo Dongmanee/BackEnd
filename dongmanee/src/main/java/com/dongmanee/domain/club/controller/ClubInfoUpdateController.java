@@ -16,7 +16,6 @@ import com.dongmanee.domain.club.dto.request.RequestSns;
 import com.dongmanee.domain.club.mapper.ClubMapper;
 import com.dongmanee.domain.club.mapper.ClubSnsMapper;
 import com.dongmanee.domain.club.service.ClubInfoUpdateService;
-import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.service.MemberService;
 import com.dongmanee.global.utils.ApiResponse;
 
@@ -35,9 +34,8 @@ public class ClubInfoUpdateController {
 	public ApiResponse<?> editClubDescriptionAndAddress(@Valid @RequestBody RequestEditClubDescriptionAndAddress dto,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
 		Club club = clubMapper.toEntity(clubId, dto);
-		Member requestMember = memberService.getMemberFromUserId(Long.parseLong(userDetails.getUsername()));
 
-		clubInfoUpdateService.editClubDescriptionAndAddress(club, requestMember);
+		clubInfoUpdateService.editClubDescriptionAndAddress(Long.parseLong(userDetails.getUsername()), club);
 		return ApiResponse.success("클럽 정보가 수정되었습니다.");
 	}
 
@@ -45,9 +43,8 @@ public class ClubInfoUpdateController {
 	public ApiResponse<?> addClubSns(@Valid @RequestBody RequestSns request,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
-		Member requestMember = memberService.getMemberFromUserId(Long.parseLong(userDetails.getUsername()));
 
-		clubInfoUpdateService.addClubSns(requestSns, clubId, requestMember);
+		clubInfoUpdateService.addClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId);
 		return ApiResponse.success("클럽 Sns가 추가되었습니다");
 	}
 
@@ -56,18 +53,16 @@ public class ClubInfoUpdateController {
 		@AuthenticationPrincipal UserDetails userDetails,
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
-		Member requestMember = memberService.getMemberFromUserId(Long.parseLong(userDetails.getUsername()));
 
-		clubInfoUpdateService.editClubSns(requestSns, requestMember, clubId, snsId);
+		clubInfoUpdateService.editClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId, snsId);
 		return ApiResponse.success("클럽 Sns가 수정되었습니다");
 	}
 
 	@DeleteMapping("/club/{club-id}/sns/{sns-id}")
 	public ApiResponse<?> removeClubSns(@AuthenticationPrincipal UserDetails userDetails,
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
-		Member requestMember = memberService.getMemberFromUserId(Long.parseLong(userDetails.getUsername()));
 
-		clubInfoUpdateService.removeClubSns(requestMember, clubId, snsId);
+		clubInfoUpdateService.removeClubSns(Long.parseLong(userDetails.getUsername()), clubId, snsId);
 		return ApiResponse.success("클럽 Sns가 삭제되었습니다");
 	}
 
