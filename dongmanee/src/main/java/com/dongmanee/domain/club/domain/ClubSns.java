@@ -38,6 +38,7 @@ public class ClubSns extends BaseEntity {
 
 	public void addClub(Club club) {
 		this.club = club;
+		club.getClubSns().add(this);
 	}
 
 	public void editClubSns(ClubSns clubSns) {
