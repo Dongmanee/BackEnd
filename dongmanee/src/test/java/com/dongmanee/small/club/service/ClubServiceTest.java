@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubCategory;
@@ -236,10 +237,11 @@ public class ClubServiceTest {
 						.address("testAddress")
 						.build();
 					//when
+					IllegalAccessException exception = catchThrowableOfType(
+						() -> clubService.editClubDescriptionAndAddress(testNormalMember.getId(), editData),
+						IllegalAccessException.class);
 					//then
-					assertThatThrownBy(() -> {
-						clubService.editClubDescriptionAndAddress(testNormalMember.getId(), editData);
-					}).isInstanceOf(IllegalAccessException.class);
+					assertThat(exception.getHttpStatus()).isEqualTo(HttpStatus.UNAUTHORIZED);
 				}
 			}
 		}
@@ -305,10 +307,11 @@ public class ClubServiceTest {
 							.url("newClubSnsUrl")
 							.build();
 						//when
+						IllegalAccessException exception = catchThrowableOfType(
+							() -> clubService.addClubSns(normalMemberId, editData, targetClubId),
+							IllegalAccessException.class);
 						//then
-						assertThatThrownBy(() -> {
-							clubService.addClubSns(normalMemberId, editData, targetClubId);
-						}).isInstanceOf(IllegalAccessException.class);
+						assertThat(exception.getHttpStatus()).isEqualTo(HttpStatus.UNAUTHORIZED);
 					}
 				}
 			}
@@ -373,10 +376,11 @@ public class ClubServiceTest {
 							.url("newClubSnsUrl")
 							.build();
 						//when
+						IllegalAccessException exception = catchThrowableOfType(
+							() -> clubService.editClubSns(normalMemberId, editData, targetClubId, targetSnsId),
+							IllegalAccessException.class);
 						//then
-						assertThatThrownBy(() -> {
-							clubService.editClubSns(normalMemberId, editData, targetClubId, targetSnsId);
-						}).isInstanceOf(IllegalAccessException.class);
+						assertThat(exception.getHttpStatus()).isEqualTo(HttpStatus.UNAUTHORIZED);
 					}
 				}
 			}
@@ -427,10 +431,11 @@ public class ClubServiceTest {
 						Long targetClubId = testClub.getId();
 						Long targetSnsId = testSns.getId();
 						//when
+						IllegalAccessException exception = catchThrowableOfType(
+							() -> clubService.removeClubSns(normalMemberId, targetClubId, targetSnsId),
+							IllegalAccessException.class);
 						//then
-						assertThatThrownBy(() -> {
-							clubService.removeClubSns(normalMemberId, targetClubId, targetSnsId);
-						}).isInstanceOf(IllegalAccessException.class);
+						assertThat(exception.getHttpStatus()).isEqualTo(HttpStatus.UNAUTHORIZED);
 					}
 				}
 			}
