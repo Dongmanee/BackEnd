@@ -21,9 +21,9 @@ import com.dongmanee.domain.club.service.ClubServiceImpl;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.enums.Role;
 import com.dongmanee.domain.university.domain.University;
-import com.dongmanee.small.club.testdoubles.fake.FakeClubRepository;
-import com.dongmanee.small.club.testdoubles.fake.FakeClubSnsRepository;
-import com.dongmanee.small.club.testdoubles.fake.FakeClubUserRepository;
+import com.dongmanee.small.club.testdoubles.fake.ClubRepositoryFake;
+import com.dongmanee.small.club.testdoubles.fake.ClubSnsRepositoryFake;
+import com.dongmanee.small.club.testdoubles.fake.ClubUserRepositoryFake;
 
 public class ClubServiceTest {
 	private ClubServiceImpl clubService;
@@ -36,9 +36,9 @@ public class ClubServiceTest {
 	private Club testClub;
 	private ClubSns testSns;
 
-	private FakeClubRepository fakeClubRepository;
-	private FakeClubUserRepository fakeClubUserRepository;
-	private FakeClubSnsRepository fakeClubSnsRepository;
+	private ClubRepositoryFake clubRepositoryFake;
+	private ClubUserRepositoryFake clubUserRepositoryFake;
+	private ClubSnsRepositoryFake clubSnsRepositoryFake;
 
 	@BeforeEach
 	public void init() {
@@ -133,21 +133,21 @@ public class ClubServiceTest {
 
 		testClub1.appendClubSns(testClubSns1);
 
-		fakeClubRepository = new FakeClubRepository();
-		testClub = fakeClubRepository.save(testClub1);
+		clubRepositoryFake = new ClubRepositoryFake();
+		testClub = clubRepositoryFake.save(testClub1);
 
-		fakeClubUserRepository = new FakeClubUserRepository();
-		fakeClubUserRepository.save(testHostClubUser1);
-		fakeClubUserRepository.save(testAdminClubUser1);
-		fakeClubUserRepository.save(testNormalClubUser1);
+		clubUserRepositoryFake = new ClubUserRepositoryFake();
+		clubUserRepositoryFake.save(testHostClubUser1);
+		clubUserRepositoryFake.save(testAdminClubUser1);
+		clubUserRepositoryFake.save(testNormalClubUser1);
 
-		fakeClubSnsRepository = new FakeClubSnsRepository();
-		testSns = fakeClubSnsRepository.save(testClubSns1);
+		clubSnsRepositoryFake = new ClubSnsRepositoryFake();
+		testSns = clubSnsRepositoryFake.save(testClubSns1);
 
 		clubService = new ClubServiceImpl(
-			fakeClubRepository,
-			fakeClubUserRepository,
-			fakeClubSnsRepository
+			clubRepositoryFake,
+			clubUserRepositoryFake,
+			clubSnsRepositoryFake
 		);
 	}
 
@@ -170,8 +170,8 @@ public class ClubServiceTest {
 			//when
 			clubService.createClub(newClub, testNormalMember);
 			//then
-			Club findClub = fakeClubRepository.getLastClub().get();
-			ClubUser clubUser = fakeClubUserRepository
+			Club findClub = clubRepositoryFake.getLastClub().get();
+			ClubUser clubUser = clubUserRepositoryFake
 				.findClubUserWithMemberClub(testNormalMember.getId(), findClub.getId())
 				.get();
 
@@ -200,7 +200,7 @@ public class ClubServiceTest {
 					//when
 					clubService.editClubDescriptionAndAddress(testHostMember.getId(), editData);
 					//then
-					Club club = fakeClubRepository.getLastClub().get();
+					Club club = clubRepositoryFake.getLastClub().get();
 					assertThat(club.getDescription()).isEqualTo(editData.getDescription());
 					assertThat(club.getAddress()).isEqualTo(editData.getAddress());
 				}
@@ -217,7 +217,7 @@ public class ClubServiceTest {
 					//when
 					clubService.editClubDescriptionAndAddress(testAdminMember.getId(), editData);
 					//then
-					Club club = fakeClubRepository.getLastClub().get();
+					Club club = clubRepositoryFake.getLastClub().get();
 					assertThat(club.getDescription()).isEqualTo(editData.getDescription());
 					assertThat(club.getAddress()).isEqualTo(editData.getAddress());
 				}
@@ -267,7 +267,7 @@ public class ClubServiceTest {
 						//when
 						clubService.addClubSns(hostMemberId, editData, targetClubId);
 						//then
-						ClubSns targetSns = fakeClubSnsRepository.getLastClubSns().get();
+						ClubSns targetSns = clubSnsRepositoryFake.getLastClubSns().get();
 						assertThat(editData.getTitle()).isEqualTo(targetSns.getTitle());
 						assertThat(editData.getUrl()).isEqualTo(targetSns.getUrl());
 					}
@@ -285,7 +285,7 @@ public class ClubServiceTest {
 						//when
 						clubService.addClubSns(adminMemberId, editData, targetClubId);
 						//then
-						ClubSns targetSns = fakeClubSnsRepository.getLastClubSns().get();
+						ClubSns targetSns = clubSnsRepositoryFake.getLastClubSns().get();
 						assertThat(editData.getTitle()).isEqualTo(targetSns.getTitle());
 						assertThat(editData.getUrl()).isEqualTo(targetSns.getUrl());
 					}
@@ -333,7 +333,7 @@ public class ClubServiceTest {
 						//when
 						clubService.editClubSns(hostMemberId, editData, targetClubId, targetSnsId);
 						//then
-						ClubSns clubSns = fakeClubSnsRepository.findById(targetSnsId).get();
+						ClubSns clubSns = clubSnsRepositoryFake.findById(targetSnsId).get();
 						assertThat(clubSns.getTitle()).isEqualTo(editData.getTitle());
 						assertThat(clubSns.getUrl()).isEqualTo(editData.getUrl());
 					}
@@ -352,7 +352,7 @@ public class ClubServiceTest {
 						//when
 						clubService.editClubSns(adminMemberId, editData, targetClubId, targetSnsId);
 						//then
-						ClubSns clubSns = fakeClubSnsRepository.findById(targetSnsId).get();
+						ClubSns clubSns = clubSnsRepositoryFake.findById(targetSnsId).get();
 						assertThat(clubSns.getTitle()).isEqualTo(editData.getTitle());
 						assertThat(clubSns.getUrl()).isEqualTo(editData.getUrl());
 					}
@@ -397,7 +397,7 @@ public class ClubServiceTest {
 						//when
 						clubService.removeClubSns(hostMemberId, targetClubId, targetSnsId);
 						//then
-						Optional<ClubSns> byId = fakeClubSnsRepository.findById(targetSnsId);
+						Optional<ClubSns> byId = clubSnsRepositoryFake.findById(targetSnsId);
 						assertThat(byId.isEmpty()).isTrue();
 					}
 
@@ -411,7 +411,7 @@ public class ClubServiceTest {
 						//when
 						clubService.removeClubSns(adminMemberId, targetClubId, targetSnsId);
 						//then
-						Optional<ClubSns> byId = fakeClubSnsRepository.findById(targetSnsId);
+						Optional<ClubSns> byId = clubSnsRepositoryFake.findById(targetSnsId);
 						assertThat(byId.isEmpty()).isTrue();
 					}
 				}

@@ -7,7 +7,7 @@ import java.util.Optional;
 import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.service.port.ClubSnsRepository;
 
-public class FakeClubSnsRepository implements ClubSnsRepository {
+public class ClubSnsRepositoryFake implements ClubSnsRepository {
 	private final List<ClubSns> list = new ArrayList<>();
 	private long id = 1L;
 
