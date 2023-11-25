@@ -13,7 +13,13 @@ public class FakeClubUserRepository implements ClubUserRepository {
 
 	@Override
 	public ClubUser save(ClubUser clubUser) {
-		clubUser.editClubUserId(id++);
+		Long targetId = clubUser.getId();
+		if (targetId != null) {
+			list.removeIf(c -> c.getId().equals(clubUser.getId()));
+		}
+		if (targetId == null) {
+			clubUser.editClubUserId(id++);
+		}
 		list.add(clubUser);
 		return clubUser;
 	}
@@ -21,7 +27,8 @@ public class FakeClubUserRepository implements ClubUserRepository {
 	@Override
 	public Optional<ClubUser> findClubUserWithMemberClub(Long memberId, Long clubId) {
 		return list.stream()
-			.filter(clubUser -> clubUser.getClub().getId().equals(clubId))
+			.filter(
+				clubUser -> clubUser.getMember().getId().equals(memberId) && clubUser.getClub().getId().equals(clubId))
 			.findFirst();
 	}
 }

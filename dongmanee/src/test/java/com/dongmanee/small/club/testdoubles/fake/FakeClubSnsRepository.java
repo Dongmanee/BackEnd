@@ -13,7 +13,13 @@ public class FakeClubSnsRepository implements ClubSnsRepository {
 
 	@Override
 	public ClubSns save(ClubSns clubSns) {
-		clubSns.editClubSnsId(id++);
+		Long targetId = clubSns.getId();
+		if (targetId != null) {
+			list.removeIf(c -> c.getId().equals(clubSns.getId()));
+		}
+		if (targetId == null) {
+			clubSns.editClubSnsId(id++);
+		}
 		list.add(clubSns);
 		return clubSns;
 	}
@@ -28,5 +34,9 @@ public class FakeClubSnsRepository implements ClubSnsRepository {
 	@Override
 	public void delete(ClubSns clubSns) {
 		list.removeIf(item -> item.getId().equals(clubSns.getId()));
+	}
+
+	public Optional<ClubSns> getLastClubSns() {
+		return findById(id - 1);
 	}
 }
