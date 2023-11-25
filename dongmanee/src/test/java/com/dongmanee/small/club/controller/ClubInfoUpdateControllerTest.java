@@ -61,7 +61,7 @@ public class ClubInfoUpdateControllerTest {
 			//when
 			ApiResponse<?> response = clubInfoUpdateController.addClubSns(requestData, user, clubId);
 			//then
-			assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+			assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
 			assertThat(response.getMessage()).isEqualTo("클럽 Sns가 추가되었습니다");
 		}
 
@@ -88,7 +88,7 @@ public class ClubInfoUpdateControllerTest {
 			//when
 			ApiResponse<?> response = clubInfoUpdateController.removeClubSns(user, clubId, clubSnsId);
 			//then
-			assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+			assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
 			assertThat(response.getMessage()).isEqualTo("클럽 Sns가 삭제되었습니다");
 		}
 
