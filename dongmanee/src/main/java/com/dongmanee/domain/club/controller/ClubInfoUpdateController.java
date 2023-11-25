@@ -1,5 +1,6 @@
 package com.dongmanee.domain.club.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,7 +44,7 @@ public class ClubInfoUpdateController {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
 
 		clubInfoUpdateService.addClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId);
-		return ApiResponse.success("클럽 Sns가 추가되었습니다");
+		return ApiResponse.success(HttpStatus.CREATED, "클럽 Sns가 추가되었습니다");
 	}
 
 	@PutMapping("/club/{club-id}/sns/{sns-id}")
@@ -61,7 +62,7 @@ public class ClubInfoUpdateController {
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
 
 		clubInfoUpdateService.removeClubSns(Long.parseLong(userDetails.getUsername()), clubId, snsId);
-		return ApiResponse.success("클럽 Sns가 삭제되었습니다");
+		return ApiResponse.success(HttpStatus.NO_CONTENT, "클럽 Sns가 삭제되었습니다");
 	}
 
 	// TODO 1. 지원서 기능 추가 이후 지원서 수정 기능 추가

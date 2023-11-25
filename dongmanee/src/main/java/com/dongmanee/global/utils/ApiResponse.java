@@ -20,6 +20,14 @@ public class ApiResponse<T> {
 		return new ApiResponse<>(HttpStatus.OK.value(), message, null);
 	}
 
+	public static ApiResponse<?> success(HttpStatus httpStatus, String message) {
+		return new ApiResponse<>(httpStatus.value(), message, null);
+	}
+
+	public static <T> ApiResponse<T> success(T data, HttpStatus httpStatus, String message) {
+		return new ApiResponse<>(httpStatus.value(), message, data);
+	}
+
 	public static <T> ApiResponse<T> success(T data, String message) {
 		return new ApiResponse<>(HttpStatus.OK.value(), message, data);
 	}

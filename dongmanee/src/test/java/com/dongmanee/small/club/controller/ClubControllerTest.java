@@ -42,7 +42,7 @@ public class ClubControllerTest {
 			//when
 			ApiResponse<?> response = clubController.createClub(requestData, user);
 			//then
-			assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+			assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
 			assertThat(response.getMessage()).isEqualTo("클럽이 생성되었습니다.");
 		}
 

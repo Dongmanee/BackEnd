@@ -1,5 +1,6 @@
 package com.dongmanee.domain.club.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,7 @@ public class ClubController {
 		Member requestMember = memberService.getMemberFromUserId(Long.parseLong(userDetails.getUsername()));
 		Club club = clubMapper.toEntity(createClub);
 		clubService.createClub(club, requestMember);
-		return ApiResponse.success("클럽이 생성되었습니다.");
+		return ApiResponse.success(HttpStatus.CREATED, "클럽이 생성되었습니다.");
 	}
 
 	// TODO 1. 클럽 가입 요청 기능 추가
