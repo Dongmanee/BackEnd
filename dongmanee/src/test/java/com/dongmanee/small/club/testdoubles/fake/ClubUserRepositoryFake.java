@@ -7,7 +7,7 @@ import java.util.Optional;
 import com.dongmanee.domain.club.domain.ClubUser;
 import com.dongmanee.domain.club.service.port.ClubUserRepository;
 
-public class FakeClubUserRepository implements ClubUserRepository {
+public class ClubUserRepositoryFake implements ClubUserRepository {
 	private final List<ClubUser> list = new ArrayList<>();
 	private long id = 1L;
 
