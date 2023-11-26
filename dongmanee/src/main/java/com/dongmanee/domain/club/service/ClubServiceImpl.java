@@ -32,8 +32,8 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 	public void createClub(Club club, Member member) {
 		Club newClub = makeClub(club, member);
 		clubRepository.save(newClub);
-		ClubUser hostPermission = createUserWithHostPermission(newClub, member);
-		clubUserRepository.save(hostPermission);
+		ClubUser hostUser = createUserWithHostPermission(newClub, member);
+		clubUserRepository.save(hostUser);
 	}
 
 	@Override
