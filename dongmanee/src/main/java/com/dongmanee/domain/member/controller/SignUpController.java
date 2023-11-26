@@ -26,7 +26,7 @@ public class SignUpController {
 	private final EmailService emailService;
 	private final MemberMapper memberMapper;
 
-	@PostMapping("/")
+	@PostMapping()
 	public ApiResponse<?> userSignUp(@Valid @RequestBody RequestSignup request) {
 		Member newMember = memberMapper.toEntity(request);
 		signUpService.signup(request.getProvider(), request.getExternalProviderId(), newMember,
