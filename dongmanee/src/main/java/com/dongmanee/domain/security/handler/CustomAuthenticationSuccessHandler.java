@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dongmanee.domain.email.utils.EmailRedisUtils;
 import com.dongmanee.domain.security.provider.JwtProvider;
+import com.dongmanee.global.utils.ApiResponse;
 import com.dongmanee.global.utils.AuthCodeProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -42,9 +43,6 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 		String role = null;
 		String token = null;
 
-		response.setStatus(HttpStatus.OK.value());
-		response.setContentType("application/json;charset=UTF-8");
-
 		if (authentication instanceof OAuth2AuthenticationToken oauth2Token) {
 			// OAuth 로그인 성공 시
 			DefaultOAuth2User oAuth2User = (DefaultOAuth2User)oauth2Token.getPrincipal();
@@ -64,16 +62,25 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 			id = memberId;
 			role = oAuth2User.getAuthorities().iterator().next().getAuthority();
+
+			token = jwtProvider.createToken(id, role);
+
+			// 로그인 성공 시 로그인 결과 페이지로 리다이렉트
+			String url = "http://localhost:3000/login/result?token=" + token;
+			response.setStatus(HttpStatus.PERMANENT_REDIRECT.value());
+			response.setHeader("Location", url);
 		} else {
 			// 로컬 로그인 성공 시
 			id = Long.parseLong(authentication.getName());
 			role = authentication.getAuthorities().iterator().next().getAuthority();
-		}
 
-		// 로그인 성공 시 토큰 반환
-		token = jwtProvider.createToken(id, role);
-		String url = "http://localhost:3000/login/result?token=" + token;
-		getRedirectStrategy().sendRedirect(request, response, url);
+			token = jwtProvider.createToken(id, role);
+
+			// 로그인 성공 시 토큰 반환
+			response.setStatus(HttpStatus.OK.value());
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().write(objectMapper.writeValueAsString(ApiResponse.success(token, "로그인 성공")));
+		}
 	}
 
 	private void newOauthUser(HttpServletRequest request, HttpServletResponse response, OAuth2User oAuth2User,
@@ -84,8 +91,9 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 		emailRedis.setData(email, authCode, authCodeExpirationMillis);
 
-		String url = "http://localhost:3000/login/result?email=" + email + "&code=" + authCode + "&provider=" + provider
+		String url = "http://localhost:3000/signup?email=" + email + "&code=" + authCode + "&provider=" + provider
 			+ "&externalProviderId=" + externalProviderId;
-		getRedirectStrategy().sendRedirect(request, response, url);
+		response.setStatus(HttpStatus.PERMANENT_REDIRECT.value());
+		response.setHeader("Location", url);
 	}
 }
