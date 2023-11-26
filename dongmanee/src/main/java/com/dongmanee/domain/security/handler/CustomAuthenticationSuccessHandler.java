@@ -14,10 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dongmanee.domain.email.utils.EmailRedisUtils;
-import com.dongmanee.domain.security.dto.response.JwsToken;
-import com.dongmanee.domain.security.dto.response.ResponseNewOauthUser;
 import com.dongmanee.domain.security.provider.JwtProvider;
-import com.dongmanee.global.utils.ApiResponse;
 import com.dongmanee.global.utils.AuthCodeProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -75,25 +72,20 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 		// 로그인 성공 시 토큰 반환
 		token = jwtProvider.createToken(id, role);
-		JwsToken jwsToken = JwsToken.of(token);
-		response.getWriter().write(objectMapper.writeValueAsString(ApiResponse.success(jwsToken, "로그인 성공")));
+		String url = "http://localhost:3000/login/result?token=" + token;
+		getRedirectStrategy().sendRedirect(request, response, url);
 	}
 
 	private void newOauthUser(HttpServletRequest request, HttpServletResponse response, OAuth2User oAuth2User,
-		String provider, String email) {
-		
+		String provider, String email) throws IOException {
+
 		Long externalProviderId = Long.valueOf(oAuth2User.getAttributes().get("id").toString());
 		String authCode = authCodeProvider.createAuthCode();
 
-		ResponseNewOauthUser responseNewOauthUser = new ResponseNewOauthUser(provider, externalProviderId, email,
-			authCode);
 		emailRedis.setData(email, authCode, authCodeExpirationMillis);
 
-		try {
-			response.getWriter()
-				.write(objectMapper.writeValueAsString(ApiResponse.success(responseNewOauthUser, "회원가입 요청")));
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		String url = "http://localhost:3000/login/result?email=" + email + "&code=" + authCode + "&provider=" + provider
+			+ "&externalProviderId=" + externalProviderId;
+		getRedirectStrategy().sendRedirect(request, response, url);
 	}
 }
