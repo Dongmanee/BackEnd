@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,8 +30,8 @@ public class ClubInfoUpdateController {
 	private final ClubInfoUpdateService clubInfoUpdateService;
 	private final ClubSnsMapper clubSnsMapper;
 
-	@PutMapping("/club/{club-id}")
-	public ApiResponse<?> editClubDescriptionAndAddress(@Valid @RequestBody RequestEditClubDescriptionAndAddress dto,
+	@PatchMapping("/club/{club-id}")
+	public ApiResponse<?> editClubDescriptionAndAddress(@RequestBody RequestEditClubDescriptionAndAddress dto,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
 		Club club = clubMapper.toEntity(clubId, dto);
 

@@ -54,8 +54,12 @@ public class Club extends BaseEntity {
 	private Boolean isDeleted;
 
 	public void editDescriptionAndAddress(Club club) {
-		this.description = club.getDescription();
-		this.address = club.getAddress();
+		if (club.getDescription() != null) {
+			this.description = club.getDescription();
+		}
+		if (club.getAddress() != null) {
+			this.address = club.getAddress();
+		}
 	}
 
 	public void editClubId(Long id) {
