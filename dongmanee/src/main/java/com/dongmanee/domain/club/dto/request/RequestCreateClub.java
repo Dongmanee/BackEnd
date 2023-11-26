@@ -18,7 +18,7 @@ public class RequestCreateClub {
 	@NotNull(message = "동아리의 이름을 지정하여하 합니다.")
 	private String name;
 	private String description;
-	private String clubMainImage;
-	private String clubBackgroundImage;
+	private String clubMainImageUrl;
+	private String clubBackgroundImageUrl;
 	private String address;
 }
