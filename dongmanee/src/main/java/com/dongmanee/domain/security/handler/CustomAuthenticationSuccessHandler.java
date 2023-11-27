@@ -34,6 +34,10 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 	@Value("${auth.code.expiration-millis}")
 	private long authCodeExpirationMillis;
+	@Value("${spring.security.oauth2.redirect-url.login-result}")
+	private String loginResultUrl;
+	@Value("${spring.security.oauth2.redirect-url.signup}")
+	private String signupPageUrl;
 
 	@Override
 	@Transactional
@@ -63,9 +67,8 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			String token = jwtProvider.createToken(id, role);
 
 			// 로그인 성공 시 로그인 결과 페이지로 리다이렉트
-			String url = "http://localhost:3000/login/result?token=" + token;
-			response.setStatus(HttpStatus.PERMANENT_REDIRECT.value());
-			response.setHeader("Location", url);
+			String url = loginResultUrl + "?token=" + token;
+			response.sendRedirect(url);
 		} else {
 			// 로컬 로그인 성공 시
 			Long id = Long.parseLong(authentication.getName());
@@ -89,9 +92,9 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 		emailRedis.setData(email, authCode, authCodeExpirationMillis);
 
-		String url = "http://localhost:3000/signup?email=" + email + "&code=" + authCode + "&provider=" + provider
+		// 신규 유저라면 회원가입 페이지로 리다이렉트
+		String url = signupPageUrl + "?email=" + email + "&code=" + authCode + "&provider=" + provider
 			+ "&externalProviderId=" + externalProviderId;
-		response.setStatus(HttpStatus.PERMANENT_REDIRECT.value());
-		response.setHeader("Location", url);
+		response.sendRedirect(url);
 	}
 }
