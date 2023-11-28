@@ -1,22 +1,15 @@
 package com.dongmanee.domain.university.mapper;
 
-import org.mapstruct.Named;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
-import com.dongmanee.domain.university.dao.UniversityRepository;
+import com.dongmanee.domain.member.mapper.PasswordMapper;
 import com.dongmanee.domain.university.domain.University;
-import com.dongmanee.domain.university.exception.UniversityIdExistsException;
+import com.dongmanee.domain.university.dto.response.ResponseUniversity;
 
-import lombok.RequiredArgsConstructor;
-
-@Component
-@RequiredArgsConstructor
-@Named("universityMapper")
-public class UniversityMapper {
-	private final UniversityRepository universityRepository;
-
-	@Named("universityIdToUniversityEntity")
-	public University universityIdToUniversityEntity(Long universityId) {
-		return universityRepository.findById(universityId).orElseThrow(() -> new UniversityIdExistsException());
-	}
+@Mapper(componentModel = "spring",
+	unmappedTargetPolicy = ReportingPolicy.IGNORE,
+	uses = {PasswordMapper.class, UniversityMapper.class})
+public interface UniversityMapper {
+	public ResponseUniversity toResponseUniversity(University university);
 }
