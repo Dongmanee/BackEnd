@@ -9,11 +9,11 @@ import com.dongmanee.domain.email.dto.request.RequestEmailAuthCode;
 import com.dongmanee.domain.email.dto.request.RequestVerifyAuthCode;
 import com.dongmanee.domain.email.dto.response.ResponseEmailAuthCode;
 import com.dongmanee.domain.email.service.EmailService;
+import com.dongmanee.domain.member.controller.port.MemberControllerUniversityService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestSignup;
 import com.dongmanee.domain.member.mapper.MemberMapper;
 import com.dongmanee.domain.member.service.SignUpService;
-import com.dongmanee.domain.university.service.UniversityService;
 import com.dongmanee.global.utils.ApiResponse;
 
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SignUpController {
 	private final SignUpService signUpService;
-	private final UniversityService universityService;
+	private final MemberControllerUniversityService universityService;
 	private final EmailService emailService;
 	private final MemberMapper memberMapper;
 

@@ -5,15 +5,18 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.dongmanee.domain.university.dao.UniversityRepository;
+import com.dongmanee.domain.member.controller.port.MemberControllerUniversityService;
+import com.dongmanee.domain.university.controller.port.UniversityControllerUniversityService;
 import com.dongmanee.domain.university.domain.University;
+import com.dongmanee.domain.university.service.port.UniversityServiceUniversityRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UniversityServiceImpl implements UniversityService {
-	private final UniversityRepository universityRepository;
+public class UniversityServiceImpl
+	implements UniversityControllerUniversityService, MemberControllerUniversityService {
+	private final UniversityServiceUniversityRepository universityRepository;
 
 	@Override
 	public List<University> findAll() {
@@ -21,7 +24,7 @@ public class UniversityServiceImpl implements UniversityService {
 	}
 
 	@Override
-	public Optional<University> findById(Long universityId) {
-		return universityRepository.findById(universityId);
+	public Optional<University> findById(Long id) {
+		return universityRepository.findById(id);
 	}
 }
