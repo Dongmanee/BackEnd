@@ -4,6 +4,6 @@ import java.util.Optional;
 
 import com.dongmanee.domain.club.domain.ClubCategory;
 
-public interface ClubCategoryRepository {
+public interface ClubCategoryServiceClubCategoryRepository {
 	Optional<ClubCategory> findById(Long id);
 }

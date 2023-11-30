@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.dongmanee.domain.club.domain.ClubSns;
 
-public interface ClubSnsRepository {
+public interface ClubServiceClubSnsRepository {
 	ClubSns save(ClubSns clubSns);
 
 	Optional<ClubSns> findById(Long id);

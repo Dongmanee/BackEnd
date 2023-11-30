@@ -11,8 +11,6 @@ import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubCategory;
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 import com.dongmanee.domain.club.dto.request.RequestEditClubDescriptionAndAddress;
-import com.dongmanee.domain.club.exception.CategoryNotFoundException;
-import com.dongmanee.domain.club.service.port.ClubCategoryRepository;
 
 @Mapper(componentModel = "spring",
 	unmappedTargetPolicy = ReportingPolicy.IGNORE,

@@ -13,9 +13,9 @@ import com.dongmanee.domain.club.domain.ClubUser;
 import com.dongmanee.domain.club.enums.ClubRole;
 import com.dongmanee.domain.club.exception.ClubUserNotFoundException;
 import com.dongmanee.domain.club.exception.ClubSnsNotFoundException;
-import com.dongmanee.domain.club.service.port.ClubRepository;
-import com.dongmanee.domain.club.service.port.ClubSnsRepository;
-import com.dongmanee.domain.club.service.port.ClubUserRepository;
+import com.dongmanee.domain.club.service.port.ClubServiceClubRepository;
+import com.dongmanee.domain.club.service.port.ClubServiceClubSnsRepository;
+import com.dongmanee.domain.club.service.port.ClubServiceClubUserRepository;
 import com.dongmanee.domain.member.domain.Member;
 
 import lombok.RequiredArgsConstructor;
@@ -24,9 +24,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 
-	private final ClubRepository clubRepository;
-	private final ClubUserRepository clubUserRepository;
-	private final ClubSnsRepository clubSnsRepository;
+	private final ClubServiceClubRepository clubRepository;
+	private final ClubServiceClubUserRepository clubUserRepository;
+	private final ClubServiceClubSnsRepository clubSnsRepository;
 
 	@Override
 	@Transactional
