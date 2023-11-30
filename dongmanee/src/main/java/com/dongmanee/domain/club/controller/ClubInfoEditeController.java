@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dongmanee.domain.club.controller.mapper.ClubResponseMapper;
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.dto.request.RequestEditClubDescriptionAndAddress;
@@ -17,6 +18,8 @@ import com.dongmanee.domain.club.dto.request.RequestSns;
 import com.dongmanee.domain.club.controller.mapper.ClubMapper;
 import com.dongmanee.domain.club.controller.mapper.ClubSnsMapper;
 import com.dongmanee.domain.club.controller.port.ClubInfoUpdateService;
+import com.dongmanee.domain.club.dto.response.ClubEditResponse;
+import com.dongmanee.domain.club.dto.response.ClubSnsResponseDto;
 import com.dongmanee.global.utils.ApiResponse;
 
 import jakarta.validation.Valid;
@@ -28,6 +31,7 @@ public class ClubInfoEditeController {
 	private final ClubMapper clubMapper;
 	private final ClubInfoUpdateService clubInfoUpdateService;
 	private final ClubSnsMapper clubSnsMapper;
+	private final ClubResponseMapper clubResponseMapper;
 
 	@PatchMapping("/club/{club-id}")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
@@ -35,8 +39,10 @@ public class ClubInfoEditeController {
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
 		Club club = clubMapper.toEntity(clubId, dto);
 
-		clubInfoUpdateService.editClubDescriptionAndAddress(Long.parseLong(userDetails.getUsername()), club);
-		return ApiResponse.isNoContent("클럽 정보가 수정되었습니다.");
+		Club editClub = clubInfoUpdateService
+			.editClubDescriptionAndAddress(Long.parseLong(userDetails.getUsername()), club);
+		ClubEditResponse responseDto = clubResponseMapper.toDto(editClub);
+		return ApiResponse.isOk(responseDto,"클럽 정보가 수정되었습니다.");
 	}
 
 	@PostMapping("/club/{club-id}/sns")
@@ -45,8 +51,10 @@ public class ClubInfoEditeController {
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
 
-		clubInfoUpdateService.addClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId);
-		return ApiResponse.isNoContent("클럽 Sns가 추가되었습니다");
+		ClubSns createdClubSns = clubInfoUpdateService
+			.addClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId);
+		ClubSnsResponseDto responseDto = clubResponseMapper.toDto(createdClubSns);
+		return ApiResponse.isCreated(responseDto,"클럽 Sns가 추가되었습니다");
 	}
 
 	@PatchMapping("/club/{club-id}/sns/{sns-id}")
@@ -56,8 +64,11 @@ public class ClubInfoEditeController {
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
 
-		clubInfoUpdateService.editClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId, snsId);
-		return ApiResponse.isNoContent("클럽 Sns가 수정되었습니다");
+		ClubSns editClubSns = clubInfoUpdateService
+			.editClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId, snsId);
+
+		ClubSnsResponseDto responseDto = clubResponseMapper.toDto(editClubSns);
+		return ApiResponse.isOk(responseDto, "클럽 Sns가 수정되었습니다");
 	}
 
 	@DeleteMapping("/club/{club-id}/sns/{sns-id}")

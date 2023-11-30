@@ -1,14 +1,15 @@
 package com.dongmanee.domain.club.controller.port;
 
 import com.dongmanee.domain.club.domain.Club;
+import com.dongmanee.domain.club.domain.ClubCategory;
 import com.dongmanee.domain.club.domain.ClubSns;
 
 public interface ClubInfoUpdateService {
-	void editClubDescriptionAndAddress(Long memberId, Club club);
+	Club editClubDescriptionAndAddress(Long memberId, Club club);
 
-	void addClubSns(Long memberId, ClubSns clubSns, Long clubId);
+	ClubSns addClubSns(Long memberId, ClubSns clubSns, Long clubId);
 
-	void editClubSns(Long memberId, ClubSns clubSns, Long clubId, Long snsId);
+	ClubSns editClubSns(Long memberId, ClubSns clubSns, Long clubId, Long snsId);
 
 	void removeClubSns(Long memberId, Long clubId, Long snsId);
 }

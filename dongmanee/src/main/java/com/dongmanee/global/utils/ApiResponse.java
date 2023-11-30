@@ -24,6 +24,10 @@ public class ApiResponse<T> {
 		return new ApiResponse<>(HttpStatus.CREATED.value(), message, null);
 	}
 
+	public static <T> ApiResponse<T> isCreated(T data, String message) {
+		return new ApiResponse<>(HttpStatus.CREATED.value(), message, data);
+	}
+
 	public static ApiResponse<?> isNoContent(String message) {
 		return new ApiResponse<>(HttpStatus.NO_CONTENT.value(), message, null);
 	}

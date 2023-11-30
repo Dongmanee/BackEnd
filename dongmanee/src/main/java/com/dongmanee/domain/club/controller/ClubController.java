@@ -29,6 +29,7 @@ public class ClubController {
 	private final MemberService memberService;
 	private final ClubControllerClubCategoryService clubControllerClubCategoryService;
 
+	//TODO: 클럽 정보 가져오는 URL 리턴으로 변경
 	@PostMapping("/club")
 	public ApiResponse<?> createClub(@Valid @RequestBody RequestCreateClub createClub,
 		@AuthenticationPrincipal UserDetails userDetails) {

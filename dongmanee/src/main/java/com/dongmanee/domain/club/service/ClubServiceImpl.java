@@ -38,27 +38,28 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 	}
 
 	@Override
-	public void editClubDescriptionAndAddress(Long memberId, Club club) {
+	public Club editClubDescriptionAndAddress(Long memberId, Club club) {
 		// 유저 조회
 		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, club.getId())
 			.orElseThrow(ClubUserNotFoundException::new);
 		// 수정
 		Club targetClub = clubUser.getClub();
 		targetClub.editClub(club);
+		return targetClub;
 	}
 
 	@Override
-	public void addClubSns(Long memberId, ClubSns clubSns, Long clubId) {
+	public ClubSns addClubSns(Long memberId, ClubSns clubSns, Long clubId) {
 		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, clubId)
 			.orElseThrow(ClubUserNotFoundException::new);
 		// 추가
 		clubSns.addClub(clubUser.getClub());
-		clubSnsRepository.save(clubSns);
+		return clubSnsRepository.save(clubSns);
 	}
 
 	// TODO: editClubSns, removeClubSns 추후 한번에 쿼리로 fetch join 하는 방식과 시간 비교 필요
 	@Override
-	public void editClubSns(Long memberId, ClubSns clubSns, Long clubId, Long snsId) {
+	public ClubSns editClubSns(Long memberId, ClubSns clubSns, Long clubId, Long snsId) {
 		//타켓 조회
 		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, clubId)
 			.orElseThrow(ClubUserNotFoundException::new);
@@ -66,6 +67,8 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(ClubSnsNotFoundException::new);
 		// 수정
 		targetSns.editClubSns(clubSns);
+
+		return targetSns;
 	}
 
 	@Override
