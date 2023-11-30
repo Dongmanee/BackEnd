@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dongmanee.domain.email.utils.EmailRedisUtils;
 import com.dongmanee.domain.security.dto.response.JwsToken;
 import com.dongmanee.domain.security.provider.JwtProvider;
-import com.dongmanee.global.utils.ApiResponse;
+import com.dongmanee.global.utils.ApiResult;
 import com.dongmanee.global.utils.AuthCodeProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -80,7 +80,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			// 로그인 성공 시 토큰 반환
 			response.setStatus(HttpStatus.OK.value());
 			response.setContentType("application/json;charset=UTF-8");
-			response.getWriter().write(objectMapper.writeValueAsString(ApiResponse.isOk(jwsToken, "로그인 성공")));
+			response.getWriter().write(objectMapper.writeValueAsString(ApiResult.isOk(jwsToken, "로그인 성공")));
 		}
 	}
 
