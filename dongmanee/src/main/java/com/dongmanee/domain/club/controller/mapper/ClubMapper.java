@@ -22,10 +22,10 @@ public interface ClubMapper {
 	Club toEntity(RequestCreateClub requestCreateClub,
 		@Context ClubControllerClubCategoryService clubControllerClubCategoryService);
 
+	Club toEntity(Long id, RequestEditClubDescriptionAndAddress dto);
+
 	@Named("categoryConverter")
 	default ClubCategory categoryConverter(Long categoryId, @Context ClubControllerClubCategoryService clubCategoryService) {
 		return clubCategoryService.findById(categoryId);
 	}
-
-	Club toEntity(Long id, RequestEditClubDescriptionAndAddress dto);
 }
