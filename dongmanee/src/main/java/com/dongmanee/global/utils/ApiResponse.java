@@ -16,8 +16,20 @@ public class ApiResponse<T> {
 	private String message;
 	private T data;
 
-	public static ApiResponse<?> success(String message) {
+	public static ApiResponse<?> isOk(String message) {
 		return new ApiResponse<>(HttpStatus.OK.value(), message, null);
+	}
+
+	public static <T> ApiResponse<T> isOk(T data, String message) {
+		return new ApiResponse<>(HttpStatus.OK.value(), message, data);
+	}
+
+	public static ApiResponse<?> isCreated(String message) {
+		return new ApiResponse<>(HttpStatus.CREATED.value(), message, null);
+	}
+
+	public static ApiResponse<?> isNoContent(String message) {
+		return new ApiResponse<>(HttpStatus.NO_CONTENT.value(), message, null);
 	}
 
 	public static ApiResponse<?> success(HttpStatus httpStatus, String message) {
@@ -26,10 +38,6 @@ public class ApiResponse<T> {
 
 	public static <T> ApiResponse<T> success(T data, HttpStatus httpStatus, String message) {
 		return new ApiResponse<>(httpStatus.value(), message, data);
-	}
-
-	public static <T> ApiResponse<T> success(T data, String message) {
-		return new ApiResponse<>(HttpStatus.OK.value(), message, data);
 	}
 
 	public static ResponseEntity<ApiResponse<?>> error(HttpStatus errorCode, String message) {

@@ -35,7 +35,7 @@ public class ClubController {
 		Member requestMember = memberService.getMemberFromUserId(Long.parseLong(userDetails.getUsername()));
 		Club club = clubMapper.toEntity(createClub, clubControllerClubCategoryService);
 		clubService.createClub(club, requestMember);
-		return ApiResponse.success(HttpStatus.CREATED, "클럽이 생성되었습니다.");
+		return ApiResponse.isCreated("클럽이 생성되었습니다.");
 	}
 
 	// TODO 1. 클럽 가입 요청 기능 추가

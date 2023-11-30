@@ -1,6 +1,5 @@
 package com.dongmanee.domain.club.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,7 +36,7 @@ public class ClubInfoUpdateController {
 		Club club = clubMapper.toEntity(clubId, dto);
 
 		clubInfoUpdateService.editClubDescriptionAndAddress(Long.parseLong(userDetails.getUsername()), club);
-		return ApiResponse.success("클럽 정보가 수정되었습니다.");
+		return ApiResponse.isOk("클럽 정보가 수정되었습니다.");
 	}
 
 	@PostMapping("/club/{club-id}/sns")
@@ -47,7 +46,7 @@ public class ClubInfoUpdateController {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
 
 		clubInfoUpdateService.addClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId);
-		return ApiResponse.success(HttpStatus.CREATED, "클럽 Sns가 추가되었습니다");
+		return ApiResponse.isCreated("클럽 Sns가 추가되었습니다");
 	}
 
 	@PatchMapping("/club/{club-id}/sns/{sns-id}")
@@ -58,7 +57,7 @@ public class ClubInfoUpdateController {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
 
 		clubInfoUpdateService.editClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId, snsId);
-		return ApiResponse.success("클럽 Sns가 수정되었습니다");
+		return ApiResponse.isOk("클럽 Sns가 수정되었습니다");
 	}
 
 	@DeleteMapping("/club/{club-id}/sns/{sns-id}")
@@ -67,7 +66,7 @@ public class ClubInfoUpdateController {
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
 
 		clubInfoUpdateService.removeClubSns(Long.parseLong(userDetails.getUsername()), clubId, snsId);
-		return ApiResponse.success(HttpStatus.NO_CONTENT, "클럽 Sns가 삭제되었습니다");
+		return ApiResponse.isNoContent("클럽 Sns가 삭제되었습니다");
 	}
 
 	// TODO 1. 지원서 기능 추가 이후 지원서 수정 기능 추가
