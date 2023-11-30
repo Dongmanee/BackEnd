@@ -15,8 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.dongmanee.domain.security.entrypoint.CustomAuthenticationEntryPoint;
+import com.dongmanee.domain.security.filter.ClubUserAuthenticationFilter;
 import com.dongmanee.domain.security.filter.CustomAuthenticationFilter;
 import com.dongmanee.domain.security.filter.JwtAuthenticationFilter;
 import com.dongmanee.domain.security.filter.JwtExceptionFilter;
@@ -30,11 +32,12 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer {
 
 	private final JwtProvider jwtProvider;
 	private final AuthService authService;
 	private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+	private final ClubUserAuthenticationFilter clubUserAuthenticationFilter;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -51,6 +54,8 @@ public class SecurityConfig {
 			// HTTP 요청에 대한 인가 설정
 			.authorizeHttpRequests(
 				authorizedRequests -> authorizedRequests
+					.requestMatchers(new AntPathRequestMatcher("/test/{club-id}"))
+					.hasRole("HOST")
 					.requestMatchers(new AntPathRequestMatcher("/login"))
 					.permitAll() // 모든 요청에 대해서 인증 없이 허용
 					.requestMatchers(new AntPathRequestMatcher("/oauth2/**"))
@@ -74,8 +79,8 @@ public class SecurityConfig {
 
 			// JWT 검증 및 인증
 			.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
-			.addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class);
-
+			.addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
+			.addFilterAfter(clubUserAuthenticationFilter, JwtAuthenticationFilter.class);
 		return http.build();
 	}
 
