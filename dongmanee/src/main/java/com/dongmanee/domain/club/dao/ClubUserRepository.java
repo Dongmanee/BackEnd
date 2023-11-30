@@ -10,7 +10,7 @@ import com.dongmanee.domain.club.domain.ClubUser;
 import com.dongmanee.domain.club.service.port.ClubServiceClubUserRepository;
 import com.dongmanee.domain.security.filter.port.ClubAuthenticationFilterClubUserRepository;
 
-public interface ClubUserDataRepository extends JpaRepository<ClubUser, Long>, ClubServiceClubUserRepository,
+public interface ClubUserRepository extends JpaRepository<ClubUser, Long>, ClubServiceClubUserRepository,
 	ClubAuthenticationFilterClubUserRepository {
 
 	@Query("SELECT cu FROM ClubUser cu LEFT JOIN FETCH cu.member LEFT JOIN FETCH cu.club "
