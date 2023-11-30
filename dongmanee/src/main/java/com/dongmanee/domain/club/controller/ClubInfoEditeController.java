@@ -30,7 +30,7 @@ public class ClubInfoEditeController {
 	private final ClubSnsMapper clubSnsMapper;
 
 	@PatchMapping("/club/{club-id}")
-	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_USER')")
+	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_CLUB_USER')")
 	public ApiResponse<?> editClubDescriptionAndAddress(@RequestBody RequestEditClubDescriptionAndAddress dto,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
 		Club club = clubMapper.toEntity(clubId, dto);
