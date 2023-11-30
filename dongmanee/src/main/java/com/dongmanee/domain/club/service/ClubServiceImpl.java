@@ -41,8 +41,6 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 		// 유저 조회
 		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, club.getId())
 			.orElseThrow(ClubUserNotFoundException::new);
-		// 권한 확인
-		checkIsManager(clubUser);
 		// 수정
 		Club targetClub = clubUser.getClub();
 		targetClub.editDescriptionAndAddress(club);
@@ -52,8 +50,6 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 	public void addClubSns(Long memberId, ClubSns clubSns, Long clubId) {
 		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, clubId)
 			.orElseThrow(ClubUserNotFoundException::new);
-		// 유저의 권한 확인
-		checkIsManager(clubUser);
 		// 추가
 		clubSns.addClub(clubUser.getClub());
 		clubSnsRepository.save(clubSns);
@@ -65,8 +61,6 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 		//타켓 조회
 		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, clubId)
 			.orElseThrow(ClubUserNotFoundException::new);
-		// 유저의 권한 확인
-		checkIsManager(clubUser);
 		// 목표 엔티티 검색
 		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(SnsNotFoundException::new);
 		// 수정
@@ -78,18 +72,10 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 		// 타켓 조회
 		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, clubId)
 			.orElseThrow(ClubUserNotFoundException::new);
-		// 유저 권한 확인
-		checkIsManager(clubUser);
 		// 삭제
 		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(SnsNotFoundException::new);
 
 		clubSnsRepository.delete(targetSns);
-	}
-
-	private void checkIsManager(ClubUser clubUser) {
-		if (clubUser.getClubRole().equals(ClubRole.USER)) {
-			throw new IllegalAccessException();
-		}
 	}
 
 	private Club makeClub(Club club, Member member) {
