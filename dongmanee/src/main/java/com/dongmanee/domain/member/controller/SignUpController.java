@@ -1,5 +1,6 @@
 package com.dongmanee.domain.member.controller;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dongmanee.domain.email.dto.request.RequestEmailAuthCode;
 import com.dongmanee.domain.email.dto.request.RequestVerifyAuthCode;
 import com.dongmanee.domain.email.dto.response.ResponseEmailAuthCode;
-import com.dongmanee.domain.email.service.EmailService;
-import com.dongmanee.domain.member.controller.port.MemberControllerUniversityService;
+import com.dongmanee.domain.member.controller.mapper.MemberMapper;
+import com.dongmanee.domain.member.controller.port.SignUpControllerEmailService;
+import com.dongmanee.domain.member.controller.port.SignUpControllerSignUpService;
+import com.dongmanee.domain.member.controller.port.SingUpControllerUniversityService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestSignup;
-import com.dongmanee.domain.member.mapper.MemberMapper;
-import com.dongmanee.domain.member.service.SignUpService;
 import com.dongmanee.global.utils.ApiResponse;
 
 import jakarta.validation.Valid;
@@ -23,14 +24,16 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/signup")
 @RequiredArgsConstructor
 public class SignUpController {
-	private final SignUpService signUpService;
-	private final MemberControllerUniversityService universityService;
-	private final EmailService emailService;
+	private final SignUpControllerSignUpService signUpService;
+	private final SingUpControllerUniversityService universityService;
+	private final SignUpControllerEmailService emailService;
+
 	private final MemberMapper memberMapper;
+	private final PasswordEncoder passwordEncoder;
 
 	@PostMapping()
 	public ApiResponse<?> userSignUp(@Valid @RequestBody RequestSignup request) {
-		Member newMember = memberMapper.toEntity(request, universityService);
+		Member newMember = memberMapper.toEntity(request, universityService, passwordEncoder);
 		signUpService.signup(request.getProvider(), request.getExternalProviderId(), newMember,
 			request.getEmailAuthCode());
 		return ApiResponse.success("회원가입 성공");

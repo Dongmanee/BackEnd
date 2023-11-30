@@ -1,11 +1,13 @@
-package com.dongmanee.domain.member.mapper;
+package com.dongmanee.domain.member.controller.mapper;
 
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.dongmanee.domain.member.controller.port.MemberControllerUniversityService;
+import com.dongmanee.domain.member.controller.port.SingUpControllerUniversityService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestSignup;
 import com.dongmanee.domain.university.domain.University;
@@ -17,16 +19,22 @@ import com.dongmanee.domain.university.exception.UniversityNotFoundException;
 //unmappedTargetPolicy IGNORE 만약, target class에 매핑되지 않는 필드가 있으면, null로 넣게 되고, 따로 report하지 않는다.
 @Mapper(componentModel = "spring",
 	unmappedTargetPolicy = ReportingPolicy.IGNORE,
-	uses = {PasswordMapper.class, MemberControllerUniversityService.class})
+	uses = {SingUpControllerUniversityService.class})
 public interface MemberMapper {
-	@Mapping(source = "password", target = "password", qualifiedByName = {"passwordEncoder", "passwordEncoded"})
 	@Mapping(source = "universityId", target = "university")
-	public Member toEntity(RequestSignup requestSignup,
-		@Context MemberControllerUniversityService universityControllerService);
+	@Mapping(source = "password", target = "password", qualifiedByName = "passwordEncoded")
+	Member toEntity(RequestSignup requestSignup,
+		@Context SingUpControllerUniversityService universityControllerService,
+		@Context PasswordEncoder passwordEncoder);
 
-	default University map(Long id, @Context MemberControllerUniversityService universityService) {
-		return id != null ?
-			universityService.findById(id).orElseThrow(UniversityNotFoundException::new) :
+	default University map(Long id, @Context SingUpControllerUniversityService universityService) {
+		return id != null ? universityService.findById(id).orElseThrow(UniversityNotFoundException::new) :
+			null;
+	}
+
+	@Named("passwordEncoded")
+	default String passwordEncoded(@Context PasswordEncoder passwordEncoder, String password) {
+		return password != null ? passwordEncoder.encode(password) :
 			null;
 	}
 }
