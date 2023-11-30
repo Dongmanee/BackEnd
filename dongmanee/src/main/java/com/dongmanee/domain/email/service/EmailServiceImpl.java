@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class EmailService implements SignUpControllerEmailService {
+public class EmailServiceImpl implements SignUpControllerEmailService {
 	private final JavaMailSender emailSender;
 	private final EmailRedisUtils emailRedis;
 	private final MemberRepository memberRepository;
