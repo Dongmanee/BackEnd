@@ -5,6 +5,8 @@ import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.global.entity.BaseEntity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,5 +43,6 @@ public class ClubUser extends BaseEntity {
 	private Club club;
 
 	@NotNull
+	@Enumerated(EnumType.STRING)
 	private ClubRole clubRole;
 }

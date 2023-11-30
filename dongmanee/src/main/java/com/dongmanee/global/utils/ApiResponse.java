@@ -16,15 +16,23 @@ public class ApiResponse<T> {
 	private String message;
 	private T data;
 
-	public static ApiResponse success(String message) {
-		return new ApiResponse<>(HttpStatus.OK.value(), message, null);
-	}
-
-	public static <T> ApiResponse<T> success(T data, String message) {
+	public static <T> ApiResponse<T> isOk(T data, String message) {
 		return new ApiResponse<>(HttpStatus.OK.value(), message, data);
 	}
 
-	public static ResponseEntity<ApiResponse> error(HttpStatus errorCode, String message) {
+	public static ApiResponse<?> isCreated(String message) {
+		return new ApiResponse<>(HttpStatus.CREATED.value(), message, null);
+	}
+
+	public static <T> ApiResponse<T> isCreated(T data, String message) {
+		return new ApiResponse<>(HttpStatus.CREATED.value(), message, data);
+	}
+
+	public static ApiResponse<?> isNoContent(String message) {
+		return new ApiResponse<>(HttpStatus.NO_CONTENT.value(), message, null);
+	}
+
+	public static ResponseEntity<ApiResponse<?>> error(HttpStatus errorCode, String message) {
 		return ResponseEntity.status(errorCode).body(new ApiResponse<>(errorCode.value(), message, null));
 	}
 }

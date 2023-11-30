@@ -36,14 +36,14 @@ public class SignUpController {
 		Member newMember = memberMapper.toEntity(request, universityService, passwordEncoder);
 		signUpService.signup(request.getProvider(), request.getExternalProviderId(), newMember,
 			request.getEmailAuthCode());
-		return ApiResponse.success("회원가입 성공");
+		return ApiResponse.isNoContent("회원가입 성공");
 	}
 
 	@PostMapping("/code/send")
 	public ApiResponse<?> sendSignUpEmailAuthCode(@RequestBody RequestEmailAuthCode requestEmailAuthCode) {
 		emailService.sendSingUpEmailAuthCode(requestEmailAuthCode.getEmail());
 
-		return ApiResponse.success("인증 코드 발송");
+		return ApiResponse.isNoContent("인증 코드 발송");
 	}
 
 	@PostMapping("/code/check")
@@ -51,6 +51,6 @@ public class SignUpController {
 		String code = emailService.verifySignUpEmailAuthCode(requestVerifyAuthCode.getEmail(),
 			requestVerifyAuthCode.getCode());
 
-		return ApiResponse.success(new ResponseEmailAuthCode(code), "인증 성공");
+		return ApiResponse.isOk(new ResponseEmailAuthCode(code), "인증 성공");
 	}
 }

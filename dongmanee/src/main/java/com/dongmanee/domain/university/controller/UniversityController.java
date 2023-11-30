@@ -25,6 +25,6 @@ public class UniversityController {
 		List<ResponseUniversity> responseUniversityList = universityList.stream()
 			.map(universityMapper::toResponseUniversity)
 			.toList();
-		return ApiResponse.success(responseUniversityList, "대학교 목록 조회 성공");
+		return ApiResponse.isOk(responseUniversityList, "대학교 목록 조회 성공");
 	}
 }

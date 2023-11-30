@@ -1,6 +1,5 @@
 package com.dongmanee.domain.club.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.dongmanee.domain.university.domain.University;
@@ -37,19 +36,48 @@ public class Club extends BaseEntity {
 	@JoinColumn(name = "university_id")
 	private University university;
 	@OneToMany(mappedBy = "club")
-	private List<ClubUser> clubUsers = new ArrayList<>();
+	private List<ClubUser> clubUsers;
 	@NotNull
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
-	private ClubCategory clubCategory;
+	private ClubCategory category;
 	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<ClubSns> clubSns = new ArrayList<>();
+	private List<ClubSns> clubSns;
 	private Integer applicationId;
 	@NotNull
 	private String name;
 	private String description;
 	private String clubMainImageUrl;
+	private String clubBackgroundImageUrl;
 	private String address;
 	@NotNull
 	private Boolean isDeleted;
+
+	// list 제외 모든 데이터 수정
+	public void editClub(Club club) {
+		if (club.getCategory() != null) {
+			this.category = club.getCategory();
+		}
+		if (club.getApplicationId() != null) {
+			this.applicationId = club.getApplicationId();
+		}
+		if (club.getName() != null) {
+			this.name = club.getName();
+		}
+		if (club.getDescription() != null) {
+			this.description = club.getDescription();
+		}
+		if (club.getClubMainImageUrl() != null) {
+			this.clubMainImageUrl = club.getClubMainImageUrl();
+		}
+		if (club.getClubBackgroundImageUrl() != null) {
+			this.clubBackgroundImageUrl = club.getClubBackgroundImageUrl();
+		}
+		if (club.getAddress() != null) {
+			this.address = club.getAddress();
+		}
+		if (club.getIsDeleted() != null) {
+			this.isDeleted = club.getIsDeleted();
+		}
+	}
 }

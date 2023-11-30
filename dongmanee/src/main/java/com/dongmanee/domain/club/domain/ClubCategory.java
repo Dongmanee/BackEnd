@@ -2,6 +2,7 @@ package com.dongmanee.domain.club.domain;
 
 import com.dongmanee.global.entity.BaseEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,5 +27,6 @@ public class ClubCategory extends BaseEntity {
 	private Long id;
 
 	@NotNull
+	@Column(unique = true)
 	private String name;
 }

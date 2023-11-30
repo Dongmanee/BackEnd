@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,8 +31,22 @@ public class ClubSns extends BaseEntity {
 	@JoinColumn(name = "club_id")
 	private Club club;
 
-	@NotNull
+	@NotEmpty
 	private String title;
-	@NotNull
+	@NotEmpty
 	private String url;
+
+	public void addClub(Club club) {
+		this.club = club;
+		club.getClubSns().add(this);
+	}
+
+	public void editClubSns(ClubSns clubSns) {
+		if (clubSns.getTitle() != null) {
+			this.title = clubSns.getTitle();
+		}
+		if (clubSns.getUrl() != null) {
+			this.url = clubSns.getUrl();
+		}
+	}
 }
