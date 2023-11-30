@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class ClubInfoUpdateController {
+public class ClubInfoEditeController {
 	private final ClubMapper clubMapper;
 	private final ClubInfoUpdateService clubInfoUpdateService;
 	private final ClubSnsMapper clubSnsMapper;
