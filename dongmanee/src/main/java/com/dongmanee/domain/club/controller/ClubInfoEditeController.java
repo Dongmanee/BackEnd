@@ -36,7 +36,7 @@ public class ClubInfoEditeController {
 		Club club = clubMapper.toEntity(clubId, dto);
 
 		clubInfoUpdateService.editClubDescriptionAndAddress(Long.parseLong(userDetails.getUsername()), club);
-		return ApiResponse.isOk("클럽 정보가 수정되었습니다.");
+		return ApiResponse.isNoContent("클럽 정보가 수정되었습니다.");
 	}
 
 	@PostMapping("/club/{club-id}/sns")
@@ -46,7 +46,7 @@ public class ClubInfoEditeController {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
 
 		clubInfoUpdateService.addClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId);
-		return ApiResponse.isCreated("클럽 Sns가 추가되었습니다");
+		return ApiResponse.isNoContent("클럽 Sns가 추가되었습니다");
 	}
 
 	@PatchMapping("/club/{club-id}/sns/{sns-id}")
@@ -57,7 +57,7 @@ public class ClubInfoEditeController {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
 
 		clubInfoUpdateService.editClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId, snsId);
-		return ApiResponse.isOk("클럽 Sns가 수정되었습니다");
+		return ApiResponse.isNoContent("클럽 Sns가 수정되었습니다");
 	}
 
 	@DeleteMapping("/club/{club-id}/sns/{sns-id}")

@@ -16,10 +16,6 @@ public class ApiResponse<T> {
 	private String message;
 	private T data;
 
-	public static ApiResponse<?> isOk(String message) {
-		return new ApiResponse<>(HttpStatus.OK.value(), message, null);
-	}
-
 	public static <T> ApiResponse<T> isOk(T data, String message) {
 		return new ApiResponse<>(HttpStatus.OK.value(), message, data);
 	}
