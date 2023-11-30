@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ClubControllerClubCategoryServiceImpl implements ClubControllerClubCategoryService {
+public class ClubCategoryServiceImpl implements ClubControllerClubCategoryService {
 	private final ClubCategoryServiceClubCategoryRepository clubCategoryRepository;
 
 	public ClubCategory findById(Long categoryId) {
