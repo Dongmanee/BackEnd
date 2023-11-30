@@ -1,6 +1,7 @@
 package com.dongmanee.domain.club.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +32,7 @@ public class ClubInfoUpdateController {
 	private final ClubSnsMapper clubSnsMapper;
 
 	@PatchMapping("/club/{club-id}")
+	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_USER')")
 	public ApiResponse<?> editClubDescriptionAndAddress(@RequestBody RequestEditClubDescriptionAndAddress dto,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
 		Club club = clubMapper.toEntity(clubId, dto);
@@ -40,6 +42,7 @@ public class ClubInfoUpdateController {
 	}
 
 	@PostMapping("/club/{club-id}/sns")
+	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_USER')")
 	public ApiResponse<?> addClubSns(@Valid @RequestBody RequestSns request,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
@@ -49,6 +52,7 @@ public class ClubInfoUpdateController {
 	}
 
 	@PutMapping("/club/{club-id}/sns/{sns-id}")
+	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_USER')")
 	public ApiResponse<?> editClubSns(@Valid @RequestBody RequestSns request,
 		@AuthenticationPrincipal UserDetails userDetails,
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
@@ -59,6 +63,7 @@ public class ClubInfoUpdateController {
 	}
 
 	@DeleteMapping("/club/{club-id}/sns/{sns-id}")
+	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_USER')")
 	public ApiResponse<?> removeClubSns(@AuthenticationPrincipal UserDetails userDetails,
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
 

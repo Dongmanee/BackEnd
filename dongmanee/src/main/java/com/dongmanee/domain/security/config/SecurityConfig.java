@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -32,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig implements WebMvcConfigurer {
 
 	private final JwtProvider jwtProvider;
@@ -54,8 +56,6 @@ public class SecurityConfig implements WebMvcConfigurer {
 			// HTTP 요청에 대한 인가 설정
 			.authorizeHttpRequests(
 				authorizedRequests -> authorizedRequests
-					.requestMatchers(new AntPathRequestMatcher("/test/{club-id}"))
-					.hasRole("HOST")
 					.requestMatchers(new AntPathRequestMatcher("/login"))
 					.permitAll() // 모든 요청에 대해서 인증 없이 허용
 					.requestMatchers(new AntPathRequestMatcher("/oauth2/**"))
