@@ -78,6 +78,7 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 		clubSnsRepository.delete(targetSns);
 	}
 
+	//TODO Mapper로 추후 변경
 	private Club makeClub(Club club, Member member) {
 		return Club.builder()
 			.university(member.getUniversity())
