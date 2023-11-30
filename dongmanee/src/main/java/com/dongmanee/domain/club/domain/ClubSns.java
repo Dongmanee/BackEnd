@@ -42,7 +42,11 @@ public class ClubSns extends BaseEntity {
 	}
 
 	public void editClubSns(ClubSns clubSns) {
-		this.title = clubSns.getTitle();
-		this.url = clubSns.getUrl();
+		if (clubSns.getTitle() != null) {
+			this.title = clubSns.getTitle();
+		}
+		if (clubSns.getUrl() != null) {
+			this.url = clubSns.getUrl();
+		}
 	}
 }

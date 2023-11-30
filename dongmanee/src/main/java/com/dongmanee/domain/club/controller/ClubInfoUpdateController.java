@@ -51,7 +51,7 @@ public class ClubInfoUpdateController {
 		return ApiResponse.success(HttpStatus.CREATED, "클럽 Sns가 추가되었습니다");
 	}
 
-	@PutMapping("/club/{club-id}/sns/{sns-id}")
+	@PatchMapping("/club/{club-id}/sns/{sns-id}")
 	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_USER')")
 	public ApiResponse<?> editClubSns(@Valid @RequestBody RequestSns request,
 		@AuthenticationPrincipal UserDetails userDetails,
