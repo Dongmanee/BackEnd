@@ -40,7 +40,7 @@ public class ClubInfoUpdateController {
 	}
 
 	@PostMapping("/club/{club-id}/sns")
-	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_USER')")
+	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_CLUB_USER')")
 	public ApiResponse<?> addClubSns(@Valid @RequestBody RequestSns request,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
@@ -50,7 +50,7 @@ public class ClubInfoUpdateController {
 	}
 
 	@PatchMapping("/club/{club-id}/sns/{sns-id}")
-	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_USER')")
+	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_CLUB_USER')")
 	public ApiResponse<?> editClubSns(@Valid @RequestBody RequestSns request,
 		@AuthenticationPrincipal UserDetails userDetails,
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
@@ -61,7 +61,7 @@ public class ClubInfoUpdateController {
 	}
 
 	@DeleteMapping("/club/{club-id}/sns/{sns-id}")
-	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_USER')")
+	@PreAuthorize("hasAnyAuthority('ROLE_HOST', 'ROLE_ADMIN') and hasAnyAuthority('ROLE_CLUB_USER')")
 	public ApiResponse<?> removeClubSns(@AuthenticationPrincipal UserDetails userDetails,
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
 

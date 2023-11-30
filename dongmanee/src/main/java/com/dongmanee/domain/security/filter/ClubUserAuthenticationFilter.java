@@ -47,13 +47,13 @@ public class ClubUserAuthenticationFilter extends OncePerRequestFilter {
 			// Club의 User가 아닌경우 통과
 			if (clubUser.isPresent()) {
 				//DB에서 현재 권한 가져오기
-				ClubRole clubRole = clubUser.get().getClubRole();
+				String clubRole = clubUser.get().getClubRole().getKey();
 
 				// 현재 권한 목록 가져오기
 				List<GrantedAuthority> authorities = new ArrayList<>(auth.getAuthorities());
 
 				// 새로운 권한 추가
-				authorities.add(new SimpleGrantedAuthority("ROLE_"+clubRole.toString()));
+				authorities.add(new SimpleGrantedAuthority(clubRole));
 
 				// 새로운 인증 정보 생성
 				Authentication newAuth = new UsernamePasswordAuthenticationToken(
