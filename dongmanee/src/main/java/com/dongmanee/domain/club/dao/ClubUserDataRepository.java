@@ -15,8 +15,4 @@ public interface ClubUserDataRepository extends JpaRepository<ClubUser, Long>, C
 		+ "WHERE cu.member.id = :memberId AND cu.club.id =:clubId")
 	Optional<ClubUser> findClubUserWithMemberClub(@Param("memberId") Long memberId, @Param("clubId") Long clubId);
 
-	@Query("SELECT cu FROM ClubUser cu LEFT JOIN FETCH cu.member LEFT JOIN FETCH cu.club "
-		+ "WHERE cu.member.id = :memberId AND cu.club.id =:clubId")
-	Optional<ClubUser> findClubUserWithMemberClub(@Param("memberId") Long memberId, @Param("clubId") Long clubId);
-
 }
