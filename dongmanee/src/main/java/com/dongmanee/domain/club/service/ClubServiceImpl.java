@@ -44,7 +44,7 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 			.orElseThrow(ClubUserNotFoundException::new);
 		// 수정
 		Club targetClub = clubUser.getClub();
-		targetClub.editDescriptionAndAddress(club);
+		targetClub.editClub(club);
 	}
 
 	@Override

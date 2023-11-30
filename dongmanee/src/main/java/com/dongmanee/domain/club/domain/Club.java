@@ -53,12 +53,34 @@ public class Club extends BaseEntity {
 	@NotNull
 	private Boolean isDeleted;
 
-	public void editDescriptionAndAddress(Club club) {
+	// list 제외 모든 데이터 수정
+	public void editClub(Club club) {
+		if (club.getUniversity() != null) {
+			this.university = club.getUniversity();
+		}
+		if (club.getCategory() != null) {
+			this.category = club.getCategory();
+		}
+		if (club.getApplicationId() != null) {
+			this.applicationId = club.getApplicationId();
+		}
+		if (club.getName() != null) {
+			this.name = club.getName();
+		}
 		if (club.getDescription() != null) {
 			this.description = club.getDescription();
 		}
+		if (club.getClubMainImageUrl() != null) {
+			this.clubMainImageUrl = club.getClubMainImageUrl();
+		}
+		if (club.getClubBackgroundImageUrl() != null) {
+			this.clubBackgroundImageUrl = club.getClubBackgroundImageUrl();
+		}
 		if (club.getAddress() != null) {
 			this.address = club.getAddress();
+		}
+		if (club.getIsDeleted() != null) {
+			this.isDeleted = club.getIsDeleted();
 		}
 	}
 }
