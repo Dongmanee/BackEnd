@@ -1,22 +1,20 @@
-package com.dongmanee.domain.club.controller.mapper;
+package com.dongmanee.domain.club.service;
 
-import org.mapstruct.Named;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import com.dongmanee.domain.club.controller.port.ClubControllerClubCategoryService;
 import com.dongmanee.domain.club.domain.ClubCategory;
 import com.dongmanee.domain.club.exception.CategoryNotFoundException;
 import com.dongmanee.domain.club.service.port.ClubCategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 
-@Component
+@Service
 @RequiredArgsConstructor
-@Named("categoryMapper")
-public class CategoryMapper {
+public class ClubControllerClubCategoryServiceImpl implements ClubControllerClubCategoryService {
 	private final ClubCategoryRepository clubCategoryRepository;
 
-	@Named("categoryIdToEntity")
-	public ClubCategory categoryConverter(Long categoryId) {
+	public ClubCategory findById(Long categoryId) {
 		return clubCategoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 	}
 }

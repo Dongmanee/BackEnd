@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dongmanee.domain.club.controller.port.ClubControllerClubCategoryService;
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 import com.dongmanee.domain.club.controller.mapper.ClubMapper;
@@ -26,12 +27,13 @@ public class ClubController {
 	private final ClubMapper clubMapper;
 	private final ClubService clubService;
 	private final MemberService memberService;
+	private final ClubControllerClubCategoryService clubControllerClubCategoryService;
 
 	@PostMapping("/club")
 	public ApiResponse<?> createClub(@Valid @RequestBody RequestCreateClub createClub,
 		@AuthenticationPrincipal UserDetails userDetails) {
 		Member requestMember = memberService.getMemberFromUserId(Long.parseLong(userDetails.getUsername()));
-		Club club = clubMapper.toEntity(createClub);
+		Club club = clubMapper.toEntity(createClub, clubControllerClubCategoryService);
 		clubService.createClub(club, requestMember);
 		return ApiResponse.success(HttpStatus.CREATED, "클럽이 생성되었습니다.");
 	}
