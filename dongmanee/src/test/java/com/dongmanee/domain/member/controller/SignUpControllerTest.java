@@ -16,8 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.dongmanee.domain.member.controller.mapper.MemberMapper;
 import com.dongmanee.domain.member.dto.request.RequestSignup;
-import com.dongmanee.domain.member.mapper.MemberMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 

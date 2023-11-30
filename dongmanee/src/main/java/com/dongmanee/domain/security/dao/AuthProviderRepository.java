@@ -4,9 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.dongmanee.domain.member.service.port.SignUpServiceAuthProviderRepository;
 import com.dongmanee.domain.security.domain.AuthProvider;
 
-public interface AuthProviderRepository extends JpaRepository<AuthProvider, Long> {
+public interface AuthProviderRepository extends JpaRepository<AuthProvider, Long>, SignUpServiceAuthProviderRepository {
 	Optional<AuthProvider> findByAuthProviderAndExternalProviderId(String authProvider, Long externalProviderId);
 
 	Optional<AuthProvider> findByMemberId(Long memberId);
