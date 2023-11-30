@@ -12,7 +12,7 @@ import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.domain.ClubUser;
 import com.dongmanee.domain.club.enums.ClubRole;
 import com.dongmanee.domain.club.exception.ClubUserNotFoundException;
-import com.dongmanee.domain.club.exception.SnsNotFoundException;
+import com.dongmanee.domain.club.exception.ClubSnsNotFoundException;
 import com.dongmanee.domain.club.service.port.ClubRepository;
 import com.dongmanee.domain.club.service.port.ClubSnsRepository;
 import com.dongmanee.domain.club.service.port.ClubUserRepository;
@@ -63,7 +63,7 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, clubId)
 			.orElseThrow(ClubUserNotFoundException::new);
 		// 목표 엔티티 검색
-		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(SnsNotFoundException::new);
+		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(ClubSnsNotFoundException::new);
 		// 수정
 		targetSns.editClubSns(clubSns);
 	}
@@ -74,7 +74,7 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, clubId)
 			.orElseThrow(ClubUserNotFoundException::new);
 		// 삭제
-		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(SnsNotFoundException::new);
+		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(ClubSnsNotFoundException::new);
 
 		clubSnsRepository.delete(targetSns);
 	}
