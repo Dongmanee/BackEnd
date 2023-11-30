@@ -74,7 +74,7 @@ public class ClubUserAuthenticationFilter extends OncePerRequestFilter {
 		String[] pathParts = path.split("/");
 
 		OptionalInt clubIndex = IntStream.range(0, pathParts.length)
-			.filter(i -> "test".equals(pathParts[i]))
+			.filter(i -> "club".equals(pathParts[i]))
 			.findFirst();
 		Long clubId = null;
 
