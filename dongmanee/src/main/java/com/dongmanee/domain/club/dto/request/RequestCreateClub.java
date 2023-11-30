@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestCreateClub {
-	@NotEmpty(message = "카테고리 id가 입력되지 않았습니다")
+	@NotNull(message = "카테고리 id가 입력되지 않았습니다")
 	private Long categoryId;
 	@NotEmpty(message = "동아리의 이름을 지정하여하 합니다.")
 	private String name;
