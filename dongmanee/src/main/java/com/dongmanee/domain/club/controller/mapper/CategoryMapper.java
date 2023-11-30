@@ -1,4 +1,4 @@
-package com.dongmanee.domain.club.mapper;
+package com.dongmanee.domain.club.controller.mapper;
 
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;

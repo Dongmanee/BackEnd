@@ -1,4 +1,4 @@
-package com.dongmanee.domain.club.mapper;
+package com.dongmanee.domain.club.controller.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,9 +15,9 @@ import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.dto.request.RequestEditClubDescriptionAndAddress;
 import com.dongmanee.domain.club.dto.request.RequestSns;
-import com.dongmanee.domain.club.mapper.ClubMapper;
-import com.dongmanee.domain.club.mapper.ClubSnsMapper;
-import com.dongmanee.domain.club.service.ClubInfoUpdateService;
+import com.dongmanee.domain.club.controller.mapper.ClubMapper;
+import com.dongmanee.domain.club.controller.mapper.ClubSnsMapper;
+import com.dongmanee.domain.club.controller.port.ClubInfoUpdateService;
 import com.dongmanee.global.utils.ApiResponse;
 
 import jakarta.validation.Valid;

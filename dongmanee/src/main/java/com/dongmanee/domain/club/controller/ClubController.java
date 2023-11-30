@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
-import com.dongmanee.domain.club.mapper.ClubMapper;
-import com.dongmanee.domain.club.service.ClubService;
+import com.dongmanee.domain.club.controller.mapper.ClubMapper;
+import com.dongmanee.domain.club.controller.port.ClubService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.service.MemberService;
 import com.dongmanee.global.utils.ApiResponse;
