@@ -55,9 +55,6 @@ public class Club extends BaseEntity {
 
 	// list 제외 모든 데이터 수정
 	public void editClub(Club club) {
-		if (club.getUniversity() != null) {
-			this.university = club.getUniversity();
-		}
 		if (club.getCategory() != null) {
 			this.category = club.getCategory();
 		}
