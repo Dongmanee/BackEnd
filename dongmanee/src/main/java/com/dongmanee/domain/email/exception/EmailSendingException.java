@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 public class EmailSendingException extends CustomException {
-	private final HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+	private final HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
 	public EmailSendingException() {
 		super("인증 메일 발송 실패");
