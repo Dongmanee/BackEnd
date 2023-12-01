@@ -58,6 +58,7 @@ public class EmailServiceImpl implements SignUpControllerEmailService {
 			MimeMessage emailForm = createAuthCodeEmailForm(toEmail, title, authCode);
 			emailSender.send(emailForm);
 		} catch (MailSendException | MessagingException | UnsupportedEncodingException e) {
+			// TODO 클라이언트 에러, 서버 에러 구분 -> 서버 에러시 로그 기록, 어떤 상태코드를 사용할지 고민
 			throw new EmailSendingException();
 		}
 
