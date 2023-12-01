@@ -16,10 +16,12 @@ import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.service.MemberService;
 import com.dongmanee.global.utils.ApiResult;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@Tag(name = "클럽", description = "클럽 API 명세서")
 @RestController
 @RequiredArgsConstructor
 @Slf4j

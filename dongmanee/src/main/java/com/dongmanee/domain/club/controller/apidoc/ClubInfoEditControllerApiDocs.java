@@ -7,6 +7,7 @@ import com.dongmanee.domain.club.dto.request.RequestSns;
 import com.dongmanee.global.utils.ApiResult;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -54,8 +55,8 @@ public interface ClubInfoEditControllerApiDocs {
 												""")
 			))
 	})
-	ApiResult<?> editClubDescriptionAndAddress(RequestEditClubDescriptionAndAddress dto,
-		UserDetails userDetails, Long clubId);
+	ApiResult<?> editClubDescriptionAndAddress(RequestEditClubDescriptionAndAddress dto, UserDetails userDetails,
+		@Parameter(description = "클럽의 고유 식별 번호") Long clubId);
 
 	@Operation(summary = "클럽 정보 수정 - 클럽 Sns 추가")
 	@ApiResponses({
@@ -88,7 +89,8 @@ public interface ClubInfoEditControllerApiDocs {
 												""")
 			))
 	})
-	ApiResult<?> addClubSns(RequestSns request, UserDetails userDetails, Long clubId);
+	ApiResult<?> addClubSns(RequestSns request, UserDetails userDetails,
+		@Parameter(description = "클럽의 고유 식별 번호") Long clubId);
 
 	@Operation(summary = "클럽 정보 수정 - 클럽 Sns 수정")
 	@ApiResponses({
@@ -133,7 +135,9 @@ public interface ClubInfoEditControllerApiDocs {
 												""")
 			))
 	})
-	ApiResult<?> editClubSns(RequestSns request, Long clubId, Long snsId);
+	ApiResult<?> editClubSns(RequestSns request,
+		@Parameter(description = "클럽의 고유 식별 번호") Long clubId,
+		@Parameter(description = "클럽Sns 고유 식별 번호") Long snsId);
 
 	@Operation(summary = "클럽 정보 수정 - 클럽 Sns 삭제")
 	@ApiResponses({
@@ -175,5 +179,6 @@ public interface ClubInfoEditControllerApiDocs {
 												""")
 			))
 	})
-	ApiResult<?> removeClubSns(Long clubId, Long snsId);
+	ApiResult<?> removeClubSns(@Parameter(description = "클럽의 고유 식별 번호") Long clubId,
+		@Parameter(description = "클럽Sns 고유 식별 번호") Long snsId);
 }

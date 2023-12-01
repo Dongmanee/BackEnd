@@ -23,9 +23,11 @@ import com.dongmanee.domain.club.dto.response.ClubEditResponse;
 import com.dongmanee.domain.club.dto.response.ClubSnsResponseDto;
 import com.dongmanee.global.utils.ApiResult;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "클럽 정보 수정", description = "클럽 정보수정 API 명세서")
 @RestController
 @RequiredArgsConstructor
 public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
