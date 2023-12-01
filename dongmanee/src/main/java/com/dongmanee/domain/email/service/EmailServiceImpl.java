@@ -3,6 +3,7 @@ package com.dongmanee.domain.email.service;
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -53,8 +54,12 @@ public class EmailServiceImpl implements SignUpControllerEmailService {
 		String title = "동만이 이메일 인증";
 		String authCode = authCodeProvider.createAuthCode();
 
-		MimeMessage emailForm = createAuthCodeEmailForm(toEmail, title, authCode);
-		emailSender.send(emailForm);
+		try {
+			MimeMessage emailForm = createAuthCodeEmailForm(toEmail, title, authCode);
+			emailSender.send(emailForm);
+		} catch (MailSendException | MessagingException | UnsupportedEncodingException e) {
+			throw new EmailSendingException();
+		}
 
 		emailRedis.setData(toEmail, authCode, authCodeExpirationMillis);
 	}
@@ -90,19 +95,17 @@ public class EmailServiceImpl implements SignUpControllerEmailService {
 	 * @param code
 	 * @return
 	 */
-	private MimeMessage createAuthCodeEmailForm(String toEmail, String title, String code) {
-		try {
-			MimeMessage message = emailSender.createMimeMessage();
+	private MimeMessage createAuthCodeEmailForm(String toEmail, String title, String code) throws
+		UnsupportedEncodingException,
+		MessagingException {
+		MimeMessage message = emailSender.createMimeMessage();
 
-			message.setFrom(new InternetAddress(email, personal));
-			message.setRecipients(Message.RecipientType.TO, toEmail);
-			message.setSubject(title);
-			String body = "<h3>요청하신 인증 번호입니다.</h3>" + "<h1>" + code + "</h1>" + "<h3>감사합니다.</h3>";
-			message.setText(body, "UTF-8", "html");
+		message.setFrom(new InternetAddress(email, personal));
+		message.setRecipients(Message.RecipientType.TO, toEmail);
+		message.setSubject(title);
+		String body = "<h3>요청하신 인증 번호입니다.</h3>" + "<h1>" + code + "</h1>" + "<h3>감사합니다.</h3>";
+		message.setText(body, "UTF-8", "html");
 
-			return message;
-		} catch (MessagingException | UnsupportedEncodingException e) {
-			throw new EmailSendingException("이메일 전송 실패");
-		}
+		return message;
 	}
 }
