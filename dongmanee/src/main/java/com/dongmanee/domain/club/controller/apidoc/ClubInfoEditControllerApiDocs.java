@@ -23,7 +23,7 @@ public interface ClubInfoEditControllerApiDocs {
 				examples = @ExampleObject(name = "클럽 정보 수정 성공",
 					value = """
 						{
-							"status": 201,
+							"status": 200,
 							"message": "클럽 정보가 수정되었습니다.",
 							"data": null
 						}
