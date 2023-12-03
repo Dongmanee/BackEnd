@@ -84,7 +84,6 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 			.getUserInfoEndpoint()
 			.getUserNameAttributeName();
 
-		Long id;
 		// OAuth2UserService
 		OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName,
 			oAuth2User.getAttributes());
@@ -108,6 +107,7 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 				if (member != null) {
 					member.updateEmail(attributes.get("email").toString());
 					attributes.put("memberId", member.getId());
+					attributes.put("universityId", member.getUniversity().getId());
 				}
 
 				return provider;
