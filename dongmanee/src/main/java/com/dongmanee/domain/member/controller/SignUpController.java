@@ -16,13 +16,12 @@ import com.dongmanee.domain.member.controller.port.SignUpControllerSignUpService
 import com.dongmanee.domain.member.controller.port.SingUpControllerUniversityService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestSignup;
+import com.dongmanee.domain.university.service.UniversityService;
 import com.dongmanee.global.utils.ApiResult;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "회원가입", description = "회원가입 API 명세")
 @RestController
 @RequestMapping("/signup")
 @RequiredArgsConstructor
@@ -36,7 +35,7 @@ public class SignUpController implements SignUpControllerApiDocs {
 
 	@PostMapping()
 	public ApiResult<?> userSignUp(@Valid @RequestBody RequestSignup request) {
-		Member newMember = memberMapper.toEntity(request, universityService, passwordEncoder);
+		Member newMember = memberMapper.toEntity(request, (UniversityService)universityService, passwordEncoder);
 		signUpService.signup(request.getProvider(), request.getExternalProviderId(), newMember,
 			request.getEmailAuthCode());
 		return ApiResult.isNoContent("회원가입 성공");
