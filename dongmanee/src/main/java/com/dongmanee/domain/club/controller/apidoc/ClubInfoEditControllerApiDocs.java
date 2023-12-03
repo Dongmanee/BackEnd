@@ -42,13 +42,13 @@ public interface ClubInfoEditControllerApiDocs {
 						}
 												""")
 			)),
-		@ApiResponse(responseCode = "400",
+		@ApiResponse(responseCode = "404",
 			description = "클럽에 존재하지 않는 유저",
 			content = @Content(schema = @Schema(implementation = ApiResult.class),
 				examples = @ExampleObject(name = "유저 조회 실패",
 					value = """
 						{
-							"status": 400,
+							"status": 404,
 							"message": "클럽에 존재하지 않는 사용자입니다."
 							"data": null
 						}
@@ -147,7 +147,7 @@ public interface ClubInfoEditControllerApiDocs {
 				examples = @ExampleObject(name = "클럽 정보 삭제 성공",
 					value = """
 						{
-							"status": 200,
+							"status": 204,
 							"message": "클럽 Sns가 삭제되었습니다",
 							"data": null
 						}
