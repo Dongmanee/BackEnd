@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.dongmanee.domain.member.controller.port.SingUpControllerUniversityService;
-import com.dongmanee.domain.university.controller.port.UniversityControllerUniversityService;
 import com.dongmanee.domain.university.domain.University;
 import com.dongmanee.domain.university.service.port.UniversityServiceUniversityRepository;
 
@@ -14,8 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UniversityServiceImpl
-	implements UniversityControllerUniversityService, SingUpControllerUniversityService {
+public class UniversityServiceImpl implements UniversityService {
 	private final UniversityServiceUniversityRepository universityRepository;
 
 	@Override

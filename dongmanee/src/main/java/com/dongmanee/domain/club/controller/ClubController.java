@@ -35,7 +35,7 @@ public class ClubController implements ClubControllerApiDocs {
 	@PostMapping("/club")
 	public ApiResult<?> createClub(@Valid @RequestBody RequestCreateClub createClub,
 		@AuthenticationPrincipal UserDetails userDetails) {
-		Member requestMember = memberService.getMemberFromUserId(Long.parseLong(userDetails.getUsername()));
+		Member requestMember = memberService.findById(Long.parseLong(userDetails.getUsername()));
 		Club club = clubMapper.toEntity(createClub, clubControllerClubCategoryService);
 		clubService.createClub(club, requestMember);
 		return ApiResult.isCreated("클럽이 생성되었습니다.");
