@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,6 +24,7 @@ import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.enums.Role;
 import com.dongmanee.domain.security.dao.AuthProviderRepository;
 import com.dongmanee.domain.security.domain.AuthProvider;
+import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.domain.security.dto.OAuthAttributes;
 import com.dongmanee.domain.security.exception.OauthUserLocalLoginException;
 import com.dongmanee.domain.security.exception.UnAuthorizedException;
@@ -59,7 +59,8 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 		authorities.add(new SimpleGrantedAuthority(member.getRole().getKey()));
 
 		// User: Spring Security에서 제공해주는 User 모델
-		return new User(member.getId().toString(), member.getPassword(), true, true, true, true, authorities);
+		return new CustomUserDetails(member.getId().toString(), member.getPassword(),
+			member.getUniversity().getId().toString(), authorities);
 	}
 
 	/**
@@ -83,7 +84,6 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 			.getUserInfoEndpoint()
 			.getUserNameAttributeName();
 
-		Long id;
 		// OAuth2UserService
 		OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName,
 			oAuth2User.getAttributes());
@@ -99,14 +99,15 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 
 	private AuthProvider saveOrUpdate(String registrationId, Map<String, Object> attributes) {
 		Long externalProviderId = Long.valueOf(attributes.get("id").toString());
-		AuthProvider authProvider = authProviderRepository.findByAuthProviderAndExternalProviderId(registrationId,
-				externalProviderId)
+		AuthProvider authProvider = authProviderRepository
+			.findByAuthProviderAndExternalProviderIdWithMemberAndUniversity(registrationId, externalProviderId)
 			// 기존 유저
 			.map(provider -> {
 				Member member = provider.getMember();
 				if (member != null) {
 					member.updateEmail(attributes.get("email").toString());
 					attributes.put("memberId", member.getId());
+					attributes.put("universityId", member.getUniversity().getId());
 				}
 
 				return provider;

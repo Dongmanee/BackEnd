@@ -12,9 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
+import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.domain.security.exception.CustomJwtException;
 
 import io.jsonwebtoken.Claims;
@@ -48,9 +48,10 @@ public class JwtProvider {
 	}
 
 	// 토큰 생성
-	public String createToken(Long memberId, String roles) {
+	public String createToken(Long memberId, String roles, String universityId) {
 		Claims claims = Jwts.claims().setSubject(memberId.toString());
 		claims.put("roles", roles);
+		claims.put("university-id", universityId);
 		Date now = new Date();
 		return Jwts.builder()
 			.setClaims(claims)
@@ -63,18 +64,19 @@ public class JwtProvider {
 	// 권한정보 획득
 	// Spring Security 인증과정에서 권한확인을 위한 기능
 	public Authentication getAuthentication(String token) {
-		User user = resolveTokenToUser(token);
+		CustomUserDetails user = resolveTokenToUser(token);
 		return new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities());
 	}
 
-	private User resolveTokenToUser(String token) {
+	private CustomUserDetails resolveTokenToUser(String token) {
 		Claims claim = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
 		String id = claim.getSubject();
 		String role = (String)claim.get("roles");
+		String universityId = (String)claim.get("university-id");
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(role));
 
-		return new User(id, "", true, true, true, true, authorities);
+		return new CustomUserDetails(id, "", universityId, authorities);
 	}
 
 	// Authorization Header를 통해 인증을 한다.

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dongmanee.domain.email.utils.EmailRedisUtils;
+import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.domain.security.dto.response.JwsToken;
 import com.dongmanee.domain.security.provider.JwtProvider;
 import com.dongmanee.global.utils.ApiResult;
@@ -62,9 +63,10 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			}
 
 			Long id = memberId;
+			String universityId = attributes.get("universityId").toString();
 			String role = oAuth2User.getAuthorities().iterator().next().getAuthority();
 
-			String token = jwtProvider.createToken(id, role);
+			String token = jwtProvider.createToken(id, role, universityId);
 
 			// 로그인 성공 시 로그인 결과 페이지로 리다이렉트
 			String url = loginResultUrl + "?token=" + token;
@@ -73,8 +75,12 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			// 로컬 로그인 성공 시
 			Long id = Long.parseLong(authentication.getName());
 			String role = authentication.getAuthorities().iterator().next().getAuthority();
-
-			String token = jwtProvider.createToken(id, role);
+			String universityId = null;
+			Object principal = authentication.getPrincipal();
+			if (principal instanceof CustomUserDetails) {
+				universityId = ((CustomUserDetails)principal).getUniversityId();
+			}
+			String token = jwtProvider.createToken(id, role, universityId);
 			JwsToken jwsToken = JwsToken.of(token);
 
 			// 로그인 성공 시 토큰 반환
