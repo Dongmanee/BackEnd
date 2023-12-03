@@ -13,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 public class CustomUserDetails implements UserDetails {
 	private final String userId;
 	private final String password;
-	private final List<GrantedAuthority> authorities;
 	@Getter
 	private final String universityId;
+	private final List<GrantedAuthority> authorities;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

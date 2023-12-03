@@ -59,8 +59,8 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 		authorities.add(new SimpleGrantedAuthority(member.getRole().getKey()));
 
 		// User: Spring Security에서 제공해주는 User 모델
-		return new CustomUserDetails(member.getId().toString(), member.getPassword(), authorities,
-			member.getUniversity().getId().toString());
+		return new CustomUserDetails(member.getId().toString(), member.getPassword(),
+			member.getUniversity().getId().toString(), authorities);
 	}
 
 	/**

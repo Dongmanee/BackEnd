@@ -77,8 +77,7 @@ public class JwtProvider {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(role));
 
-		return new CustomUserDetails(id, "", authorities,
-			universityId);
+		return new CustomUserDetails(id, "", universityId, authorities);
 	}
 
 	// Authorization Header를 통해 인증을 한다.
