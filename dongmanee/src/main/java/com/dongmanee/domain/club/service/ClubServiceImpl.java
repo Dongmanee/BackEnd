@@ -11,8 +11,8 @@ import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.domain.ClubUser;
 import com.dongmanee.domain.club.enums.ClubRole;
-import com.dongmanee.domain.club.exception.ClubUserNotFoundException;
 import com.dongmanee.domain.club.exception.ClubSnsNotFoundException;
+import com.dongmanee.domain.club.exception.ClubUserNotFoundException;
 import com.dongmanee.domain.club.service.port.ClubServiceClubRepository;
 import com.dongmanee.domain.club.service.port.ClubServiceClubSnsRepository;
 import com.dongmanee.domain.club.service.port.ClubServiceClubUserRepository;
@@ -59,10 +59,7 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 
 	// TODO: editClubSns, removeClubSns 추후 한번에 쿼리로 fetch join 하는 방식과 시간 비교 필요
 	@Override
-	public ClubSns editClubSns(Long memberId, ClubSns clubSns, Long clubId, Long snsId) {
-		//타켓 조회
-		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, clubId)
-			.orElseThrow(ClubUserNotFoundException::new);
+	public ClubSns editClubSns(ClubSns clubSns, Long clubId, Long snsId) {
 		// 목표 엔티티 검색
 		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(ClubSnsNotFoundException::new);
 		// 수정
@@ -72,10 +69,7 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 	}
 
 	@Override
-	public void removeClubSns(Long memberId, Long clubId, Long snsId) {
-		// 타켓 조회
-		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, clubId)
-			.orElseThrow(ClubUserNotFoundException::new);
+	public void removeClubSns(Long clubId, Long snsId) {
 		// 삭제
 		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(ClubSnsNotFoundException::new);
 

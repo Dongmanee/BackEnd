@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dongmanee.domain.club.controller.apidoc.ClubInfoEditControllerApiDocs;
 import com.dongmanee.domain.club.controller.mapper.ClubMapper;
 import com.dongmanee.domain.club.controller.mapper.ClubResponseMapper;
 import com.dongmanee.domain.club.controller.mapper.ClubSnsMapper;
@@ -22,12 +23,14 @@ import com.dongmanee.domain.club.dto.response.ClubEditResponse;
 import com.dongmanee.domain.club.dto.response.ClubSnsResponseDto;
 import com.dongmanee.global.utils.ApiResult;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "클럽 정보 수정", description = "클럽 정보수정 API 명세서")
 @RestController
 @RequiredArgsConstructor
-public class ClubInfoEditeController {
+public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
 	private final ClubMapper clubMapper;
 	private final ClubInfoUpdateService clubInfoUpdateService;
 	private final ClubSnsMapper clubSnsMapper;
@@ -60,12 +63,11 @@ public class ClubInfoEditeController {
 	@PatchMapping("/club/{club-id}/sns/{sns-id}")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
 	public ApiResult<?> editClubSns(@Valid @RequestBody RequestSns request,
-		@AuthenticationPrincipal UserDetails userDetails,
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
 
 		ClubSns editClubSns = clubInfoUpdateService
-			.editClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId, snsId);
+			.editClubSns(requestSns, clubId, snsId);
 
 		ClubSnsResponseDto responseDto = clubResponseMapper.toDto(editClubSns);
 		return ApiResult.isOk(responseDto, "클럽 Sns가 수정되었습니다");
@@ -73,10 +75,9 @@ public class ClubInfoEditeController {
 
 	@DeleteMapping("/club/{club-id}/sns/{sns-id}")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
-	public ApiResult<?> removeClubSns(@AuthenticationPrincipal UserDetails userDetails,
-		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
+	public ApiResult<?> removeClubSns(@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
 
-		clubInfoUpdateService.removeClubSns(Long.parseLong(userDetails.getUsername()), clubId, snsId);
+		clubInfoUpdateService.removeClubSns(clubId, snsId);
 		return ApiResult.isNoContent("클럽 Sns가 삭제되었습니다");
 	}
 

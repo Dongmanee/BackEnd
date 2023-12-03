@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dongmanee.domain.club.controller.apidoc.ClubControllerApiDocs;
 import com.dongmanee.domain.club.controller.mapper.ClubMapper;
 import com.dongmanee.domain.club.controller.port.ClubControllerClubCategoryService;
 import com.dongmanee.domain.club.controller.port.ClubService;
@@ -15,14 +16,16 @@ import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.service.MemberService;
 import com.dongmanee.global.utils.ApiResult;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@Tag(name = "클럽", description = "클럽 API 명세서")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class ClubController {
+public class ClubController implements ClubControllerApiDocs {
 	private final ClubMapper clubMapper;
 	private final ClubService clubService;
 	private final MemberService memberService;
