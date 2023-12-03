@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dongmanee.domain.email.utils.EmailRedisUtils;
+import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.domain.security.dto.response.JwsToken;
 import com.dongmanee.domain.security.provider.JwtProvider;
 import com.dongmanee.global.utils.ApiResult;
@@ -73,8 +74,12 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			// 로컬 로그인 성공 시
 			Long id = Long.parseLong(authentication.getName());
 			String role = authentication.getAuthorities().iterator().next().getAuthority();
-
-			String token = jwtProvider.createToken(id, role);
+			String universityId = null;
+			Object principal = authentication.getPrincipal();
+			if (principal instanceof CustomUserDetails) {
+				universityId = ((CustomUserDetails)principal).getUniversityId();
+			}
+			String token = jwtProvider.createToken(id, role, universityId);
 			JwsToken jwsToken = JwsToken.of(token);
 
 			// 로그인 성공 시 토큰 반환
