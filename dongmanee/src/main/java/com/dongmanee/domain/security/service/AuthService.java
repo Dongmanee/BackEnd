@@ -99,8 +99,8 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 
 	private AuthProvider saveOrUpdate(String registrationId, Map<String, Object> attributes) {
 		Long externalProviderId = Long.valueOf(attributes.get("id").toString());
-		AuthProvider authProvider = authProviderRepository.findByAuthProviderAndExternalProviderId(registrationId,
-				externalProviderId)
+		AuthProvider authProvider = authProviderRepository
+			.findByAuthProviderAndExternalProviderIdWithMemberAndUniversity(registrationId, externalProviderId)
 			// 기존 유저
 			.map(provider -> {
 				Member member = provider.getMember();
