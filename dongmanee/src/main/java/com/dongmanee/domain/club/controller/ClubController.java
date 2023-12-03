@@ -32,7 +32,7 @@ public class ClubController implements ClubControllerApiDocs {
 	private final ClubControllerClubCategoryService clubControllerClubCategoryService;
 
 	//TODO: 클럽 정보 가져오는 URL 리턴으로 변경
-	@PostMapping("/club")
+	@PostMapping("/clubs")
 	public ApiResult<?> createClub(@Valid @RequestBody RequestCreateClub createClub,
 		@AuthenticationPrincipal UserDetails userDetails) {
 		Member requestMember = memberService.findById(Long.parseLong(userDetails.getUsername()));
