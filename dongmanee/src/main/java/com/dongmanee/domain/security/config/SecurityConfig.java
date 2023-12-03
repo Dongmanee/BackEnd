@@ -79,8 +79,8 @@ public class SecurityConfig implements WebMvcConfigurer {
 
 			// JWT 검증 및 인증
 			.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
-			.addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class);
-		// .addFilterAfter(clubUserAuthenticationFilter, JwtAuthenticationFilter.class);
+			.addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
+			.addFilterAfter(clubUserAuthenticationFilter, JwtAuthenticationFilter.class);
 		return http.build();
 	}
 
