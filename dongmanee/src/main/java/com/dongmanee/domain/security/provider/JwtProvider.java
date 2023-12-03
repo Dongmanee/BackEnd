@@ -51,6 +51,20 @@ public class JwtProvider {
 	public String createToken(Long memberId, String roles) {
 		Claims claims = Jwts.claims().setSubject(memberId.toString());
 		claims.put("roles", roles);
+		// claims.put("univId", );
+		Date now = new Date();
+		return Jwts.builder()
+			.setClaims(claims)
+			.setIssuedAt(now)
+			.setExpiration(new Date(now.getTime() + accessTokenValidityIn))
+			.signWith(secretKey, SignatureAlgorithm.HS256)
+			.compact();
+	}
+
+	public String createToken(Long memberId, String roles, String universityId) {
+		Claims claims = Jwts.claims().setSubject(memberId.toString());
+		claims.put("roles", roles);
+		claims.put("university-id", universityId);
 		Date now = new Date();
 		return Jwts.builder()
 			.setClaims(claims)
