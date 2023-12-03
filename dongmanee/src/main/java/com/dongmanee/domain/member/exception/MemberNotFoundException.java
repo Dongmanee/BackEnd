@@ -4,11 +4,11 @@ import org.springframework.http.HttpStatus;
 
 import com.dongmanee.global.error.exception.CustomException;
 
-public class UserNotFoundException extends CustomException {
+public class MemberNotFoundException extends CustomException {
 
 	private final HttpStatus httpStatus = HttpStatus.NOT_FOUND;
 
-	public UserNotFoundException() {
+	public MemberNotFoundException() {
 		super("존재하지 않는 유저입니다.");
 	}
 
