@@ -63,9 +63,10 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 			}
 
 			Long id = memberId;
+			String universityId = attributes.get("universityId").toString();
 			String role = oAuth2User.getAuthorities().iterator().next().getAuthority();
 
-			String token = jwtProvider.createToken(id, role);
+			String token = jwtProvider.createToken(id, role, universityId);
 
 			// 로그인 성공 시 로그인 결과 페이지로 리다이렉트
 			String url = loginResultUrl + "?token=" + token;

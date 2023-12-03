@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import com.dongmanee.domain.security.domain.CustomUserDetails;
@@ -49,19 +48,6 @@ public class JwtProvider {
 	}
 
 	// 토큰 생성
-	public String createToken(Long memberId, String roles) {
-		Claims claims = Jwts.claims().setSubject(memberId.toString());
-		claims.put("roles", roles);
-		// claims.put("univId", );
-		Date now = new Date();
-		return Jwts.builder()
-			.setClaims(claims)
-			.setIssuedAt(now)
-			.setExpiration(new Date(now.getTime() + accessTokenValidityIn))
-			.signWith(secretKey, SignatureAlgorithm.HS256)
-			.compact();
-	}
-
 	public String createToken(Long memberId, String roles, String universityId) {
 		Claims claims = Jwts.claims().setSubject(memberId.toString());
 		claims.put("roles", roles);
@@ -79,11 +65,11 @@ public class JwtProvider {
 	// Spring Security 인증과정에서 권한확인을 위한 기능
 	public Authentication getAuthentication(String token) {
 		// User user = resolveTokenToUser(token);
-		CustomUserDetails user = resolveTokenToCustomUser(token);
+		CustomUserDetails user = resolveTokenToUser(token);
 		return new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities());
 	}
 
-	private CustomUserDetails resolveTokenToCustomUser(String token) {
+	private CustomUserDetails resolveTokenToUser(String token) {
 		Claims claim = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
 		String id = claim.getSubject();
 		String role = (String)claim.get("roles");
@@ -93,16 +79,6 @@ public class JwtProvider {
 
 		return new CustomUserDetails(id, "", authorities,
 			universityId);
-	}
-
-	private User resolveTokenToUser(String token) {
-		Claims claim = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
-		String id = claim.getSubject();
-		String role = (String)claim.get("roles");
-		List<GrantedAuthority> authorities = new ArrayList<>();
-		authorities.add(new SimpleGrantedAuthority(role));
-
-		return new User(id, "", true, true, true, true, authorities);
 	}
 
 	// Authorization Header를 통해 인증을 한다.
