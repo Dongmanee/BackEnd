@@ -32,7 +32,7 @@ public interface MemberControllerApiDocs {
 							"data": {
 								"university": "한밭대학교",
 								"department": "컴퓨터공학과",
-								"name": "홍길동"
+								"name": "홍길동",
 								"profileImageUrl": null
 							}
 						}
