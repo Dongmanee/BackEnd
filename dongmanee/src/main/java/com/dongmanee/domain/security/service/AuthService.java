@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dongmanee.domain.member.dao.jpa.MemberJpaRepository;
+import com.dongmanee.domain.member.dao.MemberRepository;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.enums.Role;
 import com.dongmanee.domain.security.dao.jpa.AuthProviderJpaRepository;
@@ -36,7 +36,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 	private final AuthProviderJpaRepository authProviderJpaRepository;
-	private final MemberJpaRepository memberJpaRepository;
+	private final MemberRepository memberJpaRepository;
 
 	/**
 	 * Local Login 인증
