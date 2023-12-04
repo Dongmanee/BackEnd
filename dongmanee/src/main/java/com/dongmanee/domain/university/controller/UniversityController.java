@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dongmanee.domain.university.controller.apidoc.UniversityControllerApiDocs;
 import com.dongmanee.domain.university.controller.mapper.UniversityMapper;
-import com.dongmanee.domain.university.controller.port.UniversityControllerUniversityService;
 import com.dongmanee.domain.university.domain.University;
 import com.dongmanee.domain.university.dto.response.ResponseUniversity;
+import com.dongmanee.domain.university.service.UniversityService;
 import com.dongmanee.global.utils.ApiResult;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class UniversityController implements UniversityControllerApiDocs {
-	private final UniversityControllerUniversityService universityService;
+	private final UniversityService universityService;
 	private final UniversityMapper universityMapper;
 
 	@GetMapping("/universities")
