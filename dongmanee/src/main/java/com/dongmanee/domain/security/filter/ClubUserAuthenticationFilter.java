@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.dongmanee.domain.club.domain.ClubUser;
-import com.dongmanee.domain.club.service.port.ClubServiceClubUserRepository;
 import com.dongmanee.domain.security.filter.port.ClubAuthenticationFilterClubUserRepository;
 
 import jakarta.servlet.FilterChain;
@@ -30,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClubUserAuthenticationFilter extends OncePerRequestFilter {
 	private final ClubAuthenticationFilterClubUserRepository clubUserRepository;
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {

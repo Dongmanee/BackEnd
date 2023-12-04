@@ -1,9 +1,13 @@
 package com.dongmanee.domain.club.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
 import com.dongmanee.domain.club.domain.ClubSns;
-import com.dongmanee.domain.club.service.port.ClubServiceClubSnsRepository;
 
-public interface ClubSnsRepository extends JpaRepository<ClubSns, Long>, ClubServiceClubSnsRepository {
+public interface ClubSnsRepository {
+	ClubSns save(ClubSns clubSns);
+
+	Optional<ClubSns> findById(Long id);
+
+	void delete(ClubSns clubSns);
 }

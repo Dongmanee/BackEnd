@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dongmanee.domain.club.dao.ClubRepository;
+import com.dongmanee.domain.club.dao.ClubSnsRepository;
+import com.dongmanee.domain.club.dao.ClubUserRepository;
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.domain.ClubUser;
 import com.dongmanee.domain.club.enums.ClubRole;
 import com.dongmanee.domain.club.exception.ClubSnsNotFoundException;
 import com.dongmanee.domain.club.exception.ClubUserNotFoundException;
-import com.dongmanee.domain.club.service.port.ClubServiceClubRepository;
-import com.dongmanee.domain.club.service.port.ClubServiceClubSnsRepository;
-import com.dongmanee.domain.club.service.port.ClubServiceClubUserRepository;
 import com.dongmanee.domain.member.domain.Member;
 
 import lombok.RequiredArgsConstructor;
@@ -22,9 +22,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClubServiceImpl implements ClubService {
 
-	private final ClubServiceClubRepository clubRepository;
-	private final ClubServiceClubUserRepository clubUserRepository;
-	private final ClubServiceClubSnsRepository clubSnsRepository;
+	private final ClubRepository clubRepository;
+	private final ClubUserRepository clubUserRepository;
+	private final ClubSnsRepository clubSnsRepository;
 
 	@Override
 	@Transactional
