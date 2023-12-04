@@ -1,6 +1,6 @@
-package com.dongmanee.domain.member.controller.port;
+package com.dongmanee.domain.email.service;
 
-public interface SignUpControllerEmailService {
+public interface EmailService {
 	void sendSingUpEmailAuthCode(String toEmail);
 
 	String verifySignUpEmailAuthCode(String email, String authCode);

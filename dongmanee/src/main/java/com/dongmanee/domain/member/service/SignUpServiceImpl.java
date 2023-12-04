@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import com.dongmanee.domain.email.exception.EmailVerifiedException;
 import com.dongmanee.domain.email.utils.EmailRedisUtils;
-import com.dongmanee.domain.member.controller.port.SignUpControllerSignUpService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.enums.Role;
 import com.dongmanee.domain.member.exception.DuplicateEmailException;
@@ -20,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class SignUpServiceImpl implements SignUpControllerSignUpService {
+public class SignUpServiceImpl implements SignUpService {
 	private final SignUpServiceMemberRepository memberRepository;
 	private final SignUpServiceAuthProviderRepository authProviderRepository;
 	private final EmailRedisUtils emailRedis;

@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dongmanee.domain.email.dto.request.RequestEmailAuthCode;
 import com.dongmanee.domain.email.dto.request.RequestVerifyAuthCode;
 import com.dongmanee.domain.email.dto.response.ResponseEmailAuthCode;
+import com.dongmanee.domain.email.service.EmailService;
 import com.dongmanee.domain.member.controller.apidoc.SignUpControllerApiDocs;
 import com.dongmanee.domain.member.controller.mapper.MemberMapper;
-import com.dongmanee.domain.member.controller.port.SignUpControllerEmailService;
-import com.dongmanee.domain.member.controller.port.SignUpControllerSignUpService;
-import com.dongmanee.domain.member.controller.port.SingUpControllerUniversityService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestSignup;
+import com.dongmanee.domain.member.service.SignUpService;
 import com.dongmanee.domain.university.service.UniversityService;
 import com.dongmanee.global.utils.ApiResult;
 
@@ -26,16 +25,16 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/signup")
 @RequiredArgsConstructor
 public class SignUpController implements SignUpControllerApiDocs {
-	private final SignUpControllerSignUpService signUpService;
-	private final SingUpControllerUniversityService universityService;
-	private final SignUpControllerEmailService emailService;
+	private final SignUpService signUpService;
+	private final UniversityService universityService;
+	private final EmailService emailService;
 
 	private final MemberMapper memberMapper;
 	private final PasswordEncoder passwordEncoder;
 
 	@PostMapping()
 	public ApiResult<?> userSignUp(@Valid @RequestBody RequestSignup request) {
-		Member newMember = memberMapper.toEntity(request, (UniversityService)universityService, passwordEncoder);
+		Member newMember = memberMapper.toEntity(request, universityService, passwordEncoder);
 		signUpService.signup(request.getProvider(), request.getExternalProviderId(), newMember,
 			request.getEmailAuthCode());
 		return ApiResult.isNoContent("회원가입 성공");
