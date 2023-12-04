@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dongmanee.domain.member.controller.apidoc.MemberControllerApiDocs;
 import com.dongmanee.domain.member.controller.mapper.MemberMapper;
-import com.dongmanee.domain.member.controller.port.MemberControllerMemberService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.response.ResponseMember;
 import com.dongmanee.domain.member.dto.response.ResponseMemberDetails;
+import com.dongmanee.domain.member.service.MemberService;
 import com.dongmanee.global.utils.ApiResult;
 
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController implements MemberControllerApiDocs {
-	private final MemberControllerMemberService memberService;
-
+	private final MemberService memberService;
 	private final MemberMapper memberMapper;
 
 	@GetMapping("/{member-id}")

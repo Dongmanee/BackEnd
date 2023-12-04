@@ -14,13 +14,13 @@ import com.dongmanee.domain.club.controller.apidoc.ClubInfoEditControllerApiDocs
 import com.dongmanee.domain.club.controller.mapper.ClubMapper;
 import com.dongmanee.domain.club.controller.mapper.ClubResponseMapper;
 import com.dongmanee.domain.club.controller.mapper.ClubSnsMapper;
-import com.dongmanee.domain.club.controller.port.ClubInfoUpdateService;
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.dto.request.RequestEditClubDescriptionAndAddress;
 import com.dongmanee.domain.club.dto.request.RequestSns;
 import com.dongmanee.domain.club.dto.response.ClubEditResponse;
 import com.dongmanee.domain.club.dto.response.ClubSnsResponseDto;
+import com.dongmanee.domain.club.service.ClubService;
 import com.dongmanee.global.utils.ApiResult;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,11 +32,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
 	private final ClubMapper clubMapper;
-	private final ClubInfoUpdateService clubInfoUpdateService;
+	private final ClubService clubInfoUpdateService;
 	private final ClubSnsMapper clubSnsMapper;
 	private final ClubResponseMapper clubResponseMapper;
 
-	@PatchMapping("/club/{club-id}")
+	@PatchMapping("/clubs/{club-id}")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
 	public ApiResult<?> editClubDescriptionAndAddress(@RequestBody RequestEditClubDescriptionAndAddress dto,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
@@ -48,7 +48,7 @@ public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
 		return ApiResult.isOk(responseDto, "클럽 정보가 수정되었습니다.");
 	}
 
-	@PostMapping("/club/{club-id}/sns")
+	@PostMapping("/clubs/{club-id}/sns")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
 	public ApiResult<?> addClubSns(@Valid @RequestBody RequestSns request,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
@@ -60,7 +60,7 @@ public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
 		return ApiResult.isCreated(responseDto, "클럽 Sns가 추가되었습니다");
 	}
 
-	@PatchMapping("/club/{club-id}/sns/{sns-id}")
+	@PatchMapping("/clubs/{club-id}/sns/{sns-id}")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
 	public ApiResult<?> editClubSns(@Valid @RequestBody RequestSns request,
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
@@ -73,7 +73,7 @@ public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
 		return ApiResult.isOk(responseDto, "클럽 Sns가 수정되었습니다");
 	}
 
-	@DeleteMapping("/club/{club-id}/sns/{sns-id}")
+	@DeleteMapping("/clubs/{club-id}/sns/{sns-id}")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
 	public ApiResult<?> removeClubSns(@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
 

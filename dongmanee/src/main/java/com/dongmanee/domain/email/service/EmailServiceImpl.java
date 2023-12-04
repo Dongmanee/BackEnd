@@ -9,9 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.dongmanee.domain.email.exception.EmailSendingException;
 import com.dongmanee.domain.email.exception.EmailVerifiedException;
-import com.dongmanee.domain.email.service.port.EmailServiceMemberRepository;
 import com.dongmanee.domain.email.utils.EmailRedisUtils;
-import com.dongmanee.domain.member.controller.port.SignUpControllerEmailService;
+import com.dongmanee.domain.member.dao.MemberRepository;
 import com.dongmanee.domain.member.exception.DuplicateEmailException;
 import com.dongmanee.global.utils.AuthCodeProvider;
 
@@ -25,10 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class EmailServiceImpl implements SignUpControllerEmailService {
+public class EmailServiceImpl implements EmailService {
 	private final JavaMailSender emailSender;
 	private final EmailRedisUtils emailRedis;
-	private final EmailServiceMemberRepository memberRepository;
+	private final MemberRepository memberJpaRepository;
 	private final AuthCodeProvider authCodeProvider;
 
 	@Value("${spring.mail.username}")
@@ -47,7 +46,7 @@ public class EmailServiceImpl implements SignUpControllerEmailService {
 	 */
 	@Override
 	public void sendSingUpEmailAuthCode(String toEmail) {
-		if (memberRepository.existsByEmail(toEmail)) {
+		if (memberJpaRepository.existsByEmail(toEmail)) {
 			throw new DuplicateEmailException("이미 가입한 이메일입니다.");
 		}
 

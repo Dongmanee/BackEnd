@@ -1,10 +1,12 @@
-package com.dongmanee.domain.member.service.port;
+package com.dongmanee.domain.member.dao.jpa;
 
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.dongmanee.domain.member.domain.Member;
 
-public interface SignUpServiceMemberRepository {
+public interface MemberJpaRepository extends JpaRepository<Member, Long> {
 	boolean existsByStudentId(String studentId);
 
 	boolean existsByEmail(String email);
@@ -12,6 +14,4 @@ public interface SignUpServiceMemberRepository {
 	boolean existsByPhone(String phone);
 
 	Optional<Member> findByEmail(String email);
-
-	Member save(Member member);
 }

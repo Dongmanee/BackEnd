@@ -5,15 +5,15 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.dongmanee.domain.university.dao.UniversityRepository;
 import com.dongmanee.domain.university.domain.University;
-import com.dongmanee.domain.university.service.port.UniversityServiceUniversityRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class UniversityServiceImpl implements UniversityService {
-	private final UniversityServiceUniversityRepository universityRepository;
+	private final UniversityRepository universityRepository;
 
 	@Override
 	public List<University> findAll() {

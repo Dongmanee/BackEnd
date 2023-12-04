@@ -5,28 +5,30 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dongmanee.domain.club.controller.port.ClubInfoUpdateService;
-import com.dongmanee.domain.club.controller.port.ClubService;
+import com.dongmanee.domain.club.dao.ClubCategoryRepository;
+import com.dongmanee.domain.club.dao.ClubRepository;
+import com.dongmanee.domain.club.dao.ClubSnsRepository;
+import com.dongmanee.domain.club.dao.ClubUserRepository;
 import com.dongmanee.domain.club.domain.Club;
+import com.dongmanee.domain.club.domain.ClubCategory;
 import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.domain.ClubUser;
 import com.dongmanee.domain.club.enums.ClubRole;
+import com.dongmanee.domain.club.exception.CategoryNotFoundException;
 import com.dongmanee.domain.club.exception.ClubSnsNotFoundException;
 import com.dongmanee.domain.club.exception.ClubUserNotFoundException;
-import com.dongmanee.domain.club.service.port.ClubServiceClubRepository;
-import com.dongmanee.domain.club.service.port.ClubServiceClubSnsRepository;
-import com.dongmanee.domain.club.service.port.ClubServiceClubUserRepository;
 import com.dongmanee.domain.member.domain.Member;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
+public class ClubServiceImpl implements ClubService {
 
-	private final ClubServiceClubRepository clubRepository;
-	private final ClubServiceClubUserRepository clubUserRepository;
-	private final ClubServiceClubSnsRepository clubSnsRepository;
+	private final ClubRepository clubRepository;
+	private final ClubUserRepository clubUserRepository;
+	private final ClubSnsRepository clubSnsRepository;
+	private final ClubCategoryRepository clubCategoryRepository;
 
 	@Override
 	@Transactional
@@ -74,6 +76,11 @@ public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
 		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(ClubSnsNotFoundException::new);
 
 		clubSnsRepository.delete(targetSns);
+	}
+
+	@Override
+	public ClubCategory findById(Long categoryId) {
+		return clubCategoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 	}
 
 	//TODO Mapper로 추후 변경
