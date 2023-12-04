@@ -4,14 +4,14 @@ import org.springframework.stereotype.Service;
 
 import com.dongmanee.domain.email.exception.EmailVerifiedException;
 import com.dongmanee.domain.email.utils.EmailRedisUtils;
+import com.dongmanee.domain.member.dao.MemberRepository;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.enums.Role;
 import com.dongmanee.domain.member.exception.DuplicateEmailException;
 import com.dongmanee.domain.member.exception.DuplicatePhoneException;
 import com.dongmanee.domain.member.exception.DuplicateStudentIdException;
 import com.dongmanee.domain.member.exception.OAuthProviderNotFoundException;
-import com.dongmanee.domain.member.service.port.SignUpServiceAuthProviderRepository;
-import com.dongmanee.domain.member.service.port.SignUpServiceMemberRepository;
+import com.dongmanee.domain.security.dao.AuthProviderRepository;
 import com.dongmanee.domain.security.domain.AuthProvider;
 
 import jakarta.transaction.Transactional;
@@ -20,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class SignUpServiceImpl implements SignUpService {
-	private final SignUpServiceMemberRepository memberRepository;
-	private final SignUpServiceAuthProviderRepository authProviderRepository;
+	private final MemberRepository memberRepository;
+	private final AuthProviderRepository authProviderRepository;
 	private final EmailRedisUtils emailRedis;
 
 	@Override

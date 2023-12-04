@@ -19,10 +19,10 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dongmanee.domain.member.dao.MemberRepository;
+import com.dongmanee.domain.member.dao.jpa.MemberJpaRepository;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.enums.Role;
-import com.dongmanee.domain.security.dao.AuthProviderRepository;
+import com.dongmanee.domain.security.dao.jpa.AuthProviderJpaRepository;
 import com.dongmanee.domain.security.domain.AuthProvider;
 import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.domain.security.dto.OAuthAttributes;
@@ -35,8 +35,8 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-	private final AuthProviderRepository authProviderRepository;
-	private final MemberRepository memberRepository;
+	private final AuthProviderJpaRepository authProviderJpaRepository;
+	private final MemberJpaRepository memberJpaRepository;
 
 	/**
 	 * Local Login 인증
@@ -47,10 +47,10 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Member member = memberRepository.findByEmail(username).orElseThrow(UnAuthorizedException::new);
+		Member member = memberJpaRepository.findByEmail(username).orElseThrow(UnAuthorizedException::new);
 
-		if (authProviderRepository.existsByMemberId(member.getId())) {
-			AuthProvider authProvider = authProviderRepository.findByMemberId(member.getId()).orElseThrow();
+		if (authProviderJpaRepository.existsByMemberId(member.getId())) {
+			AuthProvider authProvider = authProviderJpaRepository.findByMemberId(member.getId()).orElseThrow();
 			throw new OauthUserLocalLoginException(authProvider.getAuthProvider() + " 로그인을 사용해주세요");
 		}
 
@@ -99,7 +99,7 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 
 	private AuthProvider saveOrUpdate(String registrationId, Map<String, Object> attributes) {
 		Long externalProviderId = Long.valueOf(attributes.get("id").toString());
-		AuthProvider authProvider = authProviderRepository
+		AuthProvider authProvider = authProviderJpaRepository
 			.findByAuthProviderAndExternalProviderIdWithMemberAndUniversity(registrationId, externalProviderId)
 			// 기존 유저
 			.map(provider -> {
@@ -121,6 +121,6 @@ public class AuthService implements UserDetailsService, OAuth2UserService<OAuth2
 					.build();
 			});
 
-		return authProviderRepository.save(authProvider);
+		return authProviderJpaRepository.save(authProvider);
 	}
 }
