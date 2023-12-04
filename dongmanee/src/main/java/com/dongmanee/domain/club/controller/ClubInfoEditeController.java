@@ -36,7 +36,7 @@ public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
 	private final ClubSnsMapper clubSnsMapper;
 	private final ClubResponseMapper clubResponseMapper;
 
-	@PatchMapping("/club/{club-id}")
+	@PatchMapping("/clubs/{club-id}")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
 	public ApiResult<?> editClubDescriptionAndAddress(@RequestBody RequestEditClubDescriptionAndAddress dto,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
@@ -48,7 +48,7 @@ public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
 		return ApiResult.isOk(responseDto, "클럽 정보가 수정되었습니다.");
 	}
 
-	@PostMapping("/club/{club-id}/sns")
+	@PostMapping("/clubs/{club-id}/sns")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
 	public ApiResult<?> addClubSns(@Valid @RequestBody RequestSns request,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
@@ -60,7 +60,7 @@ public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
 		return ApiResult.isCreated(responseDto, "클럽 Sns가 추가되었습니다");
 	}
 
-	@PatchMapping("/club/{club-id}/sns/{sns-id}")
+	@PatchMapping("/clubs/{club-id}/sns/{sns-id}")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
 	public ApiResult<?> editClubSns(@Valid @RequestBody RequestSns request,
 		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
@@ -73,7 +73,7 @@ public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
 		return ApiResult.isOk(responseDto, "클럽 Sns가 수정되었습니다");
 	}
 
-	@DeleteMapping("/club/{club-id}/sns/{sns-id}")
+	@DeleteMapping("/clubs/{club-id}/sns/{sns-id}")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
 	public ApiResult<?> removeClubSns(@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
 
