@@ -10,20 +10,20 @@ import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubCategory;
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 import com.dongmanee.domain.club.dto.request.RequestEditClubDescriptionAndAddress;
-import com.dongmanee.domain.club.service.ClubCategoryService;
+import com.dongmanee.domain.club.service.ClubService;
 
 @Mapper(componentModel = "spring",
 	unmappedTargetPolicy = ReportingPolicy.IGNORE,
-	uses = {ClubCategoryService.class})
+	uses = {ClubService.class})
 public interface ClubMapper {
 	@Mapping(source = "categoryId", target = "category", qualifiedByName = "categoryConverter")
 	Club toEntity(RequestCreateClub requestCreateClub,
-		@Context ClubCategoryService clubCategoryService);
+		@Context ClubService clubService);
 
 	Club toEntity(Long id, RequestEditClubDescriptionAndAddress dto);
 
 	@Named("categoryConverter")
-	default ClubCategory categoryConverter(Long categoryId, @Context ClubCategoryService clubCategoryService) {
-		return clubCategoryService.findById(categoryId);
+	default ClubCategory categoryConverter(Long categoryId, @Context ClubService clubService) {
+		return clubService.findById(categoryId);
 	}
 }
