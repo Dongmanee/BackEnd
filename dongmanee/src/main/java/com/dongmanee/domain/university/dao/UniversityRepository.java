@@ -1,9 +1,13 @@
 package com.dongmanee.domain.university.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Optional;
 
 import com.dongmanee.domain.university.domain.University;
-import com.dongmanee.domain.university.service.port.UniversityServiceUniversityRepository;
 
-public interface UniversityRepository extends JpaRepository<University, Long>, UniversityServiceUniversityRepository {
+public interface UniversityRepository {
+
+	List<University> findAll();
+
+	Optional<University> findById(Long id);
 }
