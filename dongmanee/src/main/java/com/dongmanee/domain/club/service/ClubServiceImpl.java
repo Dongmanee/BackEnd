@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dongmanee.domain.club.controller.port.ClubInfoUpdateService;
-import com.dongmanee.domain.club.controller.port.ClubService;
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.domain.ClubUser;
@@ -22,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ClubServiceImpl implements ClubService, ClubInfoUpdateService {
+public class ClubServiceImpl implements ClubService {
 
 	private final ClubServiceClubRepository clubRepository;
 	private final ClubServiceClubUserRepository clubUserRepository;

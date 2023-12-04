@@ -1,12 +1,10 @@
 package com.dongmanee.domain.club.controller.mapper;
 
-import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
-import com.dongmanee.domain.club.controller.port.ClubControllerClubCategoryService;
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubCategory;
 import com.dongmanee.domain.club.domain.ClubSns;

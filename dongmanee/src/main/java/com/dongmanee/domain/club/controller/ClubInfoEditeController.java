@@ -14,13 +14,13 @@ import com.dongmanee.domain.club.controller.apidoc.ClubInfoEditControllerApiDocs
 import com.dongmanee.domain.club.controller.mapper.ClubMapper;
 import com.dongmanee.domain.club.controller.mapper.ClubResponseMapper;
 import com.dongmanee.domain.club.controller.mapper.ClubSnsMapper;
-import com.dongmanee.domain.club.controller.port.ClubInfoUpdateService;
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.dto.request.RequestEditClubDescriptionAndAddress;
 import com.dongmanee.domain.club.dto.request.RequestSns;
 import com.dongmanee.domain.club.dto.response.ClubEditResponse;
 import com.dongmanee.domain.club.dto.response.ClubSnsResponseDto;
+import com.dongmanee.domain.club.service.ClubService;
 import com.dongmanee.global.utils.ApiResult;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
 	private final ClubMapper clubMapper;
-	private final ClubInfoUpdateService clubInfoUpdateService;
+	private final ClubService clubInfoUpdateService;
 	private final ClubSnsMapper clubSnsMapper;
 	private final ClubResponseMapper clubResponseMapper;
 
