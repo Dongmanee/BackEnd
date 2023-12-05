@@ -13,6 +13,7 @@ import com.dongmanee.domain.member.controller.apidoc.MemberControllerApiDocs;
 import com.dongmanee.domain.member.controller.mapper.MemberMapper;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestUpdateMemberDetails;
+import com.dongmanee.domain.member.dto.request.RequestUpdatePassword;
 import com.dongmanee.domain.member.dto.response.ResponseMember;
 import com.dongmanee.domain.member.dto.response.ResponseMemberDetails;
 import com.dongmanee.domain.member.service.MemberService;
@@ -47,5 +48,13 @@ public class MemberController implements MemberControllerApiDocs {
 		Member updatedMember = memberService.updateMemberDetails(Long.parseLong(userDetails.getUsername()), request);
 		ResponseMemberDetails response = memberMapper.toResponseMemberDetails(updatedMember);
 		return ApiResult.isOk(response, "멤버 세부 정보 수정 성공");
+	}
+
+	@PatchMapping("/password")
+	public ApiResult<?> updateMemberPassword(@AuthenticationPrincipal UserDetails userDetails,
+		@RequestBody RequestUpdatePassword request) {
+		memberService.updateMemberPassword(Long.parseLong(userDetails.getUsername()), request);
+
+		return ApiResult.isNoContent("비밀번호 변경 성공");
 	}
 }

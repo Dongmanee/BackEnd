@@ -3,6 +3,7 @@ package com.dongmanee.domain.member.controller.apidoc;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.dongmanee.domain.member.dto.request.RequestUpdateMemberDetails;
+import com.dongmanee.domain.member.dto.request.RequestUpdatePassword;
 import com.dongmanee.domain.member.dto.response.ResponseMember;
 import com.dongmanee.domain.member.dto.response.ResponseMemberDetails;
 import com.dongmanee.global.utils.ApiResult;
@@ -88,4 +89,20 @@ public interface MemberControllerApiDocs {
 							"""))),
 	})
 	ApiResult<ResponseMemberDetails> updateMemberDetails(UserDetails userDetails, RequestUpdateMemberDetails request);
+
+	@Operation(summary = "멤버 비밀번호 변경")
+	@ApiResponses({
+		@ApiResponse(responseCode = "204",
+			description = "요청 성공",
+			content = @Content(schema = @Schema(implementation = ApiResult.class),
+				examples = @ExampleObject(name = "멤버 비밀번호 변경 성공",
+					value = """
+						{
+							"status":204,
+							"message":"비밀번호 변경 성공",
+							"data": null
+						}
+							"""))),
+	})
+	ApiResult<?> updateMemberPassword(UserDetails userDetails, RequestUpdatePassword request);
 }

@@ -1,11 +1,14 @@
 package com.dongmanee.domain.member.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.dongmanee.domain.member.dao.MemberRepository;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestUpdateMemberDetails;
+import com.dongmanee.domain.member.dto.request.RequestUpdatePassword;
 import com.dongmanee.domain.member.exception.MemberNotFoundException;
+import com.dongmanee.domain.security.exception.PasswordUnMatchException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 	private final MemberRepository memberRepository;
+
+	private final PasswordEncoder passwordEncoder;
 
 	@Override
 	public Member findById(Long id) {
@@ -31,5 +36,20 @@ public class MemberServiceImpl implements MemberService {
 		);
 
 		return memberRepository.save(member);
+	}
+
+	@Override
+	public void updateMemberPassword(long id, RequestUpdatePassword request) {
+		Member member = memberRepository.findById(id).orElseThrow(MemberNotFoundException::new);
+
+		if (!passwordEncoder.matches(request.getExistingPassword(), member.getPassword())) {
+			throw new PasswordUnMatchException();
+		}
+
+		String encodedNewPassword = passwordEncoder.encode(request.getNewPassword());
+
+		member.updatePassword(encodedNewPassword);
+
+		memberRepository.save(member);
 	}
 }

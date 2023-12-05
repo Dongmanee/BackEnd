@@ -94,4 +94,8 @@ public class Member extends BaseEntity {
 			this.profileImageUrl = profileImageUrl;
 		}
 	}
+
+	public void updatePassword(String encodedNewPassword) {
+		this.password = encodedNewPassword;
+	}
 }
