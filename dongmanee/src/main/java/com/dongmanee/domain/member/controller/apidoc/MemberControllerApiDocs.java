@@ -1,9 +1,8 @@
 package com.dongmanee.domain.member.controller.apidoc;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PathVariable;
 
+import com.dongmanee.domain.member.dto.request.RequestUpdateMemberDetails;
 import com.dongmanee.domain.member.dto.response.ResponseMember;
 import com.dongmanee.domain.member.dto.response.ResponseMemberDetails;
 import com.dongmanee.global.utils.ApiResult;
@@ -38,7 +37,7 @@ public interface MemberControllerApiDocs {
 						}
 							"""))),
 	})
-	ApiResult<ResponseMember> findMemberById(@PathVariable("member-id") Long id);
+	ApiResult<ResponseMember> findMemberById(Long id);
 
 	@Operation(summary = "멤버 세부 정보 조회")
 	@ApiResponses({
@@ -63,5 +62,30 @@ public interface MemberControllerApiDocs {
 						}
 							"""))),
 	})
-	ApiResult<ResponseMemberDetails> findMemberDetailsById(@AuthenticationPrincipal UserDetails userDetails);
+	ApiResult<ResponseMemberDetails> findMemberDetailsById(UserDetails userDetails);
+
+	@Operation(summary = "멤버 세부 정보 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",
+			description = "요청 성공",
+			content = @Content(schema = @Schema(implementation = ApiResult.class),
+				examples = @ExampleObject(name = "멤버 정보 수정 성공",
+					value = """
+						{
+							"status":200,
+							"message":"멤버 정보 수정 성공",
+							"data": {
+								"university": "한밭대학교",
+								"studentId": "20181010",
+								"department": "컴퓨터공학과",
+								"name": "홍길동",
+								"phone": "010-1234-5678",
+								"email": "example@example.org",
+								"birth": "1999-01-01",
+								"profileImageUrl": null
+							}
+						}
+							"""))),
+	})
+	ApiResult<ResponseMemberDetails> updateMemberDetails(UserDetails userDetails, RequestUpdateMemberDetails request);
 }
