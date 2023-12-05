@@ -79,4 +79,19 @@ public class Member extends BaseEntity {
 	public void updateEmail(String email) {
 		this.email = email;
 	}
+
+	public void updateMember(String department, String phone, LocalDate birth, String profileImageUrl) {
+		if (department != null) {
+			this.department = department;
+		}
+		if (phone != null) {
+			this.phone = phone;
+		}
+		if (birth != null) {
+			this.birth = birth;
+		}
+		if (profileImageUrl != null) {
+			this.profileImageUrl = profileImageUrl;
+		}
+	}
 }
