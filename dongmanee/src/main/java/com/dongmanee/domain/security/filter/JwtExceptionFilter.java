@@ -1,7 +1,6 @@
 package com.dongmanee.domain.security.filter;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,8 +41,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 		final Map<String, Object> body = new HashMap<>();
 		body.put("status", ex.getHttpStatus().value());
 		body.put("error", ex.getMessage());
-		body.put("path", req.getServletPath());
-		body.put("timestamp", LocalDateTime.now().toString());
+		body.put("data", null);
 		final ObjectMapper mapper = new ObjectMapper();
 		mapper.writeValue(res.getOutputStream(), body);
 		res.setStatus(ex.getHttpStatus().value());

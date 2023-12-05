@@ -37,8 +37,7 @@ public interface ClubInfoEditControllerApiDocs {
 						{
 							"status": 401,
 							"message": "인증에 실패하였습니다.",
-							"path": "/club/1",
-							"timestamp": "2023-12-02T01:51:10.278370"
+							"daa": null
 						}
 												""")
 			)),
@@ -83,8 +82,7 @@ public interface ClubInfoEditControllerApiDocs {
 						{
 							"status": 401,
 							"message": "인증에 실패하였습니다.",
-							"path": "/club/1",
-							"timestamp": "2023-12-02T01:51:10.278370"
+							"daa": null
 						}
 												""")
 			))
@@ -117,8 +115,7 @@ public interface ClubInfoEditControllerApiDocs {
 						{
 							"status": 401,
 							"message": "인증에 실패하였습니다.",
-							"path": "/club/1",
-							"timestamp": "2023-12-02T01:51:10.278370"
+							"daa": null
 						}
 												""")
 			)),
@@ -161,8 +158,7 @@ public interface ClubInfoEditControllerApiDocs {
 						{
 							"status": 401,
 							"message": "인증에 실패하였습니다.",
-							"path": "/club/1",
-							"timestamp": "2023-12-02T01:51:10.278370"
+							"daa": null
 						}
 												""")
 			)),
