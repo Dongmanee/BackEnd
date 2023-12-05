@@ -1,10 +1,7 @@
 package com.dongmanee.domain.member.service;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.dongmanee.domain.email.service.EmailService;
-import com.dongmanee.domain.email.utils.EmailRedisUtils;
 import com.dongmanee.domain.member.dao.MemberRepository;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestUpdateMemberDetails;
@@ -15,11 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-	private final EmailService emailService;
 	private final MemberRepository memberJpaRepository;
-	private final PasswordEncoder passwordEncoder;
-
-	private final EmailRedisUtils emailRedis;
 
 	@Override
 	public Member findById(Long id) {
