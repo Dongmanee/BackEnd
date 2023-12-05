@@ -27,6 +27,18 @@ public interface ClubControllerApiDocs {
 						}
 												""")
 			)),
+		@ApiResponse(responseCode = "401",
+			description = "인증에 실패하였습니다. - JWT토큰 혹은 ClubUserRole",
+			content = @Content(schema = @Schema(implementation = ApiResult.class),
+				examples = @ExampleObject(name = "인증 실패",
+					value = """
+						{
+							"status": 401,
+							"message": "인증에 실패하였습니다.",
+							"daa": null
+						}
+												""")
+			)),
 		@ApiResponse(responseCode = "404",
 			description = "카테고리 검색 실패",
 			content = @Content(schema = @Schema(implementation = ApiResult.class),
