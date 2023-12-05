@@ -51,6 +51,7 @@ public class RequestSignup {
 	@Schema(description = "이메일인증 완료 후 사용자가 받은 인증 코드",
 		example = "123456")
 	@NotBlank(message = "이메일 인증을 해주세요.")
+	@Size(min = 6, max = 6, message = "옳바르지 않은 인증코드 입니다.")
 	private String emailAuthCode;
 
 	@Schema(description = "사용자의 생년월일",
