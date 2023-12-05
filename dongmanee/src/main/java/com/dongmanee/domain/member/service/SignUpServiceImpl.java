@@ -46,7 +46,7 @@ public class SignUpServiceImpl implements SignUpService {
 	}
 
 	private void checkEmailAuthCode(String email, String emailAuthCode) {
-		if (emailRedis.getData(email).equals(emailAuthCode)) {
+		if (emailRedis.getData(email) != null && emailRedis.getData(email).equals(emailAuthCode)) {
 			emailRedis.deleteData(email);
 		} else {
 			throw new EmailVerifiedException("이메일 인증을 해주세요.");
