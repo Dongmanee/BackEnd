@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EmailServiceImpl implements EmailService {
 	private final JavaMailSender emailSender;
 	private final EmailRedisUtils emailRedis;
-	private final MemberRepository memberJpaRepository;
+	private final MemberRepository memberRepository;
 	private final AuthCodeProvider authCodeProvider;
 
 	@Value("${spring.mail.username}")
@@ -46,7 +46,7 @@ public class EmailServiceImpl implements EmailService {
 	 */
 	@Override
 	public void sendSingUpEmailAuthCode(String toEmail) {
-		if (memberJpaRepository.existsByEmail(toEmail)) {
+		if (memberRepository.existsByEmail(toEmail)) {
 			throw new DuplicateEmailException("이미 가입한 이메일입니다.");
 		}
 

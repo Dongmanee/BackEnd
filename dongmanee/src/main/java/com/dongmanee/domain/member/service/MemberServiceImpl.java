@@ -12,16 +12,16 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-	private final MemberRepository memberJpaRepository;
+	private final MemberRepository memberRepository;
 
 	@Override
 	public Member findById(Long id) {
-		return memberJpaRepository.findById(id).orElseThrow(MemberNotFoundException::new);
+		return memberRepository.findById(id).orElseThrow(MemberNotFoundException::new);
 	}
 
 	@Override
 	public Member updateMemberDetails(long id, RequestUpdateMemberDetails request) {
-		Member member = memberJpaRepository.findById(id).orElseThrow(MemberNotFoundException::new);
+		Member member = memberRepository.findById(id).orElseThrow(MemberNotFoundException::new);
 
 		member.updateMember(
 			request.getDepartment(),
@@ -30,6 +30,6 @@ public class MemberServiceImpl implements MemberService {
 			request.getProfileImageUrl()
 		);
 
-		return memberJpaRepository.save(member);
+		return memberRepository.save(member);
 	}
 }
