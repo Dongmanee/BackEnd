@@ -5,13 +5,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dongmanee.domain.email.dto.request.RequestEmailAuthCode;
+import com.dongmanee.domain.email.dto.request.RequestVerifyAuthCode;
+import com.dongmanee.domain.email.dto.response.ResponseEmailAuthCode;
+import com.dongmanee.domain.email.service.EmailService;
 import com.dongmanee.domain.member.controller.apidoc.MemberControllerApiDocs;
 import com.dongmanee.domain.member.controller.mapper.MemberMapper;
 import com.dongmanee.domain.member.domain.Member;
+import com.dongmanee.domain.member.dto.request.RequestUpdateEmail;
 import com.dongmanee.domain.member.dto.request.RequestUpdateMemberDetails;
 import com.dongmanee.domain.member.dto.request.RequestUpdatePassword;
 import com.dongmanee.domain.member.dto.response.ResponseMember;
@@ -27,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberController implements MemberControllerApiDocs {
 	private final MemberService memberService;
+	private final EmailService emailService;
 	private final MemberMapper memberMapper;
 
 	@GetMapping("/{member-id}")
@@ -57,5 +64,28 @@ public class MemberController implements MemberControllerApiDocs {
 		memberService.updateMemberPassword(Long.parseLong(userDetails.getUsername()), request);
 
 		return ApiResult.isNoContent("비밀번호 변경 성공");
+	}
+
+	@PostMapping("/emails/verification-code")
+	public ApiResult<?> sendEmailAuthCode(@Valid @RequestBody RequestEmailAuthCode requestEmailAuthCode) {
+		emailService.sendEmailVerificationCode(requestEmailAuthCode.getEmail());
+
+		return ApiResult.isNoContent("인증 코드 발송");
+	}
+
+	@PostMapping("/emails/confirm")
+	public ApiResult<?> verifyEmailAuthCode(@Valid @RequestBody RequestVerifyAuthCode requestVerifyAuthCode) {
+		String code = emailService.verifyEmailAuthCode(requestVerifyAuthCode.getEmail(),
+			requestVerifyAuthCode.getCode());
+
+		return ApiResult.isOk(new ResponseEmailAuthCode(code), "인증 성공");
+	}
+
+	@PatchMapping("/emails")
+	public ApiResult<?> updateMemberEmail(@AuthenticationPrincipal UserDetails userDetails,
+		@Valid @RequestBody RequestUpdateEmail request) {
+		memberService.updateMemberEmail(Long.parseLong(userDetails.getUsername()), request);
+
+		return ApiResult.isNoContent("이메일 변경 성공");
 	}
 }
