@@ -73,7 +73,9 @@ public interface SignUpControllerApiDocs {
 						{
 							"status":204,
 							"message":"이메일 인증 성공",
-							"data": null
+							"data": {
+								"code": "123456"
+							}
 						}
 							"""))),
 		@ApiResponse(responseCode = "401",

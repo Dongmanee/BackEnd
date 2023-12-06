@@ -45,7 +45,7 @@ public class EmailServiceImpl implements EmailService {
 	 * @param toEmail
 	 */
 	@Override
-	public void sendSingUpEmailAuthCode(String toEmail) {
+	public void sendEmailVerificationCode(String toEmail) {
 		if (memberRepository.existsByEmail(toEmail)) {
 			throw new DuplicateEmailException("이미 가입한 이메일입니다.");
 		}
@@ -71,7 +71,7 @@ public class EmailServiceImpl implements EmailService {
 	 * @param authCode
 	 */
 	@Override
-	public String verifySignUpEmailAuthCode(String email, String authCode) {
+	public String verifyEmailAuthCode(String email, String authCode) {
 		String redisAuthCode = emailRedis.getData(email);
 
 		if (redisAuthCode == null || redisAuthCode.isEmpty() || !redisAuthCode.equals(authCode)) {
@@ -85,6 +85,15 @@ public class EmailServiceImpl implements EmailService {
 		emailRedis.setData(email, authCode, authCodeExpirationMillis);
 
 		return authCode;
+	}
+
+	@Override
+	public void verifyFinalEmailAuthCode(String email, String emailAuthCode) {
+		if (emailRedis.getData(email) != null && emailRedis.getData(email).equals(emailAuthCode)) {
+			emailRedis.deleteData(email);
+		} else {
+			throw new EmailVerifiedException("이메일 인증을 해주세요.");
+		}
 	}
 
 	/**

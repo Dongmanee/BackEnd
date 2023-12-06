@@ -40,16 +40,16 @@ public class SignUpController implements SignUpControllerApiDocs {
 		return ApiResult.isNoContent("회원가입 성공");
 	}
 
-	@PostMapping("/code/send")
+	@PostMapping("/emails/verification-code")
 	public ApiResult<?> sendSignUpEmailAuthCode(@Valid @RequestBody RequestEmailAuthCode requestEmailAuthCode) {
-		emailService.sendSingUpEmailAuthCode(requestEmailAuthCode.getEmail());
+		emailService.sendEmailVerificationCode(requestEmailAuthCode.getEmail());
 
 		return ApiResult.isNoContent("인증 코드 발송");
 	}
 
-	@PostMapping("/code/check")
+	@PostMapping("/emails/confirm")
 	public ApiResult<?> verifySignUpEmailAuthCode(@Valid @RequestBody RequestVerifyAuthCode requestVerifyAuthCode) {
-		String code = emailService.verifySignUpEmailAuthCode(requestVerifyAuthCode.getEmail(),
+		String code = emailService.verifyEmailAuthCode(requestVerifyAuthCode.getEmail(),
 			requestVerifyAuthCode.getCode());
 
 		return ApiResult.isOk(new ResponseEmailAuthCode(code), "인증 성공");
