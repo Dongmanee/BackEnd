@@ -44,7 +44,8 @@ public class ClubController implements ClubControllerApiDocs {
 	}
 
 	@GetMapping("/members/clubs")
-	public ApiResult<?> clubJoinLists(@AuthenticationPrincipal CustomUserDetails userDetails) {
+	public ApiResult<List<MemberJoinedClubResponseDto>> clubJoinLists(
+		@AuthenticationPrincipal CustomUserDetails userDetails) {
 		List<Club> joinedClubList = clubService.getJoinedClubList(Long.parseLong(userDetails.getUsername()));
 
 		List<MemberJoinedClubResponseDto> responseDto = clubMapper.toDto(joinedClubList);
