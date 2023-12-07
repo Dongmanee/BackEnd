@@ -26,5 +26,5 @@ public class RequestUpdateEmail {
 		example = "123456")
 	@NotBlank(message = "이메일 인증을 해주세요.")
 	@Size(min = 6, max = 6, message = "옳바르지 않은 인증코드 입니다.")
-	private String emailAuthCode;
+	private String code;
 }
