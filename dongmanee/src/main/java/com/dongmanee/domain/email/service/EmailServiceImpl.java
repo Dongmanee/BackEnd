@@ -71,7 +71,7 @@ public class EmailServiceImpl implements EmailService {
 	 * @param authCode
 	 */
 	@Override
-	public String verifyEmailAuthCode(String email, String authCode) {
+	public void verifyEmailAuthCode(String email, String authCode) {
 		String redisAuthCode = emailRedis.getData(email);
 
 		if (redisAuthCode == null || redisAuthCode.isEmpty() || !redisAuthCode.equals(authCode)) {
@@ -79,20 +79,15 @@ public class EmailServiceImpl implements EmailService {
 			throw new EmailVerifiedException();
 		}
 
-		// 인증 성공 시 새로운 인증 코드를 생성해 응답
-		// 추가정보를 포함해 회원가입 요청을 보낼 때 해당 값을 포함해야함
-		authCode = authCodeProvider.createAuthCode();
-		emailRedis.setData(email, authCode, authCodeExpirationMillis);
-
-		return authCode;
+		emailRedis.setData(email, "verified", authCodeExpirationMillis);
 	}
 
 	@Override
-	public void verifyFinalEmailAuthCode(String email, String emailAuthCode) {
-		if (emailRedis.getData(email) != null && emailRedis.getData(email).equals(emailAuthCode)) {
-			emailRedis.deleteData(email);
-		} else {
-			throw new EmailVerifiedException("이메일 인증을 해주세요.");
+	public void checkEmailAuthentication(String email) {
+		String status = emailRedis.getData(email);
+
+		if (status == null || !status.equals("verified")) {
+			throw new EmailVerifiedException();
 		}
 	}
 

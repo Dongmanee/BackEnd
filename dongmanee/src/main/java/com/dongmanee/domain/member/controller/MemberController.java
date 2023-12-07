@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dongmanee.domain.email.dto.request.RequestEmailAuthCode;
 import com.dongmanee.domain.email.dto.request.RequestVerifyAuthCode;
-import com.dongmanee.domain.email.dto.response.ResponseEmailAuthCode;
 import com.dongmanee.domain.email.service.EmailService;
 import com.dongmanee.domain.member.controller.apidoc.MemberControllerApiDocs;
 import com.dongmanee.domain.member.controller.mapper.MemberMapper;
@@ -77,17 +76,15 @@ public class MemberController implements MemberControllerApiDocs {
 
 	@PostMapping("/emails/confirm")
 	public ApiResult<?> verifyEmailAuthCode(@Valid @RequestBody RequestVerifyAuthCode requestVerifyAuthCode) {
-		String code = emailService.verifyEmailAuthCode(requestVerifyAuthCode.getEmail(),
-			requestVerifyAuthCode.getCode());
+		emailService.verifyEmailAuthCode(requestVerifyAuthCode.getEmail(), requestVerifyAuthCode.getCode());
 
-		return ApiResult.isOk(new ResponseEmailAuthCode(code), "인증 성공");
+		return ApiResult.isNoContent("인증 성공");
 	}
 
 	@PatchMapping("/emails")
 	public ApiResult<?> updateMemberEmail(@AuthenticationPrincipal UserDetails userDetails,
 		@Valid @RequestBody RequestUpdateEmail request) {
-		memberService.updateMemberEmail(Long.parseLong(userDetails.getUsername()), request.getEmail(),
-			request.getEmailAuthCode());
+		memberService.updateMemberEmail(Long.parseLong(userDetails.getUsername()), request.getEmail());
 
 		return ApiResult.isNoContent("이메일 변경 성공");
 	}

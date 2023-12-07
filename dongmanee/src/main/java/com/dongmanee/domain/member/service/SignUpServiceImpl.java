@@ -25,8 +25,8 @@ public class SignUpServiceImpl implements SignUpService {
 
 	@Override
 	@Transactional
-	public void signup(String provider, Long externalProviderId, Member member, String emailAuthCode) {
-		emailService.verifyFinalEmailAuthCode(member.getEmail(), emailAuthCode);
+	public void signup(String provider, Long externalProviderId, Member member) {
+		emailService.checkEmailAuthentication(member.getEmail());
 		checkStudentIdAvailability(member.getStudentId());
 		checkEmailAvailability(member.getEmail());
 		checkPhoneAvailability(member.getPhone());

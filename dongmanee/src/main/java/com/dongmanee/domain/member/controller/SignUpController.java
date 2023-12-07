@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dongmanee.domain.email.dto.request.RequestEmailAuthCode;
 import com.dongmanee.domain.email.dto.request.RequestVerifyAuthCode;
-import com.dongmanee.domain.email.dto.response.ResponseEmailAuthCode;
 import com.dongmanee.domain.email.service.EmailService;
 import com.dongmanee.domain.member.controller.apidoc.SignUpControllerApiDocs;
 import com.dongmanee.domain.member.controller.mapper.MemberMapper;
@@ -35,8 +34,7 @@ public class SignUpController implements SignUpControllerApiDocs {
 	@PostMapping()
 	public ApiResult<?> userSignUp(@Valid @RequestBody RequestSignup request) {
 		Member newMember = memberMapper.toEntity(request, universityService, passwordEncoder);
-		signUpService.signup(request.getProvider(), request.getExternalProviderId(), newMember,
-			request.getEmailAuthCode());
+		signUpService.signup(request.getProvider(), request.getExternalProviderId(), newMember);
 		return ApiResult.isNoContent("회원가입 성공");
 	}
 
@@ -49,9 +47,8 @@ public class SignUpController implements SignUpControllerApiDocs {
 
 	@PostMapping("/emails/confirm")
 	public ApiResult<?> verifySignUpEmailAuthCode(@Valid @RequestBody RequestVerifyAuthCode requestVerifyAuthCode) {
-		String code = emailService.verifyEmailAuthCode(requestVerifyAuthCode.getEmail(),
-			requestVerifyAuthCode.getCode());
+		emailService.verifyEmailAuthCode(requestVerifyAuthCode.getEmail(), requestVerifyAuthCode.getCode());
 
-		return ApiResult.isOk(new ResponseEmailAuthCode(code), "인증 성공");
+		return ApiResult.isNoContent("인증 성공");
 	}
 }

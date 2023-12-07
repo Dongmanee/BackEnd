@@ -53,10 +53,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void updateMemberEmail(long id, String email, String code) {
+	public void updateMemberEmail(long id, String email) {
 		Member member = memberRepository.findById(id).orElseThrow(MemberNotFoundException::new);
 
-		emailService.verifyFinalEmailAuthCode(email, code);
+		emailService.checkEmailAuthentication(email);
 
 		member.updateEmail(email);
 

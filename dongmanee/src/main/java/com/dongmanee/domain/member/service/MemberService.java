@@ -9,5 +9,5 @@ public interface MemberService {
 
 	void updateMemberPassword(long id, String existingPassword, String newPassword);
 
-	void updateMemberEmail(long id, String email, String code);
+	void updateMemberEmail(long id, String email);
 }
