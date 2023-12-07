@@ -1,6 +1,9 @@
 package com.dongmanee.domain.club.controller.apidoc;
 
+import java.util.List;
+
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
+import com.dongmanee.domain.club.dto.response.MemberJoinedClubResponseDto;
 import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.global.utils.ApiResult;
 
@@ -62,8 +65,13 @@ public interface ClubControllerApiDocs {
 					value = """
 						{
 							"status": 200,
-							"message": "클럽이 생성되었습니다.",
-							"data": null
+							"message": "조회에 성공하였습니다.",
+							"data": [
+								{
+								"name": "clubName",
+								"clubMainImageUrl":"url or null"
+								}
+							]
 						}
 												""")
 			)),
@@ -80,6 +88,6 @@ public interface ClubControllerApiDocs {
 												""")
 			))
 	})
-	ApiResult<?> clubJoinLists(CustomUserDetails userDetails);
+	ApiResult<List<MemberJoinedClubResponseDto>> clubJoinLists(CustomUserDetails userDetails);
 
 }
