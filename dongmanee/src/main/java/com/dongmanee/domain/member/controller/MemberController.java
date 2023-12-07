@@ -53,7 +53,8 @@ public class MemberController implements MemberControllerApiDocs {
 	@PatchMapping("/details")
 	public ApiResult<ResponseMemberDetails> updateMemberDetails(@AuthenticationPrincipal UserDetails userDetails,
 		@Valid @RequestBody RequestUpdateMemberDetails request) {
-		Member updatedMember = memberService.updateMemberDetails(Long.parseLong(userDetails.getUsername()), request);
+		Member sourceMember = memberMapper.toEntity(Long.parseLong(userDetails.getUsername()), request);
+		Member updatedMember = memberService.updateMemberDetails(sourceMember);
 		ResponseMemberDetails response = memberMapper.toResponseMemberDetails(updatedMember);
 		return ApiResult.isOk(response, "멤버 세부 정보 수정 성공");
 	}
@@ -61,7 +62,8 @@ public class MemberController implements MemberControllerApiDocs {
 	@PatchMapping("/password")
 	public ApiResult<?> updateMemberPassword(@AuthenticationPrincipal UserDetails userDetails,
 		@Valid @RequestBody RequestUpdatePassword request) {
-		memberService.updateMemberPassword(Long.parseLong(userDetails.getUsername()), request);
+		memberService.updateMemberPassword(Long.parseLong(userDetails.getUsername()), request.getExistingPassword(),
+			request.getNewPassword());
 
 		return ApiResult.isNoContent("비밀번호 변경 성공");
 	}
@@ -84,7 +86,8 @@ public class MemberController implements MemberControllerApiDocs {
 	@PatchMapping("/emails")
 	public ApiResult<?> updateMemberEmail(@AuthenticationPrincipal UserDetails userDetails,
 		@Valid @RequestBody RequestUpdateEmail request) {
-		memberService.updateMemberEmail(Long.parseLong(userDetails.getUsername()), request);
+		memberService.updateMemberEmail(Long.parseLong(userDetails.getUsername()), request.getEmail(),
+			request.getEmailAuthCode());
 
 		return ApiResult.isNoContent("이메일 변경 성공");
 	}
