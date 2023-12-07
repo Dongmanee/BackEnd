@@ -1,5 +1,7 @@
 package com.dongmanee.domain.club.service;
 
+import java.util.List;
+
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubCategory;
 import com.dongmanee.domain.club.domain.ClubSns;
@@ -11,6 +13,8 @@ public interface ClubService {
 	Club editClubDescriptionAndAddress(Long memberId, Club club);
 
 	ClubSns addClubSns(Long memberId, ClubSns clubSns, Long clubId);
+
+	List<Club> getJoinedClubList(Long memberId);
 
 	ClubSns editClubSns(ClubSns clubSns, Long clubId, Long snsId);
 
