@@ -2,8 +2,7 @@ package com.dongmanee.domain.member.service;
 
 import org.springframework.stereotype.Service;
 
-import com.dongmanee.domain.email.exception.EmailVerifiedException;
-import com.dongmanee.domain.email.utils.EmailRedisUtils;
+import com.dongmanee.domain.email.service.EmailService;
 import com.dongmanee.domain.member.dao.MemberRepository;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.enums.Role;
@@ -22,12 +21,12 @@ import lombok.RequiredArgsConstructor;
 public class SignUpServiceImpl implements SignUpService {
 	private final MemberRepository memberRepository;
 	private final AuthProviderRepository authProviderRepository;
-	private final EmailRedisUtils emailRedis;
+	private final EmailService emailService;
 
 	@Override
 	@Transactional
-	public void signup(String provider, Long externalProviderId, Member member, String emailAuthCode) {
-		checkEmailAuthCode(member.getEmail(), emailAuthCode);
+	public void signup(String provider, Long externalProviderId, Member member) {
+		emailService.checkEmailAuthentication(member.getEmail());
 		checkStudentIdAvailability(member.getStudentId());
 		checkEmailAvailability(member.getEmail());
 		checkPhoneAvailability(member.getPhone());
@@ -43,14 +42,6 @@ public class SignUpServiceImpl implements SignUpService {
 		}
 
 		memberRepository.save(member);
-	}
-
-	private void checkEmailAuthCode(String email, String emailAuthCode) {
-		if (emailRedis.getData(email).equals(emailAuthCode)) {
-			emailRedis.deleteData(email);
-		} else {
-			throw new EmailVerifiedException("이메일 인증을 해주세요.");
-		}
 	}
 
 	private void checkStudentIdAvailability(String studentId) {

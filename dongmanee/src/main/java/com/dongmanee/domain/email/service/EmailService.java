@@ -1,7 +1,9 @@
 package com.dongmanee.domain.email.service;
 
 public interface EmailService {
-	void sendSingUpEmailAuthCode(String toEmail);
+	void sendEmailVerificationCode(String toEmail);
 
-	String verifySignUpEmailAuthCode(String email, String authCode);
+	void verifyEmailAuthCode(String email, String authCode);
+
+	void checkEmailAuthentication(String email);
 }

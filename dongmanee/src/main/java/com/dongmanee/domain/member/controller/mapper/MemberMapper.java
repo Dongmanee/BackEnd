@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestSignup;
+import com.dongmanee.domain.member.dto.request.RequestUpdateMemberDetails;
 import com.dongmanee.domain.member.dto.response.ResponseMember;
 import com.dongmanee.domain.member.dto.response.ResponseMemberDetails;
 import com.dongmanee.domain.university.domain.University;
@@ -28,6 +29,8 @@ public interface MemberMapper {
 	Member toEntity(RequestSignup requestSignup,
 		@Context UniversityService universityService,
 		@Context PasswordEncoder passwordEncoder);
+
+	Member toEntity(Long id, RequestUpdateMemberDetails request);
 
 	@Mapping(target = "university", expression = "java(member.getUniversity().getName())")
 	ResponseMember toResponseMember(Member member);
