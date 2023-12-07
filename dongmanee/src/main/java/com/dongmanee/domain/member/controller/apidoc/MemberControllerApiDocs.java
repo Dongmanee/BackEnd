@@ -162,9 +162,7 @@ public interface MemberControllerApiDocs {
 							{
 								"status":401,
 								"message":"이메일 인증 실패",
-								"data": {
-									"code": "123456"
-								}
+								"data": null
 							}
 								""")
 				}))
