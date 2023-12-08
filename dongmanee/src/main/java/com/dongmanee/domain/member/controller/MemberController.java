@@ -98,7 +98,7 @@ public class MemberController implements MemberControllerApiDocs {
 		return ApiResult.isNoContent("이메일 변경 성공");
 	}
 
-	@GetMapping("/members/clubs")
+	@GetMapping("/clubs")
 	public ApiResult<List<MemberJoinedClubResponseDto>> clubJoinLists(
 		@AuthenticationPrincipal CustomUserDetails userDetails) {
 		List<Club> joinedClubList = clubService.getJoinedClubList(Long.parseLong(userDetails.getUsername()));
