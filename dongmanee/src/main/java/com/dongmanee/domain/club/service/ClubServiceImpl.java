@@ -1,6 +1,7 @@
 package com.dongmanee.domain.club.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +58,12 @@ public class ClubServiceImpl implements ClubService {
 		// 추가
 		clubSns.addClub(clubUser.getClub());
 		return clubSnsRepository.save(clubSns);
+	}
+
+	@Override
+	public List<Club> getJoinedClubList(Long memberId) {
+		List<ClubUser> clubUsers = clubUserRepository.findWithMember(memberId);
+		return clubUsers.stream().map(ClubUser::getClub).toList();
 	}
 
 	// TODO: editClubSns, removeClubSns 추후 한번에 쿼리로 fetch join 하는 방식과 시간 비교 필요

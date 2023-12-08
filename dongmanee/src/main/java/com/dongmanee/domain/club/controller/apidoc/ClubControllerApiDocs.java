@@ -1,8 +1,7 @@
 package com.dongmanee.domain.club.controller.apidoc;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
+import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.global.utils.ApiResult;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,6 +51,6 @@ public interface ClubControllerApiDocs {
 												""")
 			))
 	})
-	ApiResult<?> createClub(RequestCreateClub createClub, UserDetails userDetails);
+	ApiResult<?> createClub(RequestCreateClub createClub, CustomUserDetails userDetails);
 
 }

@@ -1,7 +1,6 @@
 package com.dongmanee.domain.club.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +12,7 @@ import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 import com.dongmanee.domain.club.service.ClubService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.service.MemberService;
+import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.global.utils.ApiResult;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,7 +32,7 @@ public class ClubController implements ClubControllerApiDocs {
 	//TODO: 클럽 정보 가져오는 URL 리턴으로 변경
 	@PostMapping("/clubs")
 	public ApiResult<?> createClub(@Valid @RequestBody RequestCreateClub createClub,
-		@AuthenticationPrincipal UserDetails userDetails) {
+		@AuthenticationPrincipal CustomUserDetails userDetails) {
 		Member requestMember = memberService.findById(Long.parseLong(userDetails.getUsername()));
 		Club club = clubMapper.toEntity(createClub, clubService);
 		clubService.createClub(club, requestMember);

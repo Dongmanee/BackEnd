@@ -1,5 +1,7 @@
 package com.dongmanee.domain.club.controller.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,6 +13,7 @@ import com.dongmanee.domain.club.domain.ClubCategory;
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 import com.dongmanee.domain.club.dto.request.RequestEditClubDescriptionAndAddress;
 import com.dongmanee.domain.club.service.ClubService;
+import com.dongmanee.domain.member.dto.response.MainPageMemberClubDto;
 
 @Mapper(componentModel = "spring",
 	unmappedTargetPolicy = ReportingPolicy.IGNORE,
@@ -21,6 +24,8 @@ public interface ClubMapper {
 		@Context ClubService clubService);
 
 	Club toEntity(Long id, RequestEditClubDescriptionAndAddress dto);
+
+	List<MainPageMemberClubDto> toMemberJoinedClubResponseDto(List<Club> clubs);
 
 	@Named("categoryConverter")
 	default ClubCategory categoryConverter(Long categoryId, @Context ClubService clubService) {
