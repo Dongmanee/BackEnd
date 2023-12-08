@@ -25,7 +25,7 @@ public interface ClubMapper {
 
 	Club toEntity(Long id, RequestEditClubDescriptionAndAddress dto);
 
-	List<MemberJoinedClubResponseDto> toDto(List<Club> clubs);
+	List<MemberJoinedClubResponseDto> toMemberJoinedClubResponseDto(List<Club> clubs);
 
 	@Named("categoryConverter")
 	default ClubCategory categoryConverter(Long categoryId, @Context ClubService clubService) {

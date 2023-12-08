@@ -51,8 +51,7 @@ public class MemberController implements MemberControllerApiDocs {
 	public ApiResult<List<MemberJoinedClubResponseDto>> clubJoinLists(
 		@AuthenticationPrincipal CustomUserDetails userDetails) {
 		List<Club> joinedClubList = clubService.getJoinedClubList(Long.parseLong(userDetails.getUsername()));
-
-		List<MemberJoinedClubResponseDto> responseDto = clubMapper.toDto(joinedClubList);
+		List<MemberJoinedClubResponseDto> responseDto = clubMapper.toMemberJoinedClubResponseDto(joinedClubList);
 		return ApiResult.isOk(responseDto, "조회에 성공하였습니다.");
 	}
 }
