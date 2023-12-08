@@ -1,11 +1,15 @@
 package com.dongmanee.domain.member.controller.apidoc;
 
+import java.util.List;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.dongmanee.domain.club.dto.response.MemberJoinedClubResponseDto;
 import com.dongmanee.domain.member.dto.response.ResponseMember;
 import com.dongmanee.domain.member.dto.response.ResponseMemberDetails;
+import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.global.utils.ApiResult;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -64,4 +68,39 @@ public interface MemberControllerApiDocs {
 							"""))),
 	})
 	ApiResult<ResponseMemberDetails> findMemberDetailsById(@AuthenticationPrincipal UserDetails userDetails);
+
+	@Operation(summary = "로그인 유저의 가입 클럽 목록 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",
+			description = "조회 성공 - 클럽 이름, 클럽 메인 이미지",
+			content = @Content(schema = @Schema(implementation = ApiResult.class),
+				examples = @ExampleObject(name = "클럽조회성공",
+					value = """
+						{
+							"status": 200,
+							"message": "조회에 성공하였습니다.",
+							"data": [
+								{
+								"name": "clubName",
+								"clubMainImageUrl":"url or null"
+								}
+							]
+						}
+												""")
+			)),
+		@ApiResponse(responseCode = "401",
+			description = "인증에 실패하였습니다. - JWT토큰 혹은 ClubUserRole",
+			content = @Content(schema = @Schema(implementation = ApiResult.class),
+				examples = @ExampleObject(name = "인증 실패",
+					value = """
+						{
+							"status": 401,
+							"message": "인증에 실패하였습니다.",
+							"daa": null
+						}
+												""")
+			))
+	})
+	ApiResult<List<MemberJoinedClubResponseDto>> clubJoinLists(CustomUserDetails userDetails);
+
 }
