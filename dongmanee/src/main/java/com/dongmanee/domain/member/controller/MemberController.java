@@ -31,6 +31,7 @@ import com.dongmanee.domain.member.service.MemberService;
 import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.global.utils.ApiResult;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -39,6 +40,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberController implements MemberControllerApiDocs {
 	private final MemberService memberService;
 	private final MemberMapper memberMapper;
+	private final EmailService emailService;
 	private final ClubService clubService;
 	private final ClubMapper clubMapper;
 

@@ -2,9 +2,7 @@ package com.dongmanee.domain.member.controller.apidoc;
 
 import java.util.List;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.dongmanee.domain.club.dto.response.MemberJoinedClubResponseDto;
 import com.dongmanee.domain.email.dto.request.RequestEmailAuthCode;
@@ -24,7 +22,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 
 @Tag(name = "멤버", description = "멤버 API 명세")
 public interface MemberControllerApiDocs {
@@ -48,7 +45,7 @@ public interface MemberControllerApiDocs {
 						}
 							"""))),
 	})
-	ApiResult<ResponseMember> findMemberById(@PathVariable("member-id") Long id);
+	ApiResult<ResponseMember> findMemberById(Long id);
 
 	@Operation(summary = "멤버 세부 정보 조회")
 	@ApiResponses({
@@ -143,7 +140,7 @@ public interface MemberControllerApiDocs {
 								""")
 				}))
 	})
-	ApiResult<?> sendEmailAuthCode(@Valid @RequestBody RequestEmailAuthCode requestEmailAuthCode);
+	ApiResult<?> sendEmailAuthCode(RequestEmailAuthCode requestEmailAuthCode);
 
 	@Operation(summary = "이메일 인증 코드 검증")
 	@ApiResponses({
@@ -172,7 +169,7 @@ public interface MemberControllerApiDocs {
 								""")
 				}))
 	})
-	ApiResult<?> verifyEmailAuthCode(@Valid @RequestBody RequestVerifyAuthCode requestVerifyAuthCode);
+	ApiResult<?> verifyEmailAuthCode(RequestVerifyAuthCode requestVerifyAuthCode);
 
 	@Operation(summary = "멤버 이메일 변경")
 	@ApiResponses({
@@ -189,7 +186,6 @@ public interface MemberControllerApiDocs {
 							"""))),
 	})
 	ApiResult<?> updateMemberEmail(UserDetails userDetails, RequestUpdateEmail request);
-	ApiResult<ResponseMemberDetails> findMemberDetailsById(@AuthenticationPrincipal UserDetails userDetails);
 
 	@Operation(summary = "로그인 유저의 가입 클럽 목록 조회")
 	@ApiResponses({
