@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dongmanee.domain.club.controller.mapper.ClubMapper;
 import com.dongmanee.domain.club.domain.Club;
-import com.dongmanee.domain.club.dto.response.MemberJoinedClubResponseDto;
 import com.dongmanee.domain.club.service.ClubService;
 import com.dongmanee.domain.email.dto.request.RequestEmailAuthCode;
 import com.dongmanee.domain.email.dto.request.RequestVerifyAuthCode;
@@ -25,6 +24,7 @@ import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.dto.request.RequestUpdateEmail;
 import com.dongmanee.domain.member.dto.request.RequestUpdateMemberDetails;
 import com.dongmanee.domain.member.dto.request.RequestUpdatePassword;
+import com.dongmanee.domain.member.dto.response.MainPageMemberClubDto;
 import com.dongmanee.domain.member.dto.response.ResponseMember;
 import com.dongmanee.domain.member.dto.response.ResponseMemberDetails;
 import com.dongmanee.domain.member.service.MemberService;
@@ -99,10 +99,10 @@ public class MemberController implements MemberControllerApiDocs {
 	}
 
 	@GetMapping("/clubs")
-	public ApiResult<List<MemberJoinedClubResponseDto>> clubJoinLists(
+	public ApiResult<List<MainPageMemberClubDto>> clubJoinLists(
 		@AuthenticationPrincipal CustomUserDetails userDetails) {
 		List<Club> joinedClubList = clubService.getJoinedClubList(Long.parseLong(userDetails.getUsername()));
-		List<MemberJoinedClubResponseDto> responseDto = clubMapper.toMemberJoinedClubResponseDto(joinedClubList);
+		List<MainPageMemberClubDto> responseDto = clubMapper.toMemberJoinedClubResponseDto(joinedClubList);
 		return ApiResult.isOk(responseDto, "조회에 성공하였습니다.");
 	}
 }

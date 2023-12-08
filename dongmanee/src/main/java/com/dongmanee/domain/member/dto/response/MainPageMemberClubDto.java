@@ -1,4 +1,4 @@
-package com.dongmanee.domain.club.dto.response;
+package com.dongmanee.domain.member.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberJoinedClubResponseDto {
+public class MainPageMemberClubDto {
 	private String name;
 	private String clubMainImageUrl;
 }

@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.dongmanee.domain.club.dto.response.MemberJoinedClubResponseDto;
 import com.dongmanee.domain.email.dto.request.RequestEmailAuthCode;
 import com.dongmanee.domain.email.dto.request.RequestVerifyAuthCode;
 import com.dongmanee.domain.member.dto.request.RequestUpdateEmail;
 import com.dongmanee.domain.member.dto.request.RequestUpdateMemberDetails;
 import com.dongmanee.domain.member.dto.request.RequestUpdatePassword;
+import com.dongmanee.domain.member.dto.response.MainPageMemberClubDto;
 import com.dongmanee.domain.member.dto.response.ResponseMember;
 import com.dongmanee.domain.member.dto.response.ResponseMemberDetails;
 import com.dongmanee.domain.security.domain.CustomUserDetails;
@@ -219,6 +219,6 @@ public interface MemberControllerApiDocs {
 												""")
 			))
 	})
-	ApiResult<List<MemberJoinedClubResponseDto>> clubJoinLists(CustomUserDetails userDetails);
+	ApiResult<List<MainPageMemberClubDto>> clubJoinLists(CustomUserDetails userDetails);
 
 }

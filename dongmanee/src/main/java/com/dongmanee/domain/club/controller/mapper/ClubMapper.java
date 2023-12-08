@@ -12,8 +12,8 @@ import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubCategory;
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 import com.dongmanee.domain.club.dto.request.RequestEditClubDescriptionAndAddress;
-import com.dongmanee.domain.club.dto.response.MemberJoinedClubResponseDto;
 import com.dongmanee.domain.club.service.ClubService;
+import com.dongmanee.domain.member.dto.response.MainPageMemberClubDto;
 
 @Mapper(componentModel = "spring",
 	unmappedTargetPolicy = ReportingPolicy.IGNORE,
@@ -25,7 +25,7 @@ public interface ClubMapper {
 
 	Club toEntity(Long id, RequestEditClubDescriptionAndAddress dto);
 
-	List<MemberJoinedClubResponseDto> toMemberJoinedClubResponseDto(List<Club> clubs);
+	List<MainPageMemberClubDto> toMemberJoinedClubResponseDto(List<Club> clubs);
 
 	@Named("categoryConverter")
 	default ClubCategory categoryConverter(Long categoryId, @Context ClubService clubService) {
