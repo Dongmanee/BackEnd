@@ -25,6 +25,11 @@ jobs:
           distribution: 'temurin'
       
       # 그래들 세팅
+      - name: Init Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.6.1
+
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
       
