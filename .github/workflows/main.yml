@@ -63,7 +63,7 @@ jobs:
 
       # EC2에 Docker Container 실행
       - name: Deploy to server
-        uses: appleboy/ssh-actions@v1.0.0
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{secrets.HOST}}
           username: ${{secrets.USERNAME}}
