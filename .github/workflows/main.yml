@@ -32,12 +32,12 @@ jobs:
         uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
         with:
           arguments: build -x test
-          build-root-directory: ./dongmanee
+          build-root-directory: /dongmanee
       
       - uses: actions/upload-artifact@v3
         with:
           name: Package
-          path: ./build/libs
+          path: /dongmanee/build/libs
       
       # 도커 허브 로그인
       - name: Log in to Docker Hub
