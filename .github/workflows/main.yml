@@ -37,7 +37,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: Package
-          path: ./dongmanee/build/libs
+          path: ./build/libs
       
       # 도커 허브 로그인
       - name: Log in to Docker Hub
