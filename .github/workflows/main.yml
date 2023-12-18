@@ -2,7 +2,7 @@ name: CI/CD
 
 on: 
   push:
-    branches: ["50-feat-github-actions-aws-cicd-자동화"]
+    branches: ["main"]
 
 permissions: 
   contents: read
