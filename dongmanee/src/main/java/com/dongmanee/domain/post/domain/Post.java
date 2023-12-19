@@ -33,6 +33,10 @@ public class Post extends BaseEntity {
 	private Club club;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id")
+	private PostCategory category;
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
 
