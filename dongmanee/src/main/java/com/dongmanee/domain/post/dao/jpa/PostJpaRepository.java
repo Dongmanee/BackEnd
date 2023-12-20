@@ -20,7 +20,7 @@ public interface PostJpaRepository extends JpaRepository<Post, Long>, PostReposi
 
 	@Query("SELECT p FROM Post p "
 		+ "LEFT JOIN FETCH p.club LEFT JOIN FETCH p.category LEFT JOIN FETCH p.member "
-		+ "WHERE p.category.name = :category AND p.club.id = :clubId AND p.createdAt > :cursor "
+		+ "WHERE p.category.name = :category AND p.club.id = :clubId AND p.createdAt < :cursor "
 		+ "ORDER BY p.createdAt DESC")
 	List<Post> findSpecificPostsAfterCursor(@Param("clubId") Long clubId, @Param("category") String category,
 		LocalDateTime cursor,
@@ -29,7 +29,7 @@ public interface PostJpaRepository extends JpaRepository<Post, Long>, PostReposi
 	@Query("SELECT p FROM Post p "
 		+ "LEFT JOIN FETCH p.club LEFT JOIN FETCH p.category LEFT JOIN FETCH p.member "
 		+ "WHERE p.category.name != '공지사항' AND p.category.name != '문의사항' AND "
-		+ "p.club.id = :clubId AND p.createdAt > :cursor "
+		+ "p.club.id = :clubId AND p.createdAt < :cursor "
 		+ "ORDER BY p.createdAt DESC")
 	List<Post> findWithoutSpecificPostsAfterCursor(@Param("clubId") Long clubId, LocalDateTime cursor,
 		Pageable pageable);
