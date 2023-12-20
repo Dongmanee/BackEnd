@@ -86,7 +86,7 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	@Override
-	public ClubCategory findById(Long categoryId) {
+	public ClubCategory findClubCategoryById(Long categoryId) {
 		return clubCategoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 	}
 
