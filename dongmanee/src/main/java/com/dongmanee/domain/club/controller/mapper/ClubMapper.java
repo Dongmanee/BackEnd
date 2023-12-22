@@ -29,6 +29,6 @@ public interface ClubMapper {
 
 	@Named("categoryConverter")
 	default ClubCategory categoryConverter(Long categoryId, @Context ClubService clubService) {
-		return clubService.findById(categoryId);
+		return clubService.findClubCategoryById(categoryId);
 	}
 }
