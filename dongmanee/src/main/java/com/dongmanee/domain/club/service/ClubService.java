@@ -10,6 +10,8 @@ import com.dongmanee.domain.member.domain.Member;
 public interface ClubService {
 	void createClub(Club club, Member member);
 
+	Club findById(Long id);
+
 	Club editClubDescriptionAndAddress(Long memberId, Club club);
 
 	ClubSns addClubSns(Long memberId, ClubSns clubSns, Long clubId);
