@@ -21,6 +21,7 @@ jobs:
       - name: Set YML
         run: |
           mkdir -p src/main/resources
+          echo "${{ secrets.APPLICATION_PROD_YML }}" | base64 --decode > src/main/resources/application-prod.yml
           echo "${{ secrets.APPLICATION_EMAIL_YML }}" | base64 --decode > src/main/resources/application-email.yml
           echo "${{ secrets.APPLICATION_OAUTH_YML }}" | base64 --decode > src/main/resources/application-oauth.yml
           find src
