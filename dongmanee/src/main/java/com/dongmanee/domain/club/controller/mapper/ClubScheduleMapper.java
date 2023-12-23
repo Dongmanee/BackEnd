@@ -10,6 +10,7 @@ import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubSchedule;
 import com.dongmanee.domain.club.dto.request.RequestCreateClubSchedule;
 import com.dongmanee.domain.club.dto.request.RequestUpdateClubSchedule;
+import com.dongmanee.domain.club.dto.response.ResponseClubSchedule;
 import com.dongmanee.domain.club.service.ClubService;
 import com.dongmanee.global.jackson.mapper.JsonNullableMapper;
 
@@ -22,6 +23,8 @@ public interface ClubScheduleMapper {
 
 	@Mapping(source = "clubId", target = "club", qualifiedByName = "clubIdToClub")
 	ClubSchedule toEntity(Long clubId, RequestUpdateClubSchedule request, @Context ClubService clubService);
+
+	ResponseClubSchedule toResponseClubSchedule(ClubSchedule clubSchedule);
 
 	@Named("clubIdToClub")
 	default Club clubIdToClub(Long clubId, @Context ClubService clubService) {
