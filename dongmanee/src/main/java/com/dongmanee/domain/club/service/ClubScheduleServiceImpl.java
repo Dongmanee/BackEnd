@@ -1,5 +1,10 @@
 package com.dongmanee.domain.club.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.dongmanee.domain.club.dao.ClubScheduleRepository;
@@ -31,5 +36,12 @@ public class ClubScheduleServiceImpl implements ClubScheduleService {
 		clubSchedule.update(request);
 
 		clubScheduleRepository.save(clubSchedule);
+	}
+
+	@Override
+	public List<ClubSchedule> findMonthlyScheduleByClubId(long clubId, LocalDate date) {
+		LocalDateTime startOfMonth = date.withDayOfMonth(1).atStartOfDay();
+		LocalDateTime endOfMonth = date.withDayOfMonth(date.lengthOfMonth()).atTime(LocalTime.MAX);
+		return clubScheduleRepository.findByClubIdAndStartTimeBetween(clubId, startOfMonth, endOfMonth);
 	}
 }
