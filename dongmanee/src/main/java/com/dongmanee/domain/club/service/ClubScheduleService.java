@@ -12,4 +12,6 @@ public interface ClubScheduleService {
 	void updateSchedule(long clubId, long clubScheduleId, RequestUpdateClubSchedule newClubSchedule);
 
 	List<ClubSchedule> findMonthlyScheduleByClubId(long clubId, LocalDate date);
+
+	ClubSchedule findClubSchedule(long clubId, long clubScheduleId);
 }

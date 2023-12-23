@@ -44,4 +44,10 @@ public class ClubScheduleServiceImpl implements ClubScheduleService {
 		LocalDateTime endOfMonth = date.withDayOfMonth(date.lengthOfMonth()).atTime(LocalTime.MAX);
 		return clubScheduleRepository.findByClubIdAndStartTimeBetween(clubId, startOfMonth, endOfMonth);
 	}
+
+	@Override
+	public ClubSchedule findClubSchedule(long clubId, long clubScheduleId) {
+		return clubScheduleRepository.findByIdAndClubId(clubScheduleId, clubId)
+			.orElseThrow(ClubScheduleNotFoundException::new);
+	}
 }

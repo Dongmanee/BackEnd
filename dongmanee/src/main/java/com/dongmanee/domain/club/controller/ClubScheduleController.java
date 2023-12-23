@@ -41,7 +41,7 @@ public class ClubScheduleController implements ClubScheduleApiDocs {
 		List<ResponseClubSchedule> responseClubScheduleList = clubScheduleList.stream()
 			.map(clubScheduleMapper::toResponseClubSchedule)
 			.toList();
-		return ApiResult.isOk(responseClubScheduleList, "동아리 일정 조회 성공");
+		return ApiResult.isOk(responseClubScheduleList, "동아리 월간 일정 조회 성공");
 	}
 
 	@PostMapping("")
@@ -51,6 +51,15 @@ public class ClubScheduleController implements ClubScheduleApiDocs {
 		ClubSchedule newClubSchedule = clubScheduleMapper.toEntity(clubId, request, clubService);
 		clubScheduleService.createSchedule(newClubSchedule);
 		return ApiResult.isCreated("동아리 일정 생성 성공");
+	}
+
+	@GetMapping("/{schedule-id}")
+	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN', 'ROLE_CLUB_USER') or hasAnyAuthority('ROLE_ADMIN')")
+	public ApiResult<ResponseClubSchedule> findClubSchedule(@PathVariable("club-id") long clubId,
+		@PathVariable("schedule-id") long clubScheduleId) {
+		ClubSchedule clubSchedule = clubScheduleService.findClubSchedule(clubId, clubScheduleId);
+		ResponseClubSchedule responseClubSchedule = clubScheduleMapper.toResponseClubSchedule(clubSchedule);
+		return ApiResult.isOk(responseClubSchedule, "동아리 일정 조회 성공");
 	}
 
 	@PatchMapping("/{schedule-id}")
