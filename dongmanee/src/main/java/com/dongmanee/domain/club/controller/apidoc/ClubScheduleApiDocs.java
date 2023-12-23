@@ -23,16 +23,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "동아리 일정", description = "동아리 일정 API 명세서")
 public interface ClubScheduleApiDocs {
 
-	@Operation(summary = "동아리 일정 조회 요청")
+	@Operation(summary = "동아리 월간 일정 조회 요청")
 	@ApiResponses({
-		@ApiResponse(responseCode = "201",
-			description = "일정 조회 성공",
+		@ApiResponse(responseCode = "200",
+			description = "월간 일정 조회 성공",
 			content = @Content(schema = @Schema(implementation = ApiResult.class),
-				examples = @ExampleObject(name = "동아리 일정 조회 성공",
+				examples = @ExampleObject(name = "동아리 월간 일정 조회 성공",
 					value = """
 						{
 							"status": 200,
-							"message": "동아리 일정 조회 성공",
+							"message": "동아리 월간 일정 조회 성공",
 							"data": [
 								{
 									"id": 1,
@@ -80,6 +80,34 @@ public interface ClubScheduleApiDocs {
 			)),
 	})
 	ApiResult<?> createSchedule(@PathVariable("club-id") long clubId, @RequestBody RequestCreateClubSchedule request);
+
+	@Operation(summary = "동아리 월간 단건 조회 요청")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200",
+			description = "월간 일정 조회 성공",
+			content = @Content(schema = @Schema(implementation = ApiResult.class),
+				examples = @ExampleObject(name = "동아리 일정 조회 성공",
+					value = """
+						{
+							"status": 200,
+							"message": "동아리 일정 조회 성공",
+							"data": {
+								"id": 1,
+								"startTime": "2023-10-11T14:12:12",
+								"endTime": "2023-10-11T15:12:12",
+								"location": "test",
+								"title": "test",
+								"description": "test",
+								"cost": 1000,
+								"numberParticipants": 100,
+								"allDay": false
+							}
+						}
+												""")
+			)),
+	})
+	ApiResult<ResponseClubSchedule> findClubSchedule(@PathVariable("club-id") long clubId,
+		@PathVariable("schedule-id") long clubScheduleId);
 
 	@Operation(summary = "동아리 일정 수정 요청")
 	@ApiResponses({
