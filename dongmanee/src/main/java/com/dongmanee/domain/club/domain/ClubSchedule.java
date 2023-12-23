@@ -2,6 +2,8 @@ package com.dongmanee.domain.club.domain;
 
 import java.time.LocalDateTime;
 
+import com.dongmanee.domain.club.dto.request.RequestUpdateClubSchedule;
+import com.dongmanee.domain.club.exception.IllegalTimeRangeException;
 import com.dongmanee.global.entity.BaseEntity;
 
 import jakarta.persistence.Entity;
@@ -47,7 +49,41 @@ public class ClubSchedule extends BaseEntity {
 
 	private String description;
 
-	private int cost;
+	private Integer cost;
 
-	private int numberParticipants;
+	private Integer numberParticipants;
+
+	public void update(RequestUpdateClubSchedule request) {
+		if (request.getStartTime() != null) {
+			this.startTime = request.getStartTime();
+		}
+		if (request.getIsAllDay() != null) {
+			this.isAllDay = request.getIsAllDay();
+			if (this.isAllDay) {
+				this.endTime = null;
+			}
+		}
+		if (!this.isAllDay && request.getEndTime() != null) {
+			if (this.getStartTime().isAfter(request.getEndTime())) {
+				throw new IllegalTimeRangeException();
+			} else {
+				this.endTime = request.getEndTime();
+			}
+		}
+		if (request.getTitle() != null) {
+			this.title = request.getTitle();
+		}
+		if (request.getLocation() != null) {
+			this.location = request.getLocation().get();
+		}
+		if (request.getDescription() != null) {
+			this.description = request.getDescription().get();
+		}
+		if (request.getCost() != null) {
+			this.cost = request.getCost().get();
+		}
+		if (request.getNumberParticipants() != null) {
+			this.numberParticipants = request.getNumberParticipants().get();
+		}
+	}
 }
