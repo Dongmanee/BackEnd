@@ -1,6 +1,7 @@
 package com.dongmanee.domain.club.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dongmanee.domain.club.controller.mapper.ClubScheduleMapper;
 import com.dongmanee.domain.club.domain.ClubSchedule;
 import com.dongmanee.domain.club.dto.request.RequestCreateClubSchedule;
+import com.dongmanee.domain.club.dto.request.RequestUpdateClubSchedule;
 import com.dongmanee.domain.club.service.ClubScheduleService;
 import com.dongmanee.domain.club.service.ClubService;
 import com.dongmanee.global.utils.ApiResult;
@@ -31,5 +33,14 @@ public class ClubScheduleController {
 		ClubSchedule newClubSchedule = clubScheduleMapper.toEntity(clubId, request, clubService);
 		clubScheduleService.createSchedule(newClubSchedule);
 		return ApiResult.isCreated("동아리 일정 생성 성공");
+	}
+
+	@PatchMapping("/{schedule-id}")
+	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') or hasAnyAuthority('ROLE_ADMIN')")
+	public ApiResult<?> updateSchedule(@PathVariable("club-id") long clubId,
+		@PathVariable("schedule-id") long clubScheduleId,
+		@RequestBody RequestUpdateClubSchedule request) {
+		clubScheduleService.updateSchedule(clubId, clubScheduleId, request);
+		return ApiResult.isCreated("동아리 일정 수정 성공");
 	}
 }

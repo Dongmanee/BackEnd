@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 
 import com.dongmanee.domain.club.dao.ClubScheduleRepository;
 import com.dongmanee.domain.club.domain.ClubSchedule;
+import com.dongmanee.domain.club.dto.request.RequestUpdateClubSchedule;
+import com.dongmanee.domain.club.exception.ClubScheduleNotFoundException;
 import com.dongmanee.domain.club.exception.IllegalTimeRangeException;
 
 import lombok.RequiredArgsConstructor;
@@ -19,5 +21,15 @@ public class ClubScheduleServiceImpl implements ClubScheduleService {
 			throw new IllegalTimeRangeException();
 		}
 		clubScheduleRepository.save(newClubSchedule);
+	}
+
+	@Override
+	public void updateSchedule(long clubId, long clubScheduleId, RequestUpdateClubSchedule request) {
+		ClubSchedule clubSchedule = clubScheduleRepository.findByIdAndClubId(clubScheduleId, clubId)
+			.orElseThrow(ClubScheduleNotFoundException::new);
+
+		clubSchedule.update(request);
+
+		clubScheduleRepository.save(clubSchedule);
 	}
 }
