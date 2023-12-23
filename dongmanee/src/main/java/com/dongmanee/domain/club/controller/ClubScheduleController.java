@@ -1,6 +1,7 @@
 package com.dongmanee.domain.club.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,13 @@ public class ClubScheduleController {
 	private final ClubService clubService;
 	private final ClubScheduleMapper clubScheduleMapper;
 
+	@GetMapping("")
+	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') or hasAnyAuthority('ROLE_ADMIN')")
+	public ApiResult<?> findAllSchedulesForClub(@PathVariable("club-id") long clubId) {
+		clubScheduleService.(newClubSchedule);
+		return ApiResult.isCreated("동아리 일정 생성 성공");
+	}
+
 	@PostMapping("")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') or hasAnyAuthority('ROLE_ADMIN')")
 	public ApiResult<?> createSchedule(@PathVariable("club-id") long clubId,
@@ -41,6 +49,6 @@ public class ClubScheduleController {
 		@PathVariable("schedule-id") long clubScheduleId,
 		@RequestBody RequestUpdateClubSchedule request) {
 		clubScheduleService.updateSchedule(clubId, clubScheduleId, request);
-		return ApiResult.isCreated("동아리 일정 수정 성공");
+		return ApiResult.isNoContent("동아리 일정 수정 성공");
 	}
 }
