@@ -1,6 +1,5 @@
 package com.dongmanee.domain.post.domain;
 
-import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.global.entity.BaseEntity;
 
@@ -27,10 +26,6 @@ public class Post extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "club_id")
-	private Club club;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
