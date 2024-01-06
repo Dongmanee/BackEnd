@@ -14,20 +14,19 @@ import com.dongmanee.domain.post.domain.Post;
 
 public interface PostJpaRepository extends JpaRepository<Post, Long>, PostRepository {
 
-	@Query("SELECT DISTINCT p FROM Post p LEFT JOIN FETCH p.category.club LEFT JOIN FETCH p.category LEFT JOIN FETCH p.member "
+	@Query("SELECT DISTINCT p FROM Post p LEFT JOIN FETCH p.category LEFT JOIN FETCH p.category.club LEFT JOIN FETCH p.member "
 		+ "WHERE p.category.club.id = :clubId AND p.createdAt < :cursor ORDER BY p.createdAt DESC")
 	List<Post> findEveryPostsAfterCursor(@Param("clubId") Long clubId, LocalDateTime cursor, Pageable pageable);
 
-	@Query("SELECT DISTINCT p FROM Post p "
-		+ "LEFT JOIN FETCH p.category.club LEFT JOIN FETCH p.category LEFT JOIN FETCH p.member "
+	@Query("SELECT p FROM Post p "
+		+ "LEFT JOIN FETCH p.category LEFT JOIN FETCH p.category.club  LEFT JOIN FETCH p.member "
 		+ "WHERE p.category.name = :category AND p.category.club.id = :clubId AND p.createdAt < :cursor "
 		+ "ORDER BY p.createdAt DESC")
 	List<Post> findSpecificPostsAfterCursor(@Param("clubId") Long clubId, @Param("category") String category,
-		LocalDateTime cursor,
-		Pageable pageable);
+		@Param("cursor") LocalDateTime cursor, Pageable pageable);
 
 	@Query("SELECT DISTINCT p FROM Post p "
-		+ "LEFT JOIN FETCH p.category.club LEFT JOIN FETCH p.category LEFT JOIN FETCH p.member "
+		+ "LEFT JOIN FETCH p.category LEFT JOIN FETCH p.category.club LEFT JOIN FETCH p.member "
 		+ "WHERE p.category.name != '공지사항' AND p.category.name != '문의사항' AND "
 		+ "p.category.club.id = :clubId AND p.createdAt < :cursor "
 		+ "ORDER BY p.createdAt DESC")
@@ -35,7 +34,7 @@ public interface PostJpaRepository extends JpaRepository<Post, Long>, PostReposi
 		Pageable pageable);
 
 	@Query("SELECT DISTINCT p FROM Post p "
-		+ "LEFT JOIN FETCH p.category.club LEFT JOIN FETCH p.category LEFT JOIN FETCH p.member "
+		+ "LEFT JOIN FETCH p.category LEFT JOIN FETCH p.category.club LEFT JOIN FETCH p.member "
 		+ "WHERE p.category.club.id = :clubId ORDER BY p.createdAt DESC")
 	Page<Post> findPostsByClubId(Long clubId, Pageable pageable);
 
