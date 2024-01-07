@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,5 +70,13 @@ public class ClubScheduleController implements ClubScheduleApiDocs {
 		@Valid @RequestBody RequestUpdateClubSchedule request) {
 		clubScheduleService.updateSchedule(clubId, clubScheduleId, request);
 		return ApiResult.isNoContent("동아리 일정 수정 성공");
+	}
+
+	@DeleteMapping("/{schedule-id}")
+	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') or hasAnyAuthority('ROLE_ADMIN')")
+	public ApiResult<?> deleteSchedule(@PathVariable("club-id") long clubId,
+		@PathVariable("schedule-id") long scheduleId) {
+		clubScheduleService.deleteSchedule(clubId, scheduleId);
+		return ApiResult.isNoContent("동아리 일정 삭제 성공");
 	}
 }

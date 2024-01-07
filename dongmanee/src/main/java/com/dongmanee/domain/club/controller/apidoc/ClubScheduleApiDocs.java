@@ -126,4 +126,22 @@ public interface ClubScheduleApiDocs {
 	})
 	ApiResult<?> updateSchedule(@PathVariable("club-id") long clubId, @PathVariable("schedule-id") long clubScheduleId,
 		@RequestBody RequestUpdateClubSchedule request);
+
+	@Operation(summary = "동아리 일정 삭제 요청")
+	@ApiResponses({
+		@ApiResponse(responseCode = "204",
+			description = "일정 삭제 성공",
+			content = @Content(schema = @Schema(implementation = ApiResult.class),
+				examples = @ExampleObject(name = "동아리 일정 삭제 성공",
+					value = """
+						{
+							"status": 204,
+							"message": "동아리 일정 삭제 성공",
+							"data": null
+						}
+												""")
+			)),
+	})
+	public ApiResult<?> deleteSchedule(@PathVariable("club-id") long clubId,
+		@PathVariable("schedule-id") long scheduleId);
 }

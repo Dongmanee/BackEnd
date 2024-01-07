@@ -50,4 +50,9 @@ public class ClubScheduleServiceImpl implements ClubScheduleService {
 		return clubScheduleRepository.findByIdAndClubId(clubScheduleId, clubId)
 			.orElseThrow(ClubScheduleNotFoundException::new);
 	}
+
+	@Override
+	public void deleteSchedule(long clubId, long scheduleId) {
+		clubScheduleRepository.deleteByIdAndClubId(scheduleId, clubId);
+	}
 }

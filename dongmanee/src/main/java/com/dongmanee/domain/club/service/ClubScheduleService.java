@@ -14,4 +14,6 @@ public interface ClubScheduleService {
 	List<ClubSchedule> findMonthlyScheduleByClubId(long clubId, LocalDate date);
 
 	ClubSchedule findClubSchedule(long clubId, long clubScheduleId);
+
+	void deleteSchedule(long clubId, long scheduleId);
 }

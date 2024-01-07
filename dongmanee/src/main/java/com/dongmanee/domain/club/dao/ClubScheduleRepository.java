@@ -13,4 +13,6 @@ public interface ClubScheduleRepository {
 
 	List<ClubSchedule> findByClubIdAndStartTimeBetween(long clubId, LocalDateTime startOfMonth,
 		LocalDateTime endOfMonth);
+
+	void deleteByIdAndClubId(long scheduleId, long clubId);
 }
