@@ -60,8 +60,8 @@ public interface ClubControllerApiDocs {
 
 	@Operation(summary = "포스트 조회 요청", description = "특정 클럽의 포스트를 타입별로 조회 <br>"
 		+ "타입은 MAIN_PAGE(메인 공지사항),ALL(전체),ANNOUNCEMENT(공지사항),FREE(자유),QUESTION(문의사항) 중으로 전송<br>"
-		+ "최초 조회시 시간은 현재 시간으로 조회<br>"
-		+ "이후 조회시 가장 마지막으로 받은 post의 created_at 값을 넣어서 보내면 그 이후 데이터 전송<br>"
+		+ "최초 조회시 oldest-post-id의 값을 넣지 않은채로 전송<br>"
+		+ "이후 조회시 가장 마지막으로 받은 post의 postId 값을 oldest-post-id에 넣어서 보내면 그 이후 데이터 전송<br>"
 		+ "현재 Like, Comment 미구현으로 인해 null 값 반환<br>"
 		+ "data에 배열 형식으로 데이터 반환<br>"
 		+ "메인 공지사항은 1개만 반환, 없으면 존재X<br>"
