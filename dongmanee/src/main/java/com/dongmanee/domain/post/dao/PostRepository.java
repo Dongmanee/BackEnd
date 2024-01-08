@@ -14,5 +14,5 @@ public interface PostRepository {
 
 	List<Post> findWithoutSpecificPostsAfterCursor(Long clubId, Long cursor, Pageable pageable);
 
-	List<Post> findLatestPostByClubId(Long clubId, Pageable pageable);
+	List<Post> findAnnouncementPostByClubId(Long clubId, Pageable pageable);
 }

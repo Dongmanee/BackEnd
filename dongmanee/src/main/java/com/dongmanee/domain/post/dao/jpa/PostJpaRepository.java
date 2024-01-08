@@ -35,11 +35,11 @@ public interface PostJpaRepository extends JpaRepository<Post, Long>, PostReposi
 
 	@Query("SELECT DISTINCT p FROM Post p "
 		+ "LEFT JOIN FETCH p.category LEFT JOIN FETCH p.category.club LEFT JOIN FETCH p.member "
-		+ "WHERE p.category.club.id = :clubId ORDER BY p.createdAt DESC")
-	Page<Post> findPostsByClubId(Long clubId, Pageable pageable);
+		+ "WHERE p.category.club.id = :clubId AND p.category.name = '공지사항' ORDER BY p.createdAt DESC")
+	Page<Post> findAnnouncementPostsByClubId(Long clubId, Pageable pageable);
 
-	default List<Post> findLatestPostByClubId(Long clubId, Pageable pageable) {
-		return findPostsByClubId(clubId, pageable)
+	default List<Post> findAnnouncementPostByClubId(Long clubId, Pageable pageable) {
+		return findAnnouncementPostsByClubId(clubId, pageable)
 			.stream()
 			.toList();
 	}

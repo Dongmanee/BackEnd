@@ -24,39 +24,39 @@ public class PostPagingServiceImpl implements PostPagingService {
 	public List<Post> pagingDivider(PostSearchingInfo request) {
 		switch (request.getPostCategory()) {
 			case MAIN_PAGE -> {
-				return singleAnnouncement(request.getClubId());
+				return findAnnouncement(request.getClubId());
 			}
 			case ALL -> {
-				return everyPageContent(request.getClubId(), request.getCursor(), request.getPageSize());
+				return findPosts(request.getClubId(), request.getCursor(), request.getPageSize());
 			}
 			case ANNOUNCEMENT, QUESTION -> {
-				return specificCategoryPageContent(request.getClubId(), request.getCursor(), request.getPageSize(),
+				return findPostsWithCategory(request.getClubId(), request.getCursor(), request.getPageSize(),
 					request.getPostCategory());
 			}
 			case FREE -> {
-				return nonCategorizedPageContent(request.getClubId(), request.getCursor(), request.getPageSize());
+				return findFreeCategoryPosts(request.getClubId(), request.getCursor(), request.getPageSize());
 			}
 		}
 		return new ArrayList<>();
 	}
-	//TODO: 매서드명 변경
-	private List<Post> singleAnnouncement(Long clubId) {
+
+	private List<Post> findAnnouncement(Long clubId) {
 		Pageable pageable = PageRequest.of(0, 1, Sort.by("createdAt").descending());
-		return postRepository.findLatestPostByClubId(clubId, pageable);
+		return postRepository.findAnnouncementPostByClubId(clubId, pageable);
 	}
 
-	private List<Post> everyPageContent(Long clubId, Long cursor, Integer pageSize) {
+	private List<Post> findPosts(Long clubId, Long cursor, Integer pageSize) {
 		Pageable pageable = PageRequest.of(0, pageSize);
 		return postRepository.findEveryPostsAfterCursor(clubId, cursor, pageable);
 	}
 
-	private List<Post> specificCategoryPageContent(Long clubId, Long cursor, Integer pageSize,
+	private List<Post> findPostsWithCategory(Long clubId, Long cursor, Integer pageSize,
 		PostCategory postCategory) {
 		Pageable pageable = PageRequest.of(0, pageSize);
 		return postRepository.findSpecificPostsAfterCursor(clubId, postCategory.getValue(), cursor, pageable);
 	}
 
-	private List<Post> nonCategorizedPageContent(Long clubId, Long cursor, Integer pageSize) {
+	private List<Post> findFreeCategoryPosts(Long clubId, Long cursor, Integer pageSize) {
 		Pageable pageable = PageRequest.of(0, pageSize);
 		return postRepository.findWithoutSpecificPostsAfterCursor(clubId, cursor, pageable);
 	}
