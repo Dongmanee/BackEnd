@@ -1,6 +1,5 @@
 package com.dongmanee.domain.club.dto.request;
 
-import java.time.LocalDateTime;
 
 import com.dongmanee.domain.club.enums.PostCategory;
 
@@ -18,6 +17,6 @@ import lombok.Setter;
 public class PostSearchingInfo {
 	private Long clubId;
 	private PostCategory postCategory;
-	private LocalDateTime cursor;
+	private Long cursor;
 	private Integer pageSize;
 }

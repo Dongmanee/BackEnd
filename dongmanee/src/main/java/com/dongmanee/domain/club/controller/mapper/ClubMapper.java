@@ -30,7 +30,7 @@ public interface ClubMapper {
 
 	Club toEntity(Long id, RequestEditClubDescriptionAndAddress dto);
 
-	PostSearchingInfo toDto(Long clubId, PostCategory postCategory, LocalDateTime cursor, Integer pageSize);
+	PostSearchingInfo toDto(Long clubId, PostCategory postCategory, Long cursor, Integer pageSize);
 
 	@Mapping(source = "id", target = "postId")
 	@Mapping(source = "title", target = "postTitle")

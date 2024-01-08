@@ -1,6 +1,5 @@
 package com.dongmanee.domain.club.service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,24 +39,24 @@ public class PostPagingServiceImpl implements PostPagingService {
 		}
 		return new ArrayList<>();
 	}
-
+	//TODO: 매서드명 변경
 	private List<Post> singleAnnouncement(Long clubId) {
 		Pageable pageable = PageRequest.of(0, 1, Sort.by("createdAt").descending());
 		return postRepository.findLatestPostByClubId(clubId, pageable);
 	}
 
-	private List<Post> everyPageContent(Long clubId, LocalDateTime cursor, Integer pageSize) {
+	private List<Post> everyPageContent(Long clubId, Long cursor, Integer pageSize) {
 		Pageable pageable = PageRequest.of(0, pageSize);
 		return postRepository.findEveryPostsAfterCursor(clubId, cursor, pageable);
 	}
 
-	private List<Post> specificCategoryPageContent(Long clubId, LocalDateTime cursor, Integer pageSize,
+	private List<Post> specificCategoryPageContent(Long clubId, Long cursor, Integer pageSize,
 		PostCategory postCategory) {
 		Pageable pageable = PageRequest.of(0, pageSize);
 		return postRepository.findSpecificPostsAfterCursor(clubId, postCategory.getValue(), cursor, pageable);
 	}
 
-	private List<Post> nonCategorizedPageContent(Long clubId, LocalDateTime cursor, Integer pageSize) {
+	private List<Post> nonCategorizedPageContent(Long clubId, Long cursor, Integer pageSize) {
 		Pageable pageable = PageRequest.of(0, pageSize);
 		return postRepository.findWithoutSpecificPostsAfterCursor(clubId, cursor, pageable);
 	}

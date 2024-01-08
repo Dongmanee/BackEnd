@@ -97,5 +97,5 @@ public interface ClubControllerApiDocs {
 			))
 	})
 	public ApiResult<List<PostSearchResponse>> getClubNotify(Long requestClubId, PostCategory category,
-		LocalDateTime cursor, Integer pageSize);
+		Long cursor, Integer pageSize);
 }

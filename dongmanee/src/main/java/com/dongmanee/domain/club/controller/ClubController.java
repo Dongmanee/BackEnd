@@ -1,6 +1,5 @@
 package com.dongmanee.domain.club.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,7 +57,7 @@ public class ClubController implements ClubControllerApiDocs {
 	@GetMapping("/{club-id}/posts")
 	public ApiResult<List<PostSearchResponse>> getClubNotify(
 		@PathVariable("club-id") Long requestClubId, @RequestParam(name = "category") PostCategory category,
-		@RequestParam("latest-post-time") LocalDateTime cursor, @RequestParam("size") Integer pageSize) {
+		@RequestParam(value = "oldest-post-id", required = false) Long cursor, @RequestParam("size") Integer pageSize) {
 		PostSearchingInfo postSearchingRequestDto = clubMapper.toDto(requestClubId, category, cursor, pageSize);
 		List<Post> posts = postPagingService.pagingDivider(postSearchingRequestDto);
 		List<PostSearchResponse> collect = posts.stream()
