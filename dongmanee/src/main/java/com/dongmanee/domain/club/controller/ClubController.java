@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dongmanee.domain.club.controller.apidoc.ClubControllerApiDocs;
 import com.dongmanee.domain.club.controller.mapper.ClubMapper;
+import com.dongmanee.domain.club.controller.mapper.ClubSnsMapper;
 import com.dongmanee.domain.club.domain.Club;
+import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.dto.request.PostSearchingInfo;
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 import com.dongmanee.domain.club.dto.response.postsearch.PostSearchResponse;
@@ -39,6 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ClubController implements ClubControllerApiDocs {
 	private final ClubMapper clubMapper;
+	private final ClubSnsMapper clubSnsMapper;
 	private final ClubService clubService;
 	private final MemberService memberService;
 	private final PostPagingService postPagingService;
@@ -48,8 +51,11 @@ public class ClubController implements ClubControllerApiDocs {
 	public ApiResult<?> createClub(@Valid @RequestBody RequestCreateClub createClub,
 		@AuthenticationPrincipal CustomUserDetails userDetails) {
 		Member requestMember = memberService.findById(Long.parseLong(userDetails.getUsername()));
+		
 		Club club = clubMapper.toEntity(createClub, clubService);
-		clubService.createClub(club, requestMember);
+		List<ClubSns> clubSnsList = clubSnsMapper.toEntity(createClub.getClubSns());
+
+		clubService.createClub(club, requestMember, clubSnsList);
 		return ApiResult.isCreated("클럽이 생성되었습니다.");
 	}
 

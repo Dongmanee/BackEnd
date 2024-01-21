@@ -8,7 +8,7 @@ import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.member.domain.Member;
 
 public interface ClubService {
-	void createClub(Club club, Member member);
+	void createClub(Club club, Member member, List<ClubSns> clubSnsList);
 
 	Club editClubDescriptionAndAddress(Long memberId, Club club);
 
