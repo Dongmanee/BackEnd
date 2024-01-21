@@ -74,6 +74,31 @@ public interface ClubInfoEditControllerApiDocs {
 						}
 												""")
 			)),
+		@ApiResponse(responseCode = "400",
+			description = "잘못된 타입 전송 - 사전에 합의 되지 않은 타입의 SNS타입 전송, 응답 방식은 추후에 변경 예정",
+			content = @Content(schema = @Schema(implementation = ApiResult.class),
+				examples = @ExampleObject(name = "데이터 검증 실패",
+					value = """
+						{
+							"timestamp": "2024-01-21T15:05:02.906+00:00",
+							"status": 400,
+							"error":"Bad Request",
+							"path": "/clubs/1/sns"
+						}
+												""")
+			)),
+		@ApiResponse(responseCode = "400",
+			description = "잘못된 URL 전송 - URL 형식에 맞지 않는 주소 전송, 응답 방식은 추후에 변경 예정",
+			content = @Content(schema = @Schema(implementation = ApiResult.class),
+				examples = @ExampleObject(name = "데이터 검증 실패",
+					value = """
+						{
+							"status": 400,
+							"error":"must be a valid URL",
+							"data": "null"
+						}
+												""")
+			)),
 		@ApiResponse(responseCode = "401",
 			description = "인증에 실패하였습니다. - JWT토큰 혹은 ClubUserRole",
 			content = @Content(schema = @Schema(implementation = ApiResult.class),
