@@ -71,10 +71,22 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	@Override
-	public ClubSns addClubSns(Long memberId, ClubSns clubSns, Long clubId) {
+	@Transactional
+	public ClubSns upsertClubSns(Long memberId, ClubSns clubSns, Long clubId) {
 		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, clubId)
 			.orElseThrow(ClubUserNotFoundException::new);
-		// 추가
+
+		Optional<ClubSns> matchingClubSns = clubUser.getClub().getClubSns().stream()
+			.filter(sns -> sns.getTitle().equals(clubSns.getTitle()))
+			.findFirst();
+
+		// 존재하는 Sns 항목은 업데이트 처리
+		if (matchingClubSns.isPresent()) {
+			ClubSns matchingSns = matchingClubSns.get();
+			matchingSns.editClubSns(clubSns);
+			return matchingSns;
+		}
+		// 처음 등록은 추가 처리
 		clubSns.addClub(clubUser.getClub());
 		return clubSnsRepository.save(clubSns);
 	}
@@ -85,16 +97,7 @@ public class ClubServiceImpl implements ClubService {
 		return clubUsers.stream().map(ClubUser::getClub).toList();
 	}
 
-	// TODO: editClubSns, removeClubSns 추후 한번에 쿼리로 fetch join 하는 방식과 시간 비교 필요
-	@Override
-	public ClubSns editClubSns(ClubSns clubSns, Long clubId, Long snsId) {
-		// 목표 엔티티 검색
-		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(ClubSnsNotFoundException::new);
-		// 수정
-		targetSns.editClubSns(clubSns);
-
-		return targetSns;
-	}
+	// TODO: removeClubSns 추후 한번에 쿼리로 fetch join 하는 방식과 시간 비교 필요
 
 	@Override
 	public void removeClubSns(Long clubId, Long snsId) {

@@ -87,54 +87,8 @@ public interface ClubInfoEditControllerApiDocs {
 												""")
 			))
 	})
-	ApiResult<?> addClubSns(RequestSns request, UserDetails userDetails,
+	ApiResult<?> upsertClubSns(RequestSns request, UserDetails userDetails,
 		@Parameter(description = "클럽의 고유 식별 번호") Long clubId);
-
-	@Operation(summary = "클럽 정보 수정 - 클럽 Sns 수정")
-	@ApiResponses({
-		@ApiResponse(responseCode = "200",
-			description = "수정 성공",
-			content = @Content(schema = @Schema(implementation = ApiResult.class),
-				examples = @ExampleObject(name = "클럽 정보 수정 성공",
-					value = """
-						{
-							"status": 200,
-							"message": "클럽 Sns가 수정되었습니다",
-							"data": {
-								"title":"editTitle",
-								"url":"editUrl"
-							}
-						}
-												""")
-			)),
-		@ApiResponse(responseCode = "401",
-			description = "인증에 실패하였습니다. - JWT토큰 혹은 ClubUserRole",
-			content = @Content(schema = @Schema(implementation = ApiResult.class),
-				examples = @ExampleObject(name = "인증 실패",
-					value = """
-						{
-							"status": 401,
-							"message": "인증에 실패하였습니다.",
-							"daa": null
-						}
-												""")
-			)),
-		@ApiResponse(responseCode = "404",
-			description = "클럽에 존재하지 않는 Sns",
-			content = @Content(schema = @Schema(implementation = ApiResult.class),
-				examples = @ExampleObject(name = "클럽 Sns 조회 실패",
-					value = """
-						{
-							"status": 404,
-							"message": "Sns가 존재하지 않습니다"
-							"data": null
-						}
-												""")
-			))
-	})
-	ApiResult<?> editClubSns(RequestSns request,
-		@Parameter(description = "클럽의 고유 식별 번호") Long clubId,
-		@Parameter(description = "클럽Sns 고유 식별 번호") Long snsId);
 
 	@Operation(summary = "클럽 정보 수정 - 클럽 Sns 삭제")
 	@ApiResponses({
