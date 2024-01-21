@@ -82,16 +82,18 @@ public interface ClubInfoEditControllerApiDocs {
 			content = @Content(schema = @Schema(implementation = ApiResult.class),
 				examples = @ExampleObject(name = "데이터 검증 실패",
 					value = """
-						1: {
-							"timestamp": "2024-01-21T15:05:02.906+00:00",
-							"status": 400,
-							"error":"Bad Request",
-							"path": "/clubs/1/sns"
-						},
-						2: {
-							"status": 400,
-							"error":"must be a valid URL",
-							"data": "null"
+						{
+							"errorType 1": {
+								"timestamp": "2024-01-21T15:05:02.906+00:00",
+								"status": 400,
+								"error":"Bad Request",
+								"path": "/clubs/1/sns"
+							},
+							"error Type 2": {
+								"status": 400,
+								"error":"must be a valid URL",
+								"data": "null"
+							}
 						}
 												""")
 			)),
