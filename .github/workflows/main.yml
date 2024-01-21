@@ -109,7 +109,7 @@ jobs:
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/dongmanee:latest
             docker stop $(docker ps -a -q)
-            docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=dev ${{ secrets.DOCKER_USERNAME }}/dongmanee:latest
+            docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=prod ${{ secrets.DOCKER_USERNAME }}/dongmanee:latest
             docker rm $(docker ps --filter 'status=exited' -a -q)
             docker image prune -a -f
       
