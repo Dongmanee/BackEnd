@@ -57,16 +57,16 @@ public interface ClubInfoEditControllerApiDocs {
 	ApiResult<?> editClubDescriptionAndAddress(RequestEditClubDescriptionAndAddress dto, UserDetails userDetails,
 		@Parameter(description = "클럽의 고유 식별 번호") Long clubId);
 
-	@Operation(summary = "클럽 정보 수정 - 클럽 Sns 추가")
+	@Operation(summary = "클럽 정보 수정 - 클럽 Sns 추가/수정")
 	@ApiResponses({
 		@ApiResponse(responseCode = "201",
-			description = "수정 성공",
+			description = "추가/수정 성공",
 			content = @Content(schema = @Schema(implementation = ApiResult.class),
-				examples = @ExampleObject(name = "클럽 정보 수정 성공",
+				examples = @ExampleObject(name = "클럽 정보 추가/수정 성공",
 					value = """
 						{
 							"status": 201,
-							"message": "클럽 Sns가 추가되었습니다",
+							"message": "클럽 Sns가 추가/수정 되었습니다",
 							"data": {
 								"title":"editTitle",
 								"url":"editUrl"
