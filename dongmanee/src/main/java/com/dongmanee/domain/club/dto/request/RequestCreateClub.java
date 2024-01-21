@@ -1,5 +1,7 @@
 package com.dongmanee.domain.club.dto.request;
 
+import java.util.List;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -25,8 +27,8 @@ public class RequestCreateClub {
 	private String description;
 	@Schema(description = "생성할 동아리의 메인 이미지 Url", example = "imageUrl", nullable = true)
 	private String clubMainImageUrl;
-	@Schema(description = "생성할 동아리의 배경 이미지 Url", example = "imageUrl", nullable = true)
-	private String clubBackgroundImageUrl;
 	@Schema(description = "생성할 동아리의 주소", example = "Daejeon, Hakasero ...", nullable = true)
 	private String address;
+	@Schema(description = "생성할 Sns의 리스트", nullable = true)
+	private List<RequestSns> clubSns;
 }

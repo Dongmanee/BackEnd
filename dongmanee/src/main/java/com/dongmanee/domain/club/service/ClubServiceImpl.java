@@ -1,7 +1,9 @@
 package com.dongmanee.domain.club.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +35,18 @@ public class ClubServiceImpl implements ClubService {
 
 	@Override
 	@Transactional
-	public void createClub(Club club, Member member) {
+	public void createClub(Club club, Member member, List<ClubSns> clubSnsList) {
 		Club newClub = makeClub(club, member);
 		clubRepository.save(newClub);
+		// 중복 타입 못들어가게 해야함
+
+		Optional.ofNullable(clubSnsList)
+			.orElseGet(Collections::emptyList) // clubSnsList가 null일 때의 대처 빈 리스트 반환
+			.forEach(clubSns -> {
+				clubSns.addClub(newClub);
+				clubSnsRepository.save(clubSns);
+			});
+
 		ClubUser hostUser = createUserWithHostPermission(newClub, member);
 		clubUserRepository.save(hostUser);
 	}

@@ -1,5 +1,8 @@
 package com.dongmanee.domain.club.domain;
 
+import org.hibernate.validator.constraints.URL;
+
+import com.dongmanee.domain.club.enums.ClubSnsType;
 import com.dongmanee.global.entity.BaseEntity;
 
 import jakarta.persistence.Entity;
@@ -11,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,9 +35,10 @@ public class ClubSns extends BaseEntity {
 	@JoinColumn(name = "club_id")
 	private Club club;
 
+	@NotNull
+	private ClubSnsType title;
 	@NotEmpty
-	private String title;
-	@NotEmpty
+	@URL
 	private String url;
 
 	public void addClub(Club club) {

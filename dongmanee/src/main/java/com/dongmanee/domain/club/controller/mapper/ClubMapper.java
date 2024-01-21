@@ -1,6 +1,5 @@
 package com.dongmanee.domain.club.controller.mapper;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.mapstruct.Context;
