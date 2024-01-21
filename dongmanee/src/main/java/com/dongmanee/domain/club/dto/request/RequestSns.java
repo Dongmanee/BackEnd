@@ -6,6 +6,7 @@ import com.dongmanee.domain.club.enums.ClubSnsType;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RequestSns {
 	@Schema(description = "생성, 수정할 클럽의 Sns 제목", example = "String type Club Sns Title")
-	@NotEmpty
+	@NotNull
 	private ClubSnsType title;
 	@Schema(description = "생성, 수정할 클럽의 Sns Url", example = "String type Club Sns Url")
 	@NotEmpty

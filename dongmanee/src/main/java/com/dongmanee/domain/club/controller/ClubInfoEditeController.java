@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,29 +48,16 @@ public class ClubInfoEditeController implements ClubInfoEditControllerApiDocs {
 		return ApiResult.isOk(responseDto, "클럽 정보가 수정되었습니다.");
 	}
 
-	@PostMapping("/clubs/{club-id}/sns")
+	@PutMapping("/clubs/{club-id}/sns")
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
-	public ApiResult<?> addClubSns(@Valid @RequestBody RequestSns request,
+	public ApiResult<?> upsertClubSns(@Valid @RequestBody RequestSns request,
 		@AuthenticationPrincipal UserDetails userDetails, @PathVariable("club-id") Long clubId) {
 		ClubSns requestSns = clubSnsMapper.toEntity(request);
 
 		ClubSns createdClubSns = clubInfoUpdateService
-			.addClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId);
+			.upsertClubSns(Long.parseLong(userDetails.getUsername()), requestSns, clubId);
 		ClubSnsResponseDto responseDto = clubResponseMapper.toDto(createdClubSns);
-		return ApiResult.isCreated(responseDto, "클럽 Sns가 추가되었습니다");
-	}
-
-	@PatchMapping("/clubs/{club-id}/sns/{sns-id}")
-	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') and hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
-	public ApiResult<?> editClubSns(@Valid @RequestBody RequestSns request,
-		@PathVariable("club-id") Long clubId, @PathVariable("sns-id") Long snsId) {
-		ClubSns requestSns = clubSnsMapper.toEntity(request);
-
-		ClubSns editClubSns = clubInfoUpdateService
-			.editClubSns(requestSns, clubId, snsId);
-
-		ClubSnsResponseDto responseDto = clubResponseMapper.toDto(editClubSns);
-		return ApiResult.isOk(responseDto, "클럽 Sns가 수정되었습니다");
+		return ApiResult.isCreated(responseDto, "클럽 Sns가 추가/수정 되었습니다");
 	}
 
 	@DeleteMapping("/clubs/{club-id}/sns/{sns-id}")
