@@ -65,7 +65,11 @@ public class SecurityConfig implements WebMvcConfigurer {
 					.permitAll() // 모든 요청에 대해서 인증 없이 허용
 					.requestMatchers(new AntPathRequestMatcher("/signup"))
 					.permitAll()
-					.anyRequest().permitAll()
+					.requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
+					.permitAll()
+					.requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"))
+					.permitAll()
+					.anyRequest().authenticated()
 			)
 			.exceptionHandling((exception) -> {
 				exception.accessDeniedHandler(new CustomAccessDeniedHandler());
