@@ -1,7 +1,10 @@
 package com.dongmanee.domain.club.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,7 @@ import com.dongmanee.domain.club.enums.ClubRole;
 import com.dongmanee.domain.club.exception.CategoryNotFoundException;
 import com.dongmanee.domain.club.exception.ClubSnsNotFoundException;
 import com.dongmanee.domain.club.exception.ClubUserNotFoundException;
+import com.dongmanee.domain.club.exception.DuplicatedClubSnsException;
 import com.dongmanee.domain.member.domain.Member;
 
 import lombok.RequiredArgsConstructor;
@@ -33,9 +37,24 @@ public class ClubServiceImpl implements ClubService {
 
 	@Override
 	@Transactional
-	public void createClub(Club club, Member member) {
+	public void createClub(Club club, Member member, List<ClubSns> clubSnsList) {
 		Club newClub = makeClub(club, member);
 		clubRepository.save(newClub);
+
+		HashSet<Object> isSnsSaved = new HashSet<>();
+
+		Optional.ofNullable(clubSnsList)
+			.orElseGet(Collections::emptyList) // clubSnsList가 null일 때의 대처 빈 리스트 반환
+			.forEach(clubSns -> {
+				if (isSnsSaved.contains(clubSns.getTitle())) {
+					throw new DuplicatedClubSnsException();
+				}
+				isSnsSaved.add(clubSns.getTitle());
+
+				clubSns.addClub(newClub);
+				clubSnsRepository.save(clubSns);
+			});
+
 		ClubUser hostUser = createUserWithHostPermission(newClub, member);
 		clubUserRepository.save(hostUser);
 	}
@@ -52,10 +71,22 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	@Override
-	public ClubSns addClubSns(Long memberId, ClubSns clubSns, Long clubId) {
+	@Transactional
+	public ClubSns upsertClubSns(Long memberId, ClubSns clubSns, Long clubId) {
 		ClubUser clubUser = clubUserRepository.findClubUserWithMemberClub(memberId, clubId)
 			.orElseThrow(ClubUserNotFoundException::new);
-		// 추가
+
+		Optional<ClubSns> matchingClubSns = clubUser.getClub().getClubSns().stream()
+			.filter(sns -> sns.getTitle().equals(clubSns.getTitle()))
+			.findFirst();
+
+		// 존재하는 Sns 항목은 업데이트 처리
+		if (matchingClubSns.isPresent()) {
+			ClubSns matchingSns = matchingClubSns.get();
+			matchingSns.editClubSns(clubSns);
+			return matchingSns;
+		}
+		// 처음 등록은 추가 처리
 		clubSns.addClub(clubUser.getClub());
 		return clubSnsRepository.save(clubSns);
 	}
@@ -66,16 +97,7 @@ public class ClubServiceImpl implements ClubService {
 		return clubUsers.stream().map(ClubUser::getClub).toList();
 	}
 
-	// TODO: editClubSns, removeClubSns 추후 한번에 쿼리로 fetch join 하는 방식과 시간 비교 필요
-	@Override
-	public ClubSns editClubSns(ClubSns clubSns, Long clubId, Long snsId) {
-		// 목표 엔티티 검색
-		ClubSns targetSns = clubSnsRepository.findById(snsId).orElseThrow(ClubSnsNotFoundException::new);
-		// 수정
-		targetSns.editClubSns(clubSns);
-
-		return targetSns;
-	}
+	// TODO: removeClubSns 추후 한번에 쿼리로 fetch join 하는 방식과 시간 비교 필요
 
 	@Override
 	public void removeClubSns(Long clubId, Long snsId) {
