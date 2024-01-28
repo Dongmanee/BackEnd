@@ -4,11 +4,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.dongmanee.domain.club.dao.custom.ClubScheduleCustomRepository;
 import com.dongmanee.domain.club.domain.ClubSchedule;
 
-public interface ClubScheduleRepository {
-	ClubSchedule save(ClubSchedule newClubSchedule);
-
+@Repository
+public interface ClubScheduleJpaRepository extends JpaRepository<ClubSchedule, Long>, ClubScheduleCustomRepository {
 	Optional<ClubSchedule> findByIdAndClubId(long id, long clubId);
 
 	List<ClubSchedule> findByClubIdAndStartTimeBetween(long clubId, LocalDateTime startOfMonth,

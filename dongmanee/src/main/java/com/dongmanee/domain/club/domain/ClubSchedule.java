@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.dongmanee.domain.club.dto.request.RequestUpdateClubSchedule;
 import com.dongmanee.domain.club.exception.IllegalTimeRangeException;
 import com.dongmanee.global.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +31,7 @@ public class ClubSchedule extends BaseEntity {
 	private Long id;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "club_id")
 	@NotNull
 	private Club club;

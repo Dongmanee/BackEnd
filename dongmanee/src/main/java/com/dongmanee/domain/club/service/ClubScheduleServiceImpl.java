@@ -5,10 +5,13 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import com.dongmanee.domain.club.dao.ClubScheduleRepository;
+import com.dongmanee.domain.club.dao.ClubScheduleJpaRepository;
 import com.dongmanee.domain.club.domain.ClubSchedule;
+import com.dongmanee.domain.club.dto.request.RequestClubScheduleSearchCriteria;
 import com.dongmanee.domain.club.dto.request.RequestUpdateClubSchedule;
 import com.dongmanee.domain.club.exception.ClubScheduleNotFoundException;
 import com.dongmanee.domain.club.exception.IllegalTimeRangeException;
@@ -18,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ClubScheduleServiceImpl implements ClubScheduleService {
-	private final ClubScheduleRepository clubScheduleRepository;
+	private final ClubScheduleJpaRepository clubScheduleRepository;
 
 	@Override
 	public void createSchedule(ClubSchedule newClubSchedule) {
@@ -54,5 +57,11 @@ public class ClubScheduleServiceImpl implements ClubScheduleService {
 	@Override
 	public void deleteSchedule(long clubId, long scheduleId) {
 		clubScheduleRepository.deleteByIdAndClubId(scheduleId, clubId);
+	}
+
+	@Override
+	public Slice<ClubSchedule> findAllBySearchCriteriaBeforeCursor(long clubId, LocalDateTime cursor,
+		RequestClubScheduleSearchCriteria searchCriteria, Pageable pageable) {
+		return clubScheduleRepository.findAllBySearchCriteriaBeforeCursor(clubId, cursor, searchCriteria, pageable);
 	}
 }

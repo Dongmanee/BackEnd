@@ -1,11 +1,14 @@
 package com.dongmanee.domain.club.controller;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dongmanee.domain.club.controller.apidoc.ClubScheduleApiDocs;
 import com.dongmanee.domain.club.controller.mapper.ClubScheduleMapper;
 import com.dongmanee.domain.club.domain.ClubSchedule;
+import com.dongmanee.domain.club.dto.request.RequestClubScheduleSearchCriteria;
 import com.dongmanee.domain.club.dto.request.RequestCreateClubSchedule;
 import com.dongmanee.domain.club.dto.request.RequestUpdateClubSchedule;
 import com.dongmanee.domain.club.dto.response.ResponseClubSchedule;
@@ -36,13 +40,15 @@ public class ClubScheduleController implements ClubScheduleApiDocs {
 	private final ClubScheduleMapper clubScheduleMapper;
 
 	@GetMapping("")
-	public ApiResult<List<ResponseClubSchedule>> findMonthlyScheduleByClubId(@PathVariable("club-id") long clubId,
-		@RequestParam("date") LocalDate date) {
-		List<ClubSchedule> clubScheduleList = clubScheduleService.findMonthlyScheduleByClubId(clubId, date);
-		List<ResponseClubSchedule> responseClubScheduleList = clubScheduleList.stream()
-			.map(clubScheduleMapper::toResponseClubSchedule)
-			.toList();
-		return ApiResult.isOk(responseClubScheduleList, "동아리 월간 일정 조회 성공");
+	public ApiResult<Slice<ClubSchedule>> findAllClubScheduleBySearchCriteriaBeforeCursor(
+		@PathVariable("club-id") long clubId,
+		@RequestParam(value = "cursor", required = false) LocalDateTime cursor,
+		@ModelAttribute RequestClubScheduleSearchCriteria searchCriteria,
+		@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable) {
+		Slice<ClubSchedule> clubScheduleSlice = clubScheduleService.findAllBySearchCriteriaBeforeCursor(clubId, cursor,
+			searchCriteria,
+			pageable);
+		return ApiResult.isOk(clubScheduleSlice, "SUCCESS");
 	}
 
 	@PostMapping("")

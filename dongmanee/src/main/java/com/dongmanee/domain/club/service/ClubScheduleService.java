@@ -1,9 +1,14 @@
 package com.dongmanee.domain.club.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+
 import com.dongmanee.domain.club.domain.ClubSchedule;
+import com.dongmanee.domain.club.dto.request.RequestClubScheduleSearchCriteria;
 import com.dongmanee.domain.club.dto.request.RequestUpdateClubSchedule;
 
 public interface ClubScheduleService {
@@ -16,4 +21,7 @@ public interface ClubScheduleService {
 	ClubSchedule findClubSchedule(long clubId, long clubScheduleId);
 
 	void deleteSchedule(long clubId, long scheduleId);
+
+	Slice<ClubSchedule> findAllBySearchCriteriaBeforeCursor(long clubId, LocalDateTime cursor,
+		RequestClubScheduleSearchCriteria searchCriteria, Pageable pageable);
 }
