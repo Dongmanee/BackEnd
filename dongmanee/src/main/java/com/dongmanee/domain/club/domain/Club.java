@@ -37,13 +37,18 @@ public class Club extends BaseEntity {
 	private University university;
 	@OneToMany(mappedBy = "club")
 	private List<ClubUser> clubUsers;
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private ClubCategory category;
+
 	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ClubSns> clubSns;
 	private Integer applicationId;
+
+	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ClubPostCategory> clubPostCategories;
 	@NotNull
 	private String name;
 	private String description;
