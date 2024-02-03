@@ -1,9 +1,6 @@
 package com.dongmanee.domain.club.service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -24,7 +21,7 @@ public class ClubScheduleServiceImpl implements ClubScheduleService {
 	private final ClubScheduleJpaRepository clubScheduleRepository;
 
 	@Override
-	public void createSchedule(ClubSchedule newClubSchedule) {
+	public void createClueSchedule(ClubSchedule newClubSchedule) {
 		if (!newClubSchedule.isAllDay() && newClubSchedule.getStartTime().isAfter(newClubSchedule.getEndTime())) {
 			throw new IllegalTimeRangeException();
 		}
@@ -32,7 +29,7 @@ public class ClubScheduleServiceImpl implements ClubScheduleService {
 	}
 
 	@Override
-	public void updateSchedule(long clubId, long clubScheduleId, RequestUpdateClubSchedule request) {
+	public void updateClueSchedule(long clubId, long clubScheduleId, RequestUpdateClubSchedule request) {
 		ClubSchedule clubSchedule = clubScheduleRepository.findByIdAndClubId(clubScheduleId, clubId)
 			.orElseThrow(ClubScheduleNotFoundException::new);
 
@@ -42,25 +39,18 @@ public class ClubScheduleServiceImpl implements ClubScheduleService {
 	}
 
 	@Override
-	public List<ClubSchedule> findMonthlyScheduleByClubId(long clubId, LocalDate date) {
-		LocalDateTime startOfMonth = date.withDayOfMonth(1).atStartOfDay();
-		LocalDateTime endOfMonth = date.withDayOfMonth(date.lengthOfMonth()).atTime(LocalTime.MAX);
-		return clubScheduleRepository.findByClubIdAndStartTimeBetween(clubId, startOfMonth, endOfMonth);
-	}
-
-	@Override
 	public ClubSchedule findClubSchedule(long clubId, long clubScheduleId) {
 		return clubScheduleRepository.findByIdAndClubId(clubScheduleId, clubId)
 			.orElseThrow(ClubScheduleNotFoundException::new);
 	}
 
 	@Override
-	public void deleteSchedule(long clubId, long scheduleId) {
+	public void deleteClubSchedule(long clubId, long scheduleId) {
 		clubScheduleRepository.deleteByIdAndClubId(scheduleId, clubId);
 	}
 
 	@Override
-	public Slice<ClubSchedule> findAllBySearchCriteriaBeforeCursor(long clubId, LocalDateTime cursor,
+	public Slice<ClubSchedule> findAllClubScheduleBySearchCriteriaBeforeCursor(long clubId, LocalDateTime cursor,
 		RequestClubScheduleSearchCriteria searchCriteria, Pageable pageable) {
 		return clubScheduleRepository.findAllBySearchCriteriaBeforeCursor(clubId, cursor, searchCriteria, pageable);
 	}

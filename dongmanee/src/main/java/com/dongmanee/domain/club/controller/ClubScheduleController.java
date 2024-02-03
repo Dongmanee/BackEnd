@@ -45,7 +45,8 @@ public class ClubScheduleController implements ClubScheduleApiDocs {
 		@RequestParam(value = "cursor", required = false) LocalDateTime cursor,
 		@ModelAttribute RequestClubScheduleSearchCriteria searchCriteria,
 		@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable) {
-		Slice<ClubSchedule> clubScheduleSlice = clubScheduleService.findAllBySearchCriteriaBeforeCursor(clubId, cursor,
+		Slice<ClubSchedule> clubScheduleSlice = clubScheduleService.findAllClubScheduleBySearchCriteriaBeforeCursor(
+			clubId, cursor,
 			searchCriteria,
 			pageable);
 		return ApiResult.isOk(clubScheduleSlice, "SUCCESS");
@@ -56,7 +57,7 @@ public class ClubScheduleController implements ClubScheduleApiDocs {
 	public ApiResult<?> createSchedule(@PathVariable("club-id") long clubId,
 		@Valid @RequestBody RequestCreateClubSchedule request) {
 		ClubSchedule newClubSchedule = clubScheduleMapper.toEntity(clubId, request, clubService);
-		clubScheduleService.createSchedule(newClubSchedule);
+		clubScheduleService.createClueSchedule(newClubSchedule);
 		return ApiResult.isCreated("동아리 일정 생성 성공");
 	}
 
@@ -74,7 +75,7 @@ public class ClubScheduleController implements ClubScheduleApiDocs {
 	public ApiResult<?> updateSchedule(@PathVariable("club-id") long clubId,
 		@PathVariable("schedule-id") long clubScheduleId,
 		@Valid @RequestBody RequestUpdateClubSchedule request) {
-		clubScheduleService.updateSchedule(clubId, clubScheduleId, request);
+		clubScheduleService.updateClueSchedule(clubId, clubScheduleId, request);
 		return ApiResult.isNoContent("동아리 일정 수정 성공");
 	}
 
@@ -82,7 +83,7 @@ public class ClubScheduleController implements ClubScheduleApiDocs {
 	@PreAuthorize("hasAnyAuthority('ROLE_CLUB_HOST', 'ROLE_CLUB_ADMIN') or hasAnyAuthority('ROLE_ADMIN')")
 	public ApiResult<?> deleteSchedule(@PathVariable("club-id") long clubId,
 		@PathVariable("schedule-id") long scheduleId) {
-		clubScheduleService.deleteSchedule(clubId, scheduleId);
+		clubScheduleService.deleteClubSchedule(clubId, scheduleId);
 		return ApiResult.isNoContent("동아리 일정 삭제 성공");
 	}
 }
