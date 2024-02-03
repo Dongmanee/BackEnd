@@ -109,9 +109,17 @@ public interface ClubScheduleApiDocs {
 			)),
 	})
 	ApiResult<Slice<ClubSchedule>> findAllClubScheduleBySearchCriteriaBeforeCursor(
+		@Schema(description = "동아리 일정을 조회할 동아리 ID")
 		@PathVariable("club-id") long clubId,
+		@Schema(description = "동아리 일정 조회 커서/ 시작 시간이 커서 이전인 일정 조회")
 		@RequestParam(value = "cursor", required = false) LocalDateTime cursor,
+		@Schema(description = "동아리 일정 검색 조건/ 검색 조건에 부합하는 일정 조회")
 		@ModelAttribute RequestClubScheduleSearchCriteria searchCriteria,
+		@Schema(description = "동아리 일정 페이지 네이션 조건", examples = """
+					{
+						 "size": 3,
+					}
+			""")
 		@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable);
 
 	@Operation(summary = "동아리 일정 생성 요청")
