@@ -24,12 +24,12 @@ INSERT INTO club_post_category (is_public, club_id, name, created_at, update_at)
 INSERT INTO club_post_category (is_public, club_id, name, created_at, update_at) VALUES (true, 1, '문의사항', '2023-11-15 20:00:00', '2023-11-15 20:00:00');
 
 -- post 더미 데이터
-INSERT INTO club_post (is_deleted, category_id, created_at, member_id, update_at, body, title) VALUES (false, 2, '2023-11-15 10:00:00', 1, '2023-11-15 20:00:00', 'testBody', 'testTitle1');
-INSERT INTO club_post (is_deleted, category_id, created_at, member_id, update_at, body, title) VALUES (false, 2, '2023-11-15 11:00:00', 1, '2023-11-15 20:00:00', 'testBody', 'testTitle2');
-INSERT INTO club_post (is_deleted, category_id, created_at, member_id, update_at, body, title) VALUES (false, 2, '2023-11-15 12:00:00', 1, '2023-11-15 20:00:00', 'testBody', 'testTitle3');
-INSERT INTO club_post (is_deleted, category_id, created_at, member_id, update_at, body, title) VALUES (false, 3, '2023-11-15 13:00:00', 1, '2023-11-15 20:00:00', 'testBody', 'testTitle4');
-INSERT INTO club_post (is_deleted, category_id, created_at, member_id, update_at, body, title) VALUES (false, 3, '2023-11-15 14:00:00', 1, '2023-11-15 20:00:00', 'testBody', 'testTitle5');
-INSERT INTO club_post (is_deleted, category_id, created_at, member_id, update_at, body, title) VALUES (false, 3, '2023-11-15 15:00:00', 1, '2023-11-15 20:00:00', 'testBody', 'testTitle6');
-INSERT INTO club_post (is_deleted, category_id, created_at, member_id, update_at, body, title) VALUES (false, 1, '2023-11-15 16:00:00', 1, '2023-11-15 20:00:00', 'testBody', 'testTitle7');
-INSERT INTO club_post (is_deleted, category_id, created_at, member_id, update_at, body, title) VALUES (false, 1, '2023-11-15 17:00:00', 1, '2023-11-15 20:00:00', 'testBody', 'testTitle8');
-INSERT INTO club_post (is_deleted, category_id, created_at, member_id, update_at, body, title) VALUES (false, 1, '2023-11-15 18:00:00', 1, '2023-11-15 20:00:00', 'testBody', 'testTitle9');
+INSERT INTO club_post (is_deleted, category_id, created_at, member_id, post_category_id, update_at, body, title) VALUES (false, 2, '2023-11-15 10:00:00', 1, 1, '2023-11-15 20:00:00', 'testBody', 'testTitle1');
+INSERT INTO club_post (is_deleted, category_id, created_at, member_id, post_category_id, update_at, body, title) VALUES (false, 2, '2023-11-15 11:00:00', 1, 2, '2023-11-15 20:00:00', 'testBody', 'testTitle2');
+INSERT INTO club_post (is_deleted, category_id, created_at, member_id, post_category_id, update_at, body, title) VALUES (false, 2, '2023-11-15 12:00:00', 1, 3, '2023-11-15 20:00:00', 'testBody', 'testTitle3');
+INSERT INTO club_post (is_deleted, category_id, created_at, member_id, post_category_id, update_at, body, title) VALUES (false, 3, '2023-11-15 13:00:00', 1, 1, '2023-11-15 20:00:00', 'testBody', 'testTitle4');
+INSERT INTO club_post (is_deleted, category_id, created_at, member_id, post_category_id, update_at, body, title) VALUES (false, 3, '2023-11-15 14:00:00', 1, 2, '2023-11-15 20:00:00', 'testBody', 'testTitle5');
+INSERT INTO club_post (is_deleted, category_id, created_at, member_id, post_category_id, update_at, body, title) VALUES (false, 3, '2023-11-15 15:00:00', 1, 3, '2023-11-15 20:00:00', 'testBody', 'testTitle6');
+INSERT INTO club_post (is_deleted, category_id, created_at, member_id, post_category_id, update_at, body, title) VALUES (false, 1, '2023-11-15 16:00:00', 1, 1, '2023-11-15 20:00:00', 'testBody', 'testTitle7');
+INSERT INTO club_post (is_deleted, category_id, created_at, member_id, post_category_id, update_at, body, title) VALUES (false, 1, '2023-11-15 17:00:00', 1, 2, '2023-11-15 20:00:00', 'testBody', 'testTitle8');
+INSERT INTO club_post (is_deleted, category_id, created_at, member_id, post_category_id, update_at, body, title) VALUES (false, 1, '2023-11-15 18:00:00', 1, 3, '2023-11-15 20:00:00', 'testBody', 'testTitle9');
