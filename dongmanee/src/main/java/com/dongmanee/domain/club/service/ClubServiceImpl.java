@@ -19,6 +19,7 @@ import com.dongmanee.domain.club.domain.ClubSns;
 import com.dongmanee.domain.club.domain.ClubUser;
 import com.dongmanee.domain.club.enums.ClubRole;
 import com.dongmanee.domain.club.exception.CategoryNotFoundException;
+import com.dongmanee.domain.club.exception.ClubNotExistException;
 import com.dongmanee.domain.club.exception.ClubSnsNotFoundException;
 import com.dongmanee.domain.club.exception.ClubUserNotFoundException;
 import com.dongmanee.domain.club.exception.DuplicatedClubSnsException;
@@ -57,6 +58,11 @@ public class ClubServiceImpl implements ClubService {
 
 		ClubUser hostUser = createUserWithHostPermission(newClub, member);
 		clubUserRepository.save(hostUser);
+	}
+
+	@Override
+	public Club findById(Long id) {
+		return clubRepository.findById(id).orElseThrow(ClubNotExistException::new);
 	}
 
 	@Override
@@ -108,7 +114,7 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	@Override
-	public ClubCategory findById(Long categoryId) {
+	public ClubCategory findClubCategoryById(Long categoryId) {
 		return clubCategoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 	}
 

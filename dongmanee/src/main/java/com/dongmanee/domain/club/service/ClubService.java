@@ -10,6 +10,8 @@ import com.dongmanee.domain.member.domain.Member;
 public interface ClubService {
 	void createClub(Club club, Member member, List<ClubSns> clubSnsList);
 
+	Club findById(Long id);
+
 	Club editClubDescriptionAndAddress(Long memberId, Club club);
 
 	ClubSns upsertClubSns(Long memberId, ClubSns clubSns, Long clubId);
@@ -18,5 +20,5 @@ public interface ClubService {
 
 	void removeClubSns(Long clubId, Long snsId);
 
-	ClubCategory findById(Long categoryId);
+	ClubCategory findClubCategoryById(Long categoryId);
 }
