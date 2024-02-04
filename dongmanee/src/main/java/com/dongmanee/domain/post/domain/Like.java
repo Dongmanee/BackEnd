@@ -28,7 +28,7 @@ public class Like extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "post_id")
-	private Post post;
+	private ClubPost clubPost;
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")
