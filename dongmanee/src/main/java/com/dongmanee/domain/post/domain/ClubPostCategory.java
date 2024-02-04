@@ -3,9 +3,12 @@ package com.dongmanee.domain.post.domain;
 import java.util.List;
 
 import com.dongmanee.domain.club.domain.Club;
+import com.dongmanee.domain.post.enums.ClubPostCategoryDetails;
 import com.dongmanee.global.entity.BaseEntity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,9 +38,10 @@ public class ClubPostCategory extends BaseEntity {
 	private Club club;
 
 	@OneToMany(mappedBy = "category")
-	private List<Post> posts;
+	private List<ClubPost> clubPosts;
 
-	private String name;
+	@Enumerated(EnumType.STRING)
+	private ClubPostCategoryDetails name;
 	private Boolean isPublic;
 
 }
