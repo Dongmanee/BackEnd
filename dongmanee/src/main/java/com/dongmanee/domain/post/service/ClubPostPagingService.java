@@ -1,11 +1,11 @@
-package com.dongmanee.domain.club.service;
+package com.dongmanee.domain.post.service;
 
 import java.util.List;
 
 import com.dongmanee.domain.club.dto.request.PostSearchingInfo;
 import com.dongmanee.domain.post.domain.Post;
 
-public interface PostPagingService {
+public interface ClubPostPagingService {
 	List<Post> pagingDivider(PostSearchingInfo request);
 
 }

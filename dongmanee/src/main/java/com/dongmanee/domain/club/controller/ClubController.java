@@ -22,11 +22,11 @@ import com.dongmanee.domain.club.dto.request.PostSearchingInfo;
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 import com.dongmanee.domain.club.dto.response.postsearch.PostSearchResponse;
 import com.dongmanee.domain.club.service.ClubService;
-import com.dongmanee.domain.club.service.PostPagingService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.service.MemberService;
 import com.dongmanee.domain.post.domain.Post;
 import com.dongmanee.domain.post.enums.ClubPostCategoryDetails;
+import com.dongmanee.domain.post.service.ClubPostPagingService;
 import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.global.utils.ApiResult;
 
@@ -45,7 +45,7 @@ public class ClubController implements ClubControllerApiDocs {
 	private final ClubSnsMapper clubSnsMapper;
 	private final ClubService clubService;
 	private final MemberService memberService;
-	private final PostPagingService postPagingService;
+	private final ClubPostPagingService postPagingService;
 
 	//TODO: 클럽 정보 가져오는 URL 리턴으로 변경
 	@PostMapping
