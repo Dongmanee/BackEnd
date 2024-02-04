@@ -4,6 +4,6 @@ import java.util.Optional;
 
 import com.dongmanee.domain.post.domain.ClubPostCategory;
 
-public interface PostCategoryRepository {
+public interface ClubPostCategoryRepository {
 	Optional<ClubPostCategory> findByName(String name);
 }

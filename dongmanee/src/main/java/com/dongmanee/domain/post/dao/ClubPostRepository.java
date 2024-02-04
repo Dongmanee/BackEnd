@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.dongmanee.domain.post.domain.Post;
 
-public interface PostRepository {
+public interface ClubPostRepository {
 
 	List<Post> findEveryPostsAfterCursor(Long clubId, Long cursor, Pageable pageable);
 

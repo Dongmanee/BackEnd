@@ -1,4 +1,4 @@
-package com.dongmanee.domain.club.service;
+package com.dongmanee.domain.post.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.dongmanee.domain.club.dto.request.PostSearchingInfo;
-import com.dongmanee.domain.post.dao.PostRepository;
+import com.dongmanee.domain.post.dao.ClubPostRepository;
 import com.dongmanee.domain.post.domain.Post;
 import com.dongmanee.domain.post.enums.ClubPostCategoryDetails;
 
@@ -17,9 +17,9 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class PostPagingServiceImpl implements PostPagingService {
+public class ClubPostPagingServiceImpl implements ClubPostPagingService {
 
-	private final PostRepository postRepository;
+	private final ClubPostRepository postRepository;
 
 	public List<Post> pagingDivider(PostSearchingInfo request) {
 		switch (request.getPostCategory()) {

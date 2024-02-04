@@ -13,7 +13,7 @@ public interface ClubPostMapper {
 	//
 	// @Named("postCategoryToClubPostCategory")
 	// default ClubPostCategory postCategoryToClubPostCategory(ClubPostCategoryDetails postCategory,
-	// 	@Context PostCategoryRepository postCategoryRepository) {
+	// 	@Context ClubPostCategoryRepository postCategoryRepository) {
 	// 	Optional<ClubPostCategory> postCategoryDetails = postCategoryRepository.findByName(
 	// 		postCategory.getValue());
 	// }
