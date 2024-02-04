@@ -14,10 +14,10 @@ import com.dongmanee.domain.club.dto.request.PostSearchingInfo;
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 import com.dongmanee.domain.club.dto.request.RequestEditClubDescriptionAndAddress;
 import com.dongmanee.domain.club.dto.response.postsearch.PostSearchResponse;
-import com.dongmanee.domain.club.enums.PostCategory;
 import com.dongmanee.domain.club.service.ClubService;
 import com.dongmanee.domain.member.dto.response.MainPageMemberClubDto;
 import com.dongmanee.domain.post.domain.Post;
+import com.dongmanee.domain.post.enums.ClubPostCategoryDetails;
 
 @Mapper(componentModel = "spring",
 	unmappedTargetPolicy = ReportingPolicy.IGNORE,
@@ -29,7 +29,7 @@ public interface ClubMapper {
 
 	Club toEntity(Long id, RequestEditClubDescriptionAndAddress dto);
 
-	PostSearchingInfo toDto(Long clubId, PostCategory postCategory, Long cursor, Integer pageSize);
+	PostSearchingInfo toDto(Long clubId, ClubPostCategoryDetails postCategory, Long cursor, Integer pageSize);
 
 	@Mapping(source = "id", target = "postId")
 	@Mapping(source = "title", target = "postTitle")

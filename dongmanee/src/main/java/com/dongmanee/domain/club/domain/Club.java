@@ -2,6 +2,7 @@ package com.dongmanee.domain.club.domain;
 
 import java.util.List;
 
+import com.dongmanee.domain.post.domain.ClubPostCategory;
 import com.dongmanee.domain.university.domain.University;
 import com.dongmanee.global.entity.BaseEntity;
 

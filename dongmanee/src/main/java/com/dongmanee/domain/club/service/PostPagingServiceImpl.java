@@ -9,9 +9,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.dongmanee.domain.club.dto.request.PostSearchingInfo;
-import com.dongmanee.domain.club.enums.PostCategory;
 import com.dongmanee.domain.post.dao.PostRepository;
 import com.dongmanee.domain.post.domain.Post;
+import com.dongmanee.domain.post.enums.ClubPostCategoryDetails;
 
 import lombok.RequiredArgsConstructor;
 
@@ -51,7 +51,7 @@ public class PostPagingServiceImpl implements PostPagingService {
 	}
 
 	private List<Post> findPostsWithCategory(Long clubId, Long cursor, Integer pageSize,
-		PostCategory postCategory) {
+		ClubPostCategoryDetails postCategory) {
 		Pageable pageable = PageRequest.of(0, pageSize);
 		return postRepository.findSpecificPostsAfterCursor(clubId, postCategory.getValue(), cursor, pageable);
 	}

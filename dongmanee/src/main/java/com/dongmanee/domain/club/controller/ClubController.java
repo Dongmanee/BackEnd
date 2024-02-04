@@ -17,15 +17,16 @@ import com.dongmanee.domain.club.controller.mapper.ClubMapper;
 import com.dongmanee.domain.club.controller.mapper.ClubSnsMapper;
 import com.dongmanee.domain.club.domain.Club;
 import com.dongmanee.domain.club.domain.ClubSns;
+import com.dongmanee.domain.club.dto.request.CreateClubPostRequest;
 import com.dongmanee.domain.club.dto.request.PostSearchingInfo;
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 import com.dongmanee.domain.club.dto.response.postsearch.PostSearchResponse;
-import com.dongmanee.domain.club.enums.PostCategory;
 import com.dongmanee.domain.club.service.ClubService;
 import com.dongmanee.domain.club.service.PostPagingService;
 import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.domain.member.service.MemberService;
 import com.dongmanee.domain.post.domain.Post;
+import com.dongmanee.domain.post.enums.ClubPostCategoryDetails;
 import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.global.utils.ApiResult;
 
@@ -51,7 +52,7 @@ public class ClubController implements ClubControllerApiDocs {
 	public ApiResult<?> createClub(@Valid @RequestBody RequestCreateClub createClub,
 		@AuthenticationPrincipal CustomUserDetails userDetails) {
 		Member requestMember = memberService.findById(Long.parseLong(userDetails.getUsername()));
-		
+
 		Club club = clubMapper.toEntity(createClub, clubService);
 		List<ClubSns> clubSnsList = clubSnsMapper.toEntity(createClub.getClubSns());
 
@@ -62,7 +63,7 @@ public class ClubController implements ClubControllerApiDocs {
 	//TODO: 현재 Like, Comment 미구현으로 인해 null 값 반환
 	@GetMapping("/{club-id}/posts")
 	public ApiResult<List<PostSearchResponse>> getClubNotify(
-		@PathVariable("club-id") Long requestClubId, @RequestParam(name = "category") PostCategory category,
+		@PathVariable("club-id") Long requestClubId, @RequestParam(name = "category") ClubPostCategoryDetails category,
 		@RequestParam(value = "oldest-post-id", required = false) Long cursor, @RequestParam("size") Integer pageSize) {
 		PostSearchingInfo postSearchingRequestDto = clubMapper.toDto(requestClubId, category, cursor, pageSize);
 		List<Post> posts = postPagingService.pagingDivider(postSearchingRequestDto);
@@ -71,6 +72,14 @@ public class ClubController implements ClubControllerApiDocs {
 			.collect(Collectors.toList());
 
 		return ApiResult.isOk(collect, "조회에 성공하였습니다");
+	}
+
+	// TODO 현재 이미지 등록 기능은 제외
+	@PostMapping("/{club-id}/posts/{post-id}")
+	public void createClubPost(@AuthenticationPrincipal CustomUserDetails userDetails,
+		@RequestBody CreateClubPostRequest createClubPostRequest) {
+		Member member = memberService.findById(Long.parseLong(userDetails.getUsername()));
+
 	}
 
 	// TODO 1. 클럽 가입 요청 기능 추가
