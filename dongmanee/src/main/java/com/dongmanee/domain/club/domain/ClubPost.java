@@ -1,5 +1,7 @@
 package com.dongmanee.domain.club.domain;
 
+import com.dongmanee.domain.post.domain.ClubPostCategory;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +27,7 @@ public class ClubPost {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_category_id")

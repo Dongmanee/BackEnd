@@ -1,11 +1,11 @@
-package com.dongmanee.domain.club.enums;
+package com.dongmanee.domain.post.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum PostCategory {
+public enum ClubPostCategoryDetails {
 	MAIN_PAGE("메인 공지사항"),
 	ALL("전체"),
 	ANNOUNCEMENT("공지사항"),

@@ -1,7 +1,6 @@
 package com.dongmanee.domain.club.dto.request;
 
-
-import com.dongmanee.domain.club.enums.PostCategory;
+import com.dongmanee.domain.post.enums.ClubPostCategoryDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostSearchingInfo {
 	private Long clubId;
-	private PostCategory postCategory;
+	private ClubPostCategoryDetails postCategory;
 	private Long cursor;
 	private Integer pageSize;
 }

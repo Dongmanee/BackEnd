@@ -1,11 +1,10 @@
 package com.dongmanee.domain.club.controller.apidoc;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.dongmanee.domain.club.dto.request.RequestCreateClub;
 import com.dongmanee.domain.club.dto.response.postsearch.PostSearchResponse;
-import com.dongmanee.domain.club.enums.PostCategory;
+import com.dongmanee.domain.post.enums.ClubPostCategoryDetails;
 import com.dongmanee.domain.security.domain.CustomUserDetails;
 import com.dongmanee.global.utils.ApiResult;
 
@@ -96,6 +95,6 @@ public interface ClubControllerApiDocs {
 						""")
 			))
 	})
-	public ApiResult<List<PostSearchResponse>> getClubNotify(Long requestClubId, PostCategory category,
+	public ApiResult<List<PostSearchResponse>> getClubNotify(Long requestClubId, ClubPostCategoryDetails category,
 		Long cursor, Integer pageSize);
 }
