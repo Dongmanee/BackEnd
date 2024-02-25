@@ -16,7 +16,7 @@ import com.dongmanee.domain.club.dto.request.RequestEditClubDescriptionAndAddres
 import com.dongmanee.domain.club.dto.response.postsearch.PostSearchResponse;
 import com.dongmanee.domain.club.service.ClubService;
 import com.dongmanee.domain.member.dto.response.MainPageMemberClubDto;
-import com.dongmanee.domain.post.domain.Post;
+import com.dongmanee.domain.post.domain.ClubPost;
 import com.dongmanee.domain.post.enums.ClubPostCategoryDetails;
 
 @Mapper(componentModel = "spring",
@@ -39,12 +39,12 @@ public interface ClubMapper {
 	@Mapping(source = "member.id", target = "postWriter.writerId")
 	@Mapping(source = "member.name", target = "postWriter.writerName")
 	@Mapping(source = "member.profileImageUrl", target = "postWriter.writerImage")
-	PostSearchResponse postListToResponse(Post post);
+	PostSearchResponse postListToResponse(ClubPost clubPost);
 
 	List<MainPageMemberClubDto> toMemberJoinedClubResponseDto(List<Club> clubs);
 
 	@Named("categoryConverter")
 	default ClubCategory categoryConverter(Long categoryId, @Context ClubService clubService) {
-		return clubService.findById(categoryId);
+		return clubService.findClubCategoryById(categoryId);
 	}
 }

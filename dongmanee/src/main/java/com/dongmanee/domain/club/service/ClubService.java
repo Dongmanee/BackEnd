@@ -18,5 +18,7 @@ public interface ClubService {
 
 	void removeClubSns(Long clubId, Long snsId);
 
-	ClubCategory findById(Long categoryId);
+	ClubCategory findClubCategoryById(Long categoryId);
+
+	Club findClubById(Long id);
 }
