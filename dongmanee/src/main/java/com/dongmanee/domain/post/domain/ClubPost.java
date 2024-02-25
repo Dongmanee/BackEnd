@@ -1,8 +1,6 @@
 package com.dongmanee.domain.post.domain;
 
-import java.util.List;
-
-import com.dongmanee.domain.club.domain.Club;
+import com.dongmanee.domain.member.domain.Member;
 import com.dongmanee.global.entity.BaseEntity;
 
 import jakarta.persistence.Entity;
@@ -12,8 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,20 +23,26 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "club_post_category")
-public class PostCategory extends BaseEntity {
+@Table(name = "club_post")
+public class ClubPost extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "club_id")
-	private Club club;
+	@JoinColumn(name = "category_id")
+	private ClubPostCategory category;
 
-	@OneToMany(mappedBy = "category")
-	private List<Post> posts;
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
+	private Member member;
 
-	private String name;
-	private Boolean isPublic;
-
+	@NotEmpty
+	private String title;
+	@NotEmpty
+	private String body;
+	@NotNull
+	private Boolean isDeleted;
 }

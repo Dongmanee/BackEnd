@@ -69,6 +69,8 @@ public class SecurityConfig implements WebMvcConfigurer {
 					.permitAll()
 					.requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"))
 					.permitAll()
+					.requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+					.permitAll()
 					.anyRequest().authenticated()
 			)
 			.exceptionHandling((exception) -> {

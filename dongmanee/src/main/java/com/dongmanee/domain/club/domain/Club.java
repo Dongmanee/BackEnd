@@ -2,6 +2,7 @@ package com.dongmanee.domain.club.domain;
 
 import java.util.List;
 
+import com.dongmanee.domain.post.domain.ClubPostCategory;
 import com.dongmanee.domain.university.domain.University;
 import com.dongmanee.global.entity.BaseEntity;
 
@@ -37,13 +38,18 @@ public class Club extends BaseEntity {
 	private University university;
 	@OneToMany(mappedBy = "club")
 	private List<ClubUser> clubUsers;
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private ClubCategory category;
+
 	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ClubSns> clubSns;
 	private Integer applicationId;
+
+	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ClubPostCategory> clubPostCategories;
 	@NotNull
 	private String name;
 	private String description;
