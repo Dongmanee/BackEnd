@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MainPageMemberClubDto {
+	private Long clubId;
 	private String name;
 	private String clubMainImageUrl;
 }
