@@ -199,6 +199,7 @@ public interface MemberControllerApiDocs {
 							"message": "조회에 성공하였습니다.",
 							"data": [
 								{
+								"clubId": 1,
 								"name": "clubName",
 								"clubMainImageUrl":"url or null"
 								}
