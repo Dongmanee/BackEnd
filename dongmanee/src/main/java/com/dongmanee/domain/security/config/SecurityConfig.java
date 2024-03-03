@@ -57,6 +57,8 @@ public class SecurityConfig implements WebMvcConfigurer {
 			// HTTP 요청에 대한 인가 설정
 			.authorizeHttpRequests(
 				authorizedRequests -> authorizedRequests
+					.requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+					.permitAll()
 					.requestMatchers(new AntPathRequestMatcher("/clubs/**", HttpMethod.GET.name()))
 					.permitAll()
 					.requestMatchers(new AntPathRequestMatcher("/login"))

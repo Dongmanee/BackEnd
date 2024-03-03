@@ -41,7 +41,10 @@ public interface ClubMapper {
 	@Mapping(source = "member.profileImageUrl", target = "postWriter.writerImage")
 	PostSearchResponse postListToResponse(Post post);
 
-	List<MainPageMemberClubDto> toMemberJoinedClubResponseDto(List<Club> clubs);
+	@Mapping(source = "id", target = "clubId")
+	MainPageMemberClubDto toMemberJoinedClubResponseDto(Club clubs);
+
+	List<MainPageMemberClubDto> toMemberJoinedClubResponseDtoList(List<Club> clubs);
 
 	@Named("categoryConverter")
 	default ClubCategory categoryConverter(Long categoryId, @Context ClubService clubService) {
